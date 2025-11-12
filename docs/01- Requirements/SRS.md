@@ -41,28 +41,36 @@ Hệ thống web cho phép quản lý doanh thu, học viên, huấn luyện vi�
    - Dữ liệu hiển thị theo ngày, tháng, năm.
 2. **Quản lý học viên** (trang `/admin/trainees`)
    - Admin xem danh sách học viên với các trường: họ tên, email, số điện thoại, trạng thái, gói tập.
-   - Admin tạo mới học viên và gán gói tập (nhóm/1-1).
+   - Admin tạo mới học viên và gán gói tập (nhóm/1-1) thông qua menu chọn từ danh sách gói hiện có.
    - Admin cập nhật thông tin cá nhân, tiến độ hiện tại và lịch sử.
-   - Admin xóa hoặc vô hiệu hóa học viên.
+   - Admin chỉnh sửa hoặc xóa/vô hiệu hóa học viên trực tiếp trong bảng quản lý.
    - Hệ thống lưu trữ lịch sử tiến độ gồm: cân nặng, số đo, buổi tập hoàn thành.
 3. **Quản lý huấn luyện viên** (trang `/admin/coaches`)
    - Admin xem danh sách huấn luyện viên với lịch làm việc.
-   - Admin tạo mới, cập nhật, vô hiệu hóa huấn luyện viên.
+   - Admin tạo mới, cập nhật, vô hiệu hóa hoặc xóa huấn luyện viên.
+   - Khi tạo/cập nhật, chuyên môn được chọn từ danh mục định nghĩa trước để đảm bảo chuẩn hóa.
    - Hệ thống hiển thị lịch phân công lớp nhóm và 1-1.
 4. **Quản lý tài khoản và phân quyền** (trang `/admin/accounts`)
    - Admin tạo tài khoản đăng nhập cho học viên.
    - Admin gán quyền coach (truy cập trang coach) cho huấn luyện viên.
+   - Admin chỉnh sửa, khóa/mở khóa hoặc xóa tài khoản khi cần.
 5. **Quản lý gói tập** (trang `/admin/packages`)
    - Admin tạo, sửa, xóa gói tập (nhóm, 1-1) với thông tin: tên, mô tả, thời lượng, giá.
+   - Admin cập nhật nội dung marketing (mô tả, lợi ích, giá hiển thị) để đồng bộ với trang giới thiệu.
 6. **Quản lý dữ liệu danh mục** (trang `/admin/catalog`)
    - CRUD thực phẩm với thông tin dinh dưỡng.
    - CRUD meals, meal mẫu, chương trình luyện tập (program), bài tập, feedback.
 7. **Quản lý bài tập (lessons)** (trang `/admin/lessons`)
    - Admin thêm bài tập với trường: nhóm bài tập, tên, link youtube demo, mô tả.
+   - Admin chỉnh sửa hoặc xóa bài tập khỏi thư viện tiêu chuẩn.
    - Cho phép gắn bài tập vào program hoặc lesson plan.
 8. **Quản lý lớp online** (trang `/admin/schedule`)
    - Admin tạo lịch lớp với link Google Meet/Zoom.
+   - Admin sắp xếp lại thứ tự buổi học, chỉnh sửa thông tin (thời gian, link) khi lớp thay đổi.
    - Lịch đồng bộ với huấn luyện viên liên quan.
+9. **Quản lý trang marketing PT** (trang `/admin/marketing`)
+   - Admin cập nhật nội dung giới thiệu phòng PT: tiêu đề, mô tả, hình ảnh hero, các gói nổi bật và giá hiển thị.
+   - Hỗ trợ xem trước trước khi xuất bản để đảm bảo thống nhất thông điệp.
 
 ### 3.2 Trang coach
 1. **Dashboard học viên**

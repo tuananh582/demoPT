@@ -7,13 +7,20 @@ interface Column<T> {
   header: string;
 }
 
+interface ActionColumn<T> {
+  header: string;
+  className?: string;
+  render: (row: T, index: number) => ReactNode;
+}
+
 interface DataTableProps<T extends Record<string, unknown>> {
   columns: Array<Column<T>>;
   data: T[];
   renderCell?: (key: keyof T, value: unknown, row: T) => ReactNode;
+  actionColumn?: ActionColumn<T>;
 }
 
-export function DataTable<T extends Record<string, unknown>>({ columns, data, renderCell }: DataTableProps<T>) {
+export function DataTable<T extends Record<string, unknown>>({ columns, data, renderCell, actionColumn }: DataTableProps<T>) {
   return (
     <div className="overflow-hidden rounded-lg border border-zinc-200">
       <div className="max-h-[360px] overflow-auto">
@@ -25,6 +32,11 @@ export function DataTable<T extends Record<string, unknown>>({ columns, data, re
                   {column.header}
                 </th>
               ))}
+              {actionColumn ? (
+                <th scope="col" className="px-4 py-3 font-semibold">
+                  {actionColumn.header}
+                </th>
+              ) : null}
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-200 bg-white">
@@ -35,11 +47,16 @@ export function DataTable<T extends Record<string, unknown>>({ columns, data, re
                     {renderCell ? renderCell(column.key, row[column.key], row) : (row[column.key] as ReactNode)}
                   </td>
                 ))}
+                {actionColumn ? (
+                  <td className={`px-4 py-3 text-right ${actionColumn.className ?? ""}`}>
+                    {actionColumn.render(row, index)}
+                  </td>
+                ) : null}
               </tr>
             ))}
             {data.length === 0 ? (
               <tr>
-                <td colSpan={columns.length} className="px-4 py-6 text-center text-zinc-500">
+                <td colSpan={columns.length + (actionColumn ? 1 : 0)} className="px-4 py-6 text-center text-zinc-500">
                   Không có dữ liệu
                 </td>
               </tr>

@@ -18,8 +18,9 @@
 - **Luồng chính**:
   1. Admin mở danh sách học viên.
   2. Admin chọn tạo mới hoặc chỉnh sửa.
-  3. Admin nhập thông tin học viên và gói tập.
+  3. Admin nhập thông tin học viên và chọn gói tập từ danh sách thả xuống.
   4. Hệ thống lưu thông tin, hiển thị tiến độ hiện tại và lịch sử.
+- **Luồng thay thế**: Admin chọn xóa → hệ thống yêu cầu xác nhận trước khi loại bỏ học viên.
 - **Ngoại lệ**: Thiếu thông tin bắt buộc → hiển thị lỗi.
 
 ## UC-ADM-03: Quản lý huấn luyện viên
@@ -28,16 +29,19 @@
 - **Luồng chính**:
   1. Admin truy cập module coach.
   2. Xem lịch làm việc và phân công lớp.
-  3. Tạo/cập nhật thông tin coach.
+  3. Tạo/cập nhật thông tin coach, chọn chuyên môn từ danh sách cấu hình.
+  4. Xóa hoặc vô hiệu hóa coach khi nghỉ việc.
 - **Ngoại lệ**: Coach trùng email → thông báo lỗi.
 
-## UC-ADM-04: Tạo tài khoản học viên
+## UC-ADM-04: Quản lý tài khoản người dùng
 - **Tác nhân chính**: Admin
-- **Mục tiêu**: Cấp tài khoản đăng nhập cho học viên.
+- **Mục tiêu**: Cấp, chỉnh sửa hoặc thu hồi tài khoản đăng nhập.
 - **Luồng chính**:
-  1. Admin chọn học viên cần cấp tài khoản.
-  2. Nhập thông tin đăng nhập và gửi email kích hoạt.
+  1. Admin chọn học viên hoặc coach cần tạo tài khoản.
+  2. Nhập thông tin đăng nhập, vai trò và kích hoạt tài khoản.
   3. Hệ thống tạo tài khoản và gửi thông báo.
+  4. Khi cần, admin chỉnh sửa vai trò, trạng thái hoặc xóa tài khoản.
+- **Ngoại lệ**: Email đã tồn tại → hiển thị lỗi.
 
 ## UC-ADM-05: Quản lý nội dung đào tạo
 - **Tác nhân chính**: Admin
@@ -45,7 +49,8 @@
 - **Luồng chính**:
   1. Admin chọn danh mục tương ứng.
   2. Tạo hoặc cập nhật nội dung (ví dụ bài tập gồm nhóm, tên, link youtube).
-  3. Hệ thống lưu và hiển thị danh sách cập nhật.
+  3. Admin xóa nội dung không còn phù hợp.
+  4. Hệ thống lưu và hiển thị danh sách cập nhật.
 
 ## UC-ADM-06: Tạo lịch lớp online
 - **Tác nhân chính**: Admin
@@ -54,6 +59,27 @@
   1. Admin tạo buổi học và gắn coach, học viên/gói.
   2. Nhập link online.
   3. Hệ thống lưu và gửi thông báo đến coach, học viên.
+
+## UC-ADM-07: Sắp xếp và chỉnh sửa lịch học
+- **Tác nhân chính**: Admin
+- **Mục tiêu**: Sắp xếp lại thứ tự ưu tiên, chỉnh sửa thời gian hoặc link lớp.
+- **Điều kiện tiên quyết**: Đã có lịch được tạo.
+- **Luồng chính**:
+  1. Admin mở công cụ sắp xếp lịch.
+  2. Chọn buổi học cần chỉnh sửa.
+  3. Cập nhật thời gian, link Google Meet/Zoom hoặc di chuyển thứ tự.
+  4. Hệ thống lưu thay đổi và cập nhật thông báo.
+- **Ngoại lệ**: Trùng lịch với coach khác → cảnh báo.
+
+## UC-ADM-08: Chỉnh sửa trang marketing PT
+- **Tác nhân chính**: Admin
+- **Mục tiêu**: Cập nhật nội dung marketing (tiêu đề, mô tả, hình ảnh, giá).
+- **Luồng chính**:
+  1. Admin truy cập module marketing.
+  2. Chỉnh sửa nội dung và tải lên hình ảnh.
+  3. Xem trước thay đổi.
+  4. Xuất bản nội dung.
+- **Ngoại lệ**: Tệp ảnh không hợp lệ → hiển thị lỗi.
 
 ## UC-COA-01: Quản lý danh sách học viên
 - **Tác nhân chính**: Coach

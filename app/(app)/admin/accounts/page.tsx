@@ -18,6 +18,7 @@ const statusOptions = ["Hoạt động", "Dùng thử", "Vô hiệu"];
 export default function AdminAccountsPage() {
   const [accounts, setAccounts] = useState<AccountRecord[]>(() => [...accountRecords]);
   const [showForm, setShowForm] = useState(false);
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [formError, setFormError] = useState("");
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [formState, setFormState] = useState<AccountRecord>(() => ({
@@ -27,10 +28,38 @@ export default function AdminAccountsPage() {
     status: "Hoạt động",
   }));
 
-  const toggleForm = () => {
-    setShowForm((prev) => !prev);
+  const closeForm = () => {
+    setShowForm(false);
     setFormError("");
+    setEditingIndex(null);
+    setFormState({ name: "", email: "", role: "Học viên", status: "Hoạt động" });
+  };
+
+  const openCreateForm = () => {
     setFeedbackMessage("");
+    setFormError("");
+    setEditingIndex(null);
+    setFormState({ name: "", email: "", role: "Học viên", status: "Hoạt động" });
+    setShowForm(true);
+  };
+
+  const startEdit = (index: number) => {
+    setFormState({ ...accounts[index] });
+    setEditingIndex(index);
+    setFeedbackMessage("");
+    setFormError("");
+    setShowForm(true);
+  };
+
+  const handleDelete = (index: number) => {
+    const account = accounts[index];
+    if (window.confirm(`Bạn có chắc muốn xóa tài khoản ${account.email}?`)) {
+      setAccounts((prev) => prev.filter((_, itemIndex) => itemIndex !== index));
+      setFeedbackMessage(`Đã xóa tài khoản ${account.email}.`);
+      if (editingIndex === index) {
+        closeForm();
+      }
+    }
   };
 
   const handleChange = (field: keyof AccountRecord, value: string) => {
@@ -50,18 +79,31 @@ export default function AdminAccountsPage() {
       return;
     }
 
-    setAccounts((prev) => [
-      {
-        ...formState,
-        name: trimmedName,
-        email: trimmedEmail,
-      },
-      ...prev,
-    ]);
-    setFormState({ name: "", email: "", role: "Học viên", status: "Hoạt động" });
-    setFormError("");
-    setShowForm(false);
-    setFeedbackMessage("Tạo tài khoản thành công.");
+    if (editingIndex !== null) {
+      setAccounts((prev) =>
+        prev.map((item, index) =>
+          index === editingIndex
+            ? {
+                ...formState,
+                name: trimmedName,
+                email: trimmedEmail,
+              }
+            : item
+        )
+      );
+      setFeedbackMessage(`Đã cập nhật tài khoản ${trimmedEmail}.`);
+    } else {
+      setAccounts((prev) => [
+        {
+          ...formState,
+          name: trimmedName,
+          email: trimmedEmail,
+        },
+        ...prev,
+      ]);
+      setFeedbackMessage("Tạo tài khoản thành công.");
+    }
+    closeForm();
   };
 
   const handleExport = () => {
@@ -115,7 +157,7 @@ export default function AdminAccountsPage() {
           <div className="flex gap-2">
             <button
               type="button"
-              onClick={toggleForm}
+              onClick={showForm ? closeForm : openCreateForm}
               className="rounded-md border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-900 hover:text-white"
             >
               {showForm ? "Đóng form" : "Tạo tài khoản"}
@@ -188,7 +230,7 @@ export default function AdminAccountsPage() {
             <div className="flex justify-end gap-2">
               <button
                 type="button"
-                onClick={toggleForm}
+                onClick={closeForm}
                 className="rounded-md border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-100"
               >
                 Hủy
@@ -197,14 +239,39 @@ export default function AdminAccountsPage() {
                 type="submit"
                 className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-zinc-800"
               >
-                Lưu tài khoản
+                {editingIndex !== null ? "Cập nhật tài khoản" : "Lưu tài khoản"}
               </button>
             </div>
           </form>
         ) : null}
 
         {feedbackMessage ? <p className="mb-4 text-sm text-emerald-600">{feedbackMessage}</p> : null}
-        <DataTable columns={columns} data={accounts} />
+        <DataTable
+          columns={columns}
+          data={accounts}
+          actionColumn={{
+            header: "Thao tác",
+            className: "w-44",
+            render: (_row, index) => (
+              <div className="flex justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => startEdit(index)}
+                  className="rounded-md border border-zinc-300 px-3 py-1.5 text-xs font-medium text-zinc-700 transition hover:bg-zinc-100"
+                >
+                  Chỉnh sửa
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleDelete(index)}
+                  className="rounded-md border border-red-200 px-3 py-1.5 text-xs font-medium text-red-600 transition hover:bg-red-100"
+                >
+                  Xóa
+                </button>
+              </div>
+            ),
+          }}
+        />
         <p className="text-xs text-zinc-500">
           Các thay đổi quan trọng cần ghi nhận log để đảm bảo truy vết an toàn.
         </p>

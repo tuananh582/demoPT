@@ -10,22 +10,31 @@
 - **AC2.2**: Cho phép tạo học viên mới với dữ liệu bắt buộc (họ tên, email, số điện thoại, gói tập).
 - **AC2.3**: Hệ thống lưu lại lịch sử tiến độ với dấu thời gian.
 - **AC2.4**: Khi xóa học viên, hệ thống yêu cầu xác nhận và lưu trạng thái vô hiệu hóa.
+- **AC2.5**: Form học viên sử dụng menu chọn gói tập lấy từ danh mục gói hiện có.
 
 ## Epic 3: Quản lý huấn luyện viên
 - **AC3.1**: Danh sách coach hiển thị lịch làm việc trong tuần hiện tại.
 - **AC3.2**: Cho phép tạo mới coach với các trường: họ tên, email, chuyên môn, khung giờ làm việc.
 - **AC3.3**: Phân quyền coach truy cập trang coach ngay khi tài khoản được kích hoạt.
+- **AC3.4**: Chuyên môn coach được chọn từ danh sách chuẩn hóa và có thể chỉnh sửa/xóa coach.
 
 ## Epic 4: Quản lý nội dung đào tạo
 - **AC4.1**: Admin có thể tạo bài tập với nhóm bài tập, tên, link youtube hợp lệ.
 - **AC4.2**: Program bao gồm danh sách bài tập và meal plan liên kết.
 - **AC4.3**: Feedback được gắn với học viên và buổi tập cụ thể.
+- **AC4.4**: Admin có thể chỉnh sửa/xóa bài tập khỏi thư viện.
 
 ## Epic 5: Lịch và lớp online
 - **AC5.1**: Admin tạo buổi học với thời gian, địa điểm (offline/online), coach, học viên/gói.
 - **AC5.2**: Với lớp online, link Meet/Zoom phải hiển thị trong lịch của admin và coach.
 - **AC5.3**: Thông báo gửi cho coach và học viên trong vòng 5 phút sau khi tạo hoặc thay đổi lịch.
 - **AC5.4**: Lịch 1-1 yêu cầu coach xác nhận trước khi chuyển sang trạng thái "đã xác nhận".
+- **AC5.5**: Công cụ sắp xếp lịch cho phép di chuyển thứ tự và cập nhật thời gian/link buổi học.
+
+## Epic 7: Marketing phòng PT
+- **AC7.1**: Admin chỉnh sửa được tiêu đề, đoạn mô tả và hình ảnh chính của landing page.
+- **AC7.2**: Admin quản lý được danh sách gói nổi bật, bao gồm tên, giá hiển thị và mô tả ngắn.
+- **AC7.3**: Trước khi lưu, hệ thống hiển thị bản xem trước nội dung marketing.
 
 ## Epic 6: Trang coach
 - **AC6.1**: Dashboard coach hiển thị tổng số học viên lead/trial/active.

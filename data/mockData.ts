@@ -13,6 +13,7 @@ export const adminNavItems: NavItem[] = [
   { label: "Gói tập", href: "/admin/packages" },
   { label: "Danh mục", href: "/admin/catalog" },
   { label: "Bài tập", href: "/admin/lessons" },
+  { label: "Marketing PT", href: "/admin/marketing" },
   { label: "Lịch học", href: "/admin/schedule" },
 ];
 

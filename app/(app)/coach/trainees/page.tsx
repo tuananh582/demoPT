@@ -2,7 +2,11 @@
 
 import { useMemo, useState } from "react";
 import { SectionCard } from "@/components/ui/SectionCard";
-import { coachTrainees } from "@/data/mockData";
+import {
+  coachTrainees,
+  traineeMealPlans,
+  traineeMeasurements,
+} from "@/data/mockData";
 
 const statusFilters = [
   { value: "all", label: "Tất cả" },
@@ -23,6 +27,9 @@ export default function CoachTraineesPage() {
     }
     return coachTrainees.filter((trainee) => trainee.status === filter);
   }, [filter]);
+
+  const mealPlan = traineeMealPlans[selectedTrainee.name];
+  const measurements = traineeMeasurements[selectedTrainee.name] ?? [];
 
   return (
     <div className="space-y-8">
@@ -91,6 +98,86 @@ export default function CoachTraineesPage() {
             <button className="w-full rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-100 dark:border-zinc-600 dark:text-zinc-200 dark:hover:bg-zinc-800">
               Cập nhật ghi chú
             </button>
+            <div className="space-y-3 rounded-lg bg-zinc-50 p-4 text-sm text-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-200">
+              <div className="flex items-baseline justify-between gap-3">
+                <p className="font-semibold">Thực đơn tuần</p>
+                <span className="text-xs text-zinc-500 dark:text-zinc-400">
+                  {mealPlan ? mealPlan.weekRange : "Chưa có"}
+                </span>
+              </div>
+              {mealPlan ? (
+                <div className="space-y-3">
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400">
+                    {mealPlan.hydrationNote}
+                  </p>
+                  <div className="space-y-2">
+                    {mealPlan.days.map((day) => (
+                      <div
+                        key={`${selectedTrainee.name}-${day.day}`}
+                        className="rounded-md border border-zinc-200 bg-white p-3 text-xs leading-relaxed dark:border-zinc-700 dark:bg-zinc-900/60"
+                      >
+                        <p className="font-semibold text-zinc-900 dark:text-zinc-100">{day.day}</p>
+                        <p className="mt-1 text-zinc-600 dark:text-zinc-300">
+                          <span className="font-medium">Sáng:</span> {day.meals.breakfast}
+                        </p>
+                        <p className="text-zinc-600 dark:text-zinc-300">
+                          <span className="font-medium">Trưa:</span> {day.meals.lunch}
+                        </p>
+                        <p className="text-zinc-600 dark:text-zinc-300">
+                          <span className="font-medium">Tối:</span> {day.meals.dinner}
+                        </p>
+                        {day.meals.snack ? (
+                          <p className="text-zinc-600 dark:text-zinc-300">
+                            <span className="font-medium">Phụ:</span> {day.meals.snack}
+                          </p>
+                        ) : null}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <p className="text-xs italic text-zinc-500 dark:text-zinc-400">
+                  Chưa có meal plan, hãy tạo mới để học viên theo dõi.
+                </p>
+              )}
+            </div>
+            <div className="space-y-3 rounded-lg bg-zinc-50 p-4 text-sm text-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-200">
+              <div className="flex items-baseline justify-between gap-3">
+                <p className="font-semibold">Lịch sử đo chỉ số</p>
+                <span className="text-xs text-zinc-500 dark:text-zinc-400">
+                  {measurements.length > 0 ? `${measurements.length} lần ghi nhận` : "Chưa có"}
+                </span>
+              </div>
+              {measurements.length > 0 ? (
+                <div className="space-y-2">
+                  <div className="grid grid-cols-[1.3fr_1fr_1fr_1fr] gap-2 rounded-md bg-white px-3 py-2 text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:bg-zinc-900/60 dark:text-zinc-400">
+                    <span>Buổi tập</span>
+                    <span>Cân nặng</span>
+                    <span>Body fat</span>
+                    <span>Muscle</span>
+                  </div>
+                  {measurements.map((entry) => (
+                    <div
+                      key={`${selectedTrainee.name}-${entry.session}`}
+                      className="grid grid-cols-[1.3fr_1fr_1fr_1fr] gap-2 rounded-md border border-zinc-200 bg-white px-3 py-2 text-xs text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900/60 dark:text-zinc-300"
+                    >
+                      <div>
+                        <p className="font-medium text-zinc-900 dark:text-zinc-100">{entry.session}</p>
+                        <p className="text-[11px] text-zinc-500 dark:text-zinc-400">{entry.recordedAt}</p>
+                        <p className="mt-1 text-[11px] text-zinc-500 dark:text-zinc-400">{entry.note}</p>
+                      </div>
+                      <span>{entry.weight}</span>
+                      <span>{entry.bodyFat}</span>
+                      <span>{entry.muscleMass}</span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-xs italic text-zinc-500 dark:text-zinc-400">
+                  Chưa có lần đo nào, hãy cập nhật sau buổi tập đầu tiên.
+                </p>
+              )}
+            </div>
           </div>
         </div>
       </SectionCard>

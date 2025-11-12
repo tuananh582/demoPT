@@ -10,11 +10,14 @@
 - **AC2.2**: Cho phép tạo học viên mới với dữ liệu bắt buộc (họ tên, email, số điện thoại, gói tập).
 - **AC2.3**: Hệ thống lưu lại lịch sử tiến độ với dấu thời gian.
 - **AC2.4**: Khi xóa học viên, hệ thống yêu cầu xác nhận và lưu trạng thái vô hiệu hóa.
+- **AC2.5**: Cho phép tạo và gán thực đơn (meal plan) theo tuần cho từng học viên, hiển thị rõ bữa sáng/trưa/tối.
+- **AC2.6**: Trang chi tiết học viên hiển thị biểu đồ và bảng lịch sử đo chỉ số cho từng buổi tập.
 
 ## Epic 3: Quản lý huấn luyện viên
 - **AC3.1**: Danh sách coach hiển thị lịch làm việc trong tuần hiện tại.
 - **AC3.2**: Cho phép tạo mới coach với các trường: họ tên, email, chuyên môn, khung giờ làm việc.
 - **AC3.3**: Phân quyền coach truy cập trang coach ngay khi tài khoản được kích hoạt.
+- **AC3.4**: Dashboard coach/admin hiển thị tổng số buổi coach đã thực hiện trong tuần kèm chi tiết từng buổi.
 
 ## Epic 4: Quản lý nội dung đào tạo
 - **AC4.1**: Admin có thể tạo bài tập với nhóm bài tập, tên, link youtube hợp lệ.

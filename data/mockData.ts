@@ -247,6 +247,138 @@ export const coachTrainees = [
   },
 ];
 
+export interface MealPlanDay {
+  day: string;
+  meals: {
+    breakfast: string;
+    lunch: string;
+    dinner: string;
+    snack?: string;
+  };
+}
+
+export interface TraineeMealPlan {
+  trainee: string;
+  weekRange: string;
+  hydrationNote: string;
+  days: MealPlanDay[];
+}
+
+export const traineeMealPlans: Record<string, TraineeMealPlan> = {
+  "Gia Han": {
+    trainee: "Gia Han",
+    weekRange: "03/06 - 09/06",
+    hydrationNote: "Uống tối thiểu 2.5L nước/ngày, bổ sung điện giải sau buổi cardio.",
+    days: [
+      {
+        day: "Thứ 2",
+        meals: {
+          breakfast: "Yến mạch + whey + việt quất",
+          lunch: "Ức gà áp chảo + khoai lang + salad",
+          dinner: "Cá hồi nướng + quinoa + rau củ hấp",
+          snack: "Sữa chua Hy Lạp + hạt óc chó",
+        },
+      },
+      {
+        day: "Thứ 3",
+        meals: {
+          breakfast: "Bánh mì nguyên cám + trứng luộc",
+          lunch: "Bò bít tết + cơm gạo lứt + rau bina",
+          dinner: "Tôm áp chảo + miến đậu xanh + bông cải",
+        },
+      },
+      {
+        day: "Thứ 4",
+        meals: {
+          breakfast: "Smoothie xoài + đạm đậu nành",
+          lunch: "Cá thu kho + cơm gạo lứt + canh rau củ",
+          dinner: "Ức gà xé + bún gạo lứt + rau sống",
+        },
+      },
+    ],
+  },
+  "Quang Huy": {
+    trainee: "Quang Huy",
+    weekRange: "03/06 - 09/06",
+    hydrationNote: "Giảm đồ ngọt, ưu tiên nước lọc 2L/ngày.",
+    days: [
+      {
+        day: "Thứ 2",
+        meals: {
+          breakfast: "Trứng ốp + bánh mì đen",
+          lunch: "Cá basa sốt cà + cơm gạo lứt",
+          dinner: "Ức gà áp chảo + salad rau xanh",
+        },
+      },
+      {
+        day: "Thứ 3",
+        meals: {
+          breakfast: "Phở gà ít bánh",
+          lunch: "Thịt nạc thăn + khoai lang + cải xanh",
+          dinner: "Trứng hấp + đậu bắp luộc",
+          snack: "Táo + bơ đậu phộng",
+        },
+      },
+    ],
+  },
+  "Linh Chi": {
+    trainee: "Linh Chi",
+    weekRange: "Đang khảo sát khẩu vị",
+    hydrationNote: "Gợi ý các lựa chọn healthy để thử nghiệm tuần tới.",
+    days: [
+      {
+        day: "Gợi ý",
+        meals: {
+          breakfast: "Sinh tố chuối + yến mạch",
+          lunch: "Salad cá ngừ + trứng luộc",
+          dinner: "Ức gà quay + khoai tây nghiền",
+        },
+      },
+    ],
+  },
+};
+
+export interface MeasurementEntry {
+  session: string;
+  recordedAt: string;
+  weight: string;
+  bodyFat: string;
+  muscleMass: string;
+  note: string;
+}
+
+export const traineeMeasurements: Record<string, MeasurementEntry[]> = {
+  "Gia Han": [
+    {
+      session: "PT 1-1 - 15/05",
+      recordedAt: "15/05/2024 08:45",
+      weight: "60.8 kg",
+      bodyFat: "22.5%",
+      muscleMass: "24.1 kg",
+      note: "Kỹ thuật squat cải thiện, duy trì lịch chạy 2 lần/tuần.",
+    },
+    {
+      session: "PT 1-1 - 01/06",
+      recordedAt: "01/06/2024 08:40",
+      weight: "59.7 kg",
+      bodyFat: "21%",
+      muscleMass: "24.6 kg",
+      note: "Tuân thủ meal plan tốt, cần ngủ đủ 7 tiếng.",
+    },
+  ],
+  "Quang Huy": [
+    {
+      session: "Check-in online - 25/05",
+      recordedAt: "25/05/2024 19:15",
+      weight: "74.2 kg",
+      bodyFat: "26.8%",
+      muscleMass: "29.5 kg",
+      note: "Thiếu 1 buổi cardio, nhắc bổ sung rau xanh.",
+    },
+  ],
+  "Linh Chi": [],
+};
+
 export const progressSnapshots = [
   {
     date: "01/05",
@@ -288,6 +420,70 @@ export const coachSchedule = [
     link: "https://meet.google.com/abc-defg-hij",
   },
 ];
+
+export interface CoachWeeklySummary {
+  weekRange: string;
+  totalSessions: number;
+  completedSessions: number;
+  cancelledSessions: number;
+  sessions: Array<{
+    day: string;
+    time: string;
+    title: string;
+    status: string;
+  }>;
+}
+
+export const coachWeeklySummary: CoachWeeklySummary = {
+  weekRange: "03/06 - 09/06",
+  totalSessions: 11,
+  completedSessions: 6,
+  cancelledSessions: 1,
+  sessions: [
+    {
+      day: "Thứ 2",
+      time: "07:00 - 08:00",
+      title: "PT 1-1 - Minh Anh",
+      status: "Đã hoàn thành",
+    },
+    {
+      day: "Thứ 3",
+      time: "07:30 - 08:30",
+      title: "PT 1-1 - Gia Han",
+      status: "Chờ xác nhận",
+    },
+    {
+      day: "Thứ 3",
+      time: "18:00 - 19:00",
+      title: "HIIT nhóm",
+      status: "Đã hoàn thành",
+    },
+    {
+      day: "Thứ 4",
+      time: "09:00 - 09:45",
+      title: "Check-in online - Quang Huy",
+      status: "Online",
+    },
+    {
+      day: "Thứ 5",
+      time: "19:30 - 20:30",
+      title: "Functional nhóm",
+      status: "Đã hoàn thành",
+    },
+    {
+      day: "Thứ 6",
+      time: "20:00 - 21:00",
+      title: "Workshop dinh dưỡng",
+      status: "Đã hoàn thành",
+    },
+    {
+      day: "Thứ 7",
+      time: "08:00 - 09:00",
+      title: "PT 1-1 - Tuan Kiet",
+      status: "Đã hủy",
+    },
+  ],
+};
 
 export const coachNotifications = [
   {

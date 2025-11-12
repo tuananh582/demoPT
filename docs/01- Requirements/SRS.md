@@ -45,10 +45,13 @@ Hệ thống web cho phép quản lý doanh thu, học viên, huấn luyện vi�
    - Admin cập nhật thông tin cá nhân, tiến độ hiện tại và lịch sử.
    - Admin xóa hoặc vô hiệu hóa học viên.
    - Hệ thống lưu trữ lịch sử tiến độ gồm: cân nặng, số đo, buổi tập hoàn thành.
+   - Admin tạo và gán thực đơn theo tuần, bao gồm mô tả từng bữa ăn mỗi ngày.
+   - Trang chi tiết học viên hiển thị biểu đồ và bảng lịch sử đo chỉ số theo từng buổi tập.
 3. **Quản lý huấn luyện viên**
    - Admin xem danh sách huấn luyện viên với lịch làm việc.
    - Admin tạo mới, cập nhật, vô hiệu hóa huấn luyện viên.
    - Hệ thống hiển thị lịch phân công lớp nhóm và 1-1.
+   - Dashboard thống kê tổng số buổi mỗi coach đã thực hiện trong tuần hiện tại.
 4. **Quản lý tài khoản và phân quyền**
    - Admin tạo tài khoản đăng nhập cho học viên.
    - Admin gán quyền coach (truy cập trang coach) cho huấn luyện viên.
@@ -77,9 +80,11 @@ Hệ thống web cho phép quản lý doanh thu, học viên, huấn luyện vi�
 4. **Theo dõi chỉ số và tiến trình**
    - Trang Học viên hiển thị biểu đồ tiến độ của học viên theo thời gian (cân nặng, số đo, attendance).
    - Coach ghi chú buổi tập, phản hồi từ học viên.
+   - Coach truy cập lịch sử đo chỉ số theo từng buổi tập dưới dạng bảng chi tiết.
 5. **Quản lý lịch làm việc**
    - Trang Lịch làm việc hiển thị lịch cá nhân (lớp nhóm, 1-1) và các link họp online tương ứng.
    - Coach xác nhận yêu cầu đặt lịch 1-1 từ học viên.
+   - Coach xem tổng số buổi đã hoàn thành trong tuần kèm danh sách buổi chi tiết.
 6. **Quản lý chương trình huấn luyện**
    - Trang Chương trình cho phép coach quản lý meal plan, program và tài liệu liên quan.
 7. **Thông báo**

@@ -47,6 +47,14 @@
   2. Tạo hoặc cập nhật nội dung (ví dụ bài tập gồm nhóm, tên, link youtube).
   3. Hệ thống lưu và hiển thị danh sách cập nhật.
 
+## UC-ADM-07: Lên thực đơn cho học viên
+- **Tác nhân chính**: Admin/Coach
+- **Mục tiêu**: Tạo meal plan theo tuần cho học viên.
+- **Luồng chính**:
+  1. Admin/Coach mở hồ sơ học viên.
+  2. Chọn tuần áp dụng và nhập bữa sáng/trưa/tối từng ngày.
+  3. Hệ thống lưu meal plan và hiển thị cho học viên.
+
 ## UC-ADM-06: Tạo lịch lớp online
 - **Tác nhân chính**: Admin
 - **Mục tiêu**: Tạo lịch với link Google Meet/Zoom.
@@ -77,6 +85,7 @@
   1. Coach chọn học viên.
   2. Xem biểu đồ chỉ số, tiến trình.
   3. Thêm ghi chú, phản hồi.
+  4. Mở bảng lịch sử đo chỉ số theo từng buổi tập.
 
 ## UC-COA-04: Quản lý lịch làm việc
 - **Tác nhân chính**: Coach
@@ -84,6 +93,14 @@
   1. Coach xem lịch cá nhân.
   2. Nhấp vào buổi học để xem chi tiết và link online.
   3. Xác nhận yêu cầu 1-1 nếu có.
+
+## UC-COA-06: Xem tổng số buổi đã dạy trong tuần
+- **Tác nhân chính**: Coach/Admin
+- **Mục tiêu**: Nắm số lượng buổi huấn luyện trong tuần hiện tại.
+- **Luồng chính**:
+  1. Người dùng mở dashboard lịch.
+  2. Hệ thống tính và hiển thị tổng số buổi đã hoàn thành theo coach.
+  3. Người dùng nhấp vào từng coach để xem danh sách buổi chi tiết.
 
 ## UC-COA-05: Nhận thông báo
 - **Tác nhân chính**: Coach

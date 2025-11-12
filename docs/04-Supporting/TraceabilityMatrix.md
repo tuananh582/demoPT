@@ -8,3 +8,6 @@
 | BRD-04 | Quản lý nội dung bài tập, meal, program | SRS 3.1.6/3.1.7 | UC-ADM-05 | TC-CONTENT-01..06 |
 | BRD-05 | Lớp online và thông báo | SRS 3.1.8, 3.2.4, 3.2.5 | UC-ADM-06, UC-COA-04/05 | TC-SCHEDULE-01..06 |
 | BRD-06 | Coach cá nhân hóa chương trình | SRS 3.2.2/3.2.3 | UC-COA-02/03 | TC-PROGRESS-01..04 |
+| BRD-07 | Meal plan chi tiết cho học viên | SRS 3.1.2, 3.2.3 | UC-ADM-07 | TC-MEAL-01..03 |
+| BRD-08 | Lịch sử đo chỉ số theo buổi | SRS 3.1.2, 3.2.4 | UC-COA-03 | TC-PROGRESS-05..07 |
+| BRD-09 | Thống kê số buổi làm việc của coach | SRS 3.1.3, 3.2.5 | UC-COA-06 | TC-SCHEDULE-07..09 |

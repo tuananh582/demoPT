@@ -15,10 +15,10 @@ interface DataTableProps<T extends Record<string, unknown>> {
 
 export function DataTable<T extends Record<string, unknown>>({ columns, data, renderCell }: DataTableProps<T>) {
   return (
-    <div className="overflow-hidden rounded-2xl border border-zinc-200 dark:border-zinc-800">
+    <div className="overflow-hidden rounded-lg border border-zinc-200">
       <div className="max-h-[360px] overflow-auto">
-        <table className="min-w-full divide-y divide-zinc-200 text-left text-sm dark:divide-zinc-800">
-          <thead className="bg-zinc-50 text-xs uppercase tracking-wide text-zinc-500 dark:bg-zinc-800/60 dark:text-zinc-400">
+        <table className="min-w-full divide-y divide-zinc-200 text-left text-sm">
+          <thead className="bg-zinc-50 text-xs uppercase tracking-wide text-zinc-500">
             <tr>
               {columns.map((column) => (
                 <th key={String(column.key)} scope="col" className="px-4 py-3 font-semibold">
@@ -27,11 +27,11 @@ export function DataTable<T extends Record<string, unknown>>({ columns, data, re
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-zinc-200 bg-white dark:divide-zinc-800 dark:bg-zinc-900">
+          <tbody className="divide-y divide-zinc-200 bg-white">
             {data.map((row, index) => (
-              <tr key={index} className="transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800/80">
+              <tr key={index} className="transition-colors hover:bg-zinc-50">
                 {columns.map((column) => (
-                  <td key={String(column.key)} className="px-4 py-3 text-zinc-700 dark:text-zinc-200">
+                  <td key={String(column.key)} className="px-4 py-3 text-zinc-700">
                     {renderCell ? renderCell(column.key, row[column.key], row) : (row[column.key] as ReactNode)}
                   </td>
                 ))}
@@ -39,7 +39,7 @@ export function DataTable<T extends Record<string, unknown>>({ columns, data, re
             ))}
             {data.length === 0 ? (
               <tr>
-                <td colSpan={columns.length} className="px-4 py-6 text-center text-zinc-500 dark:text-zinc-400">
+                <td colSpan={columns.length} className="px-4 py-6 text-center text-zinc-500">
                   Không có dữ liệu
                 </td>
               </tr>

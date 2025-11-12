@@ -3,24 +3,25 @@ import { UserRole } from "@/context/AuthContext";
 export type NavItem = {
   label: string;
   href: string;
-  icon: string;
 };
 
 export const adminNavItems: NavItem[] = [
-  { label: "Tổng quan", href: "#dashboard", icon: "📊" },
-  { label: "Học viên", href: "#trainees", icon: "🧑‍🎓" },
-  { label: "Huấn luyện viên", href: "#coaches", icon: "🏋️" },
-  { label: "Gói tập", href: "#packages", icon: "🎯" },
-  { label: "Nội dung", href: "#content", icon: "📚" },
-  { label: "Lịch học", href: "#schedule", icon: "🗓️" },
+  { label: "Tổng quan", href: "/admin/dashboard" },
+  { label: "Học viên", href: "/admin/trainees" },
+  { label: "Huấn luyện viên", href: "/admin/coaches" },
+  { label: "Tài khoản", href: "/admin/accounts" },
+  { label: "Gói tập", href: "/admin/packages" },
+  { label: "Danh mục", href: "/admin/catalog" },
+  { label: "Bài tập", href: "/admin/lessons" },
+  { label: "Lịch học", href: "/admin/schedule" },
 ];
 
 export const coachNavItems: NavItem[] = [
-  { label: "Tổng quan", href: "#coach-dashboard", icon: "📊" },
-  { label: "Học viên", href: "#coach-trainees", icon: "🧑‍🎓" },
-  { label: "Tiến trình", href: "#progress", icon: "📈" },
-  { label: "Lịch", href: "#coach-schedule", icon: "🗓️" },
-  { label: "Thông báo", href: "#notifications", icon: "🔔" },
+  { label: "Tổng quan", href: "#coach-dashboard" },
+  { label: "Học viên", href: "#coach-trainees" },
+  { label: "Tiến trình", href: "#progress" },
+  { label: "Lịch", href: "#coach-schedule" },
+  { label: "Thông báo", href: "#notifications" },
 ];
 
 export const revenueSummary = {
@@ -125,6 +126,33 @@ export const coachRecords: CoachRecord[] = [
     email: "phong.thanh@example.com",
     specialization: "Functional Training",
     availability: "Thứ 2-6 (7:00 - 17:00)",
+  },
+];
+
+export const accountRecords = [
+  {
+    name: "Phuong Anh",
+    email: "phuong.anh@example.com",
+    role: "Học viên",
+    status: "Hoạt động",
+  },
+  {
+    name: "Quang Huy",
+    email: "quang.huy@example.com",
+    role: "Học viên",
+    status: "Dùng thử",
+  },
+  {
+    name: "Minh Tran",
+    email: "coach@gymflow.vn",
+    role: "Coach",
+    status: "Hoạt động",
+  },
+  {
+    name: "Thao Nguyen",
+    email: "thao.nguyen@example.com",
+    role: "Admin",
+    status: "Hoạt động",
   },
 ];
 

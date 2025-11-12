@@ -35,32 +35,32 @@ Hệ thống web cho phép quản lý doanh thu, học viên, huấn luyện vi�
 
 ## 3. Yêu cầu chức năng
 ### 3.1 Trang admin
-1. **Dashboard doanh thu**
+1. **Dashboard doanh thu** (trang `/admin/dashboard`)
    - Hệ thống hiển thị biểu đồ so sánh doanh thu theo tuần/tháng/năm.
    - Admin chọn khoảng thời gian để lọc doanh thu.
    - Dữ liệu hiển thị theo ngày, tháng, năm.
-2. **Quản lý học viên**
+2. **Quản lý học viên** (trang `/admin/trainees`)
    - Admin xem danh sách học viên với các trường: họ tên, email, số điện thoại, trạng thái, gói tập.
    - Admin tạo mới học viên và gán gói tập (nhóm/1-1).
    - Admin cập nhật thông tin cá nhân, tiến độ hiện tại và lịch sử.
    - Admin xóa hoặc vô hiệu hóa học viên.
    - Hệ thống lưu trữ lịch sử tiến độ gồm: cân nặng, số đo, buổi tập hoàn thành.
-3. **Quản lý huấn luyện viên**
+3. **Quản lý huấn luyện viên** (trang `/admin/coaches`)
    - Admin xem danh sách huấn luyện viên với lịch làm việc.
    - Admin tạo mới, cập nhật, vô hiệu hóa huấn luyện viên.
    - Hệ thống hiển thị lịch phân công lớp nhóm và 1-1.
-4. **Quản lý tài khoản và phân quyền**
+4. **Quản lý tài khoản và phân quyền** (trang `/admin/accounts`)
    - Admin tạo tài khoản đăng nhập cho học viên.
    - Admin gán quyền coach (truy cập trang coach) cho huấn luyện viên.
-5. **Quản lý gói tập**
+5. **Quản lý gói tập** (trang `/admin/packages`)
    - Admin tạo, sửa, xóa gói tập (nhóm, 1-1) với thông tin: tên, mô tả, thời lượng, giá.
-6. **Quản lý dữ liệu danh mục**
+6. **Quản lý dữ liệu danh mục** (trang `/admin/catalog`)
    - CRUD thực phẩm với thông tin dinh dưỡng.
    - CRUD meals, meal mẫu, chương trình luyện tập (program), bài tập, feedback.
-7. **Quản lý bài tập (lessons)**
+7. **Quản lý bài tập (lessons)** (trang `/admin/lessons`)
    - Admin thêm bài tập với trường: nhóm bài tập, tên, link youtube demo, mô tả.
    - Cho phép gắn bài tập vào program hoặc lesson plan.
-8. **Quản lý lớp online**
+8. **Quản lý lớp online** (trang `/admin/schedule`)
    - Admin tạo lịch lớp với link Google Meet/Zoom.
    - Lịch đồng bộ với huấn luyện viên liên quan.
 
@@ -88,7 +88,7 @@ Hệ thống web cho phép quản lý doanh thu, học viên, huấn luyện vi�
 - **Khả năng bảo trì**: Mã nguồn tuân theo chuẩn clean architecture.
 
 ## 5. Yêu cầu giao diện
-- Sử dụng theme màu chuyên nghiệp, dashboard trực quan.
+- Sử dụng theme trắng đen tối giản, không dùng icon trang trí dư thừa; bố cục dashboard rõ ràng với menu điều hướng sang từng trang chức năng riêng biệt.
 - Bảng dữ liệu hỗ trợ tìm kiếm, phân trang, lọc.
 - Lịch hỗ trợ xem dạng tuần/tháng và hiển thị link họp.
 

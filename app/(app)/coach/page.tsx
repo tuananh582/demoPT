@@ -35,18 +35,19 @@ export default function CoachPage() {
 
   return (
     <AppShell title="Không gian Coach" navItems={coachNavItems} roleGuard="coach">
-      <div id="coach-dashboard" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard label="Tổng học viên" value={coachDashboardStats.total} description="Lead + Trial + Active" variant="accent" />
-        <StatCard label="Lead" value={coachDashboardStats.lead} description="Cần tư vấn chiến lược" />
-        <StatCard label="Trial" value={coachDashboardStats.trial} description="Theo sát 2 tuần đầu" />
-        <StatCard label="Active" value={coachDashboardStats.active} description="Đang theo chương trình chính" />
-      </div>
+      <div className="space-y-8">
+        <div id="coach-dashboard" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <StatCard label="Tổng học viên" value={coachDashboardStats.total} description="Lead + Trial + Active" variant="accent" />
+          <StatCard label="Lead" value={coachDashboardStats.lead} description="Cần tư vấn chiến lược" />
+          <StatCard label="Trial" value={coachDashboardStats.trial} description="Theo sát 2 tuần đầu" />
+          <StatCard label="Active" value={coachDashboardStats.active} description="Đang theo chương trình chính" />
+        </div>
 
-      <SectionCard
-        id="coach-trainees"
-        title="Học viên phụ trách"
-        description="Chọn học viên để xem mục tiêu, chương trình và buổi kế tiếp."
-        actions={
+        <SectionCard
+          id="coach-trainees"
+          title="Học viên phụ trách"
+          description="Chọn học viên để xem mục tiêu, chương trình và buổi kế tiếp."
+          actions={
           <div className="inline-flex gap-2 rounded-2xl bg-zinc-100 p-1 text-xs dark:bg-zinc-800">
             {statusFilters.map((item) => (
               <button
@@ -127,13 +128,13 @@ export default function CoachPage() {
             </button>
           </div>
         </div>
-      </SectionCard>
+        </SectionCard>
 
-      <SectionCard
-        id="progress"
-        title="Tiến trình học viên"
-        description="Theo dõi thay đổi cân nặng, % mỡ và ghi chú huấn luyện."
-      >
+        <SectionCard
+          id="progress"
+          title="Tiến trình học viên"
+          description="Theo dõi thay đổi cân nặng, % mỡ và ghi chú huấn luyện."
+        >
         <div className="grid gap-6 lg:grid-cols-2">
           <div className="space-y-4 rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-950/40">
             <h3 className="text-sm font-semibold uppercase tracking-wide text-indigo-500">Cập nhật gần nhất</h3>
@@ -165,13 +166,13 @@ export default function CoachPage() {
             </div>
           </div>
         </div>
-      </SectionCard>
+        </SectionCard>
 
-      <SectionCard
-        id="coach-schedule"
-        title="Lịch làm việc"
-        description="Các buổi trong 3 ngày tới, phân loại trạng thái và link họp."
-      >
+        <SectionCard
+          id="coach-schedule"
+          title="Lịch làm việc"
+          description="Các buổi trong 3 ngày tới, phân loại trạng thái và link họp."
+        >
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {coachSchedule.map((slot) => (
             <div
@@ -195,13 +196,13 @@ export default function CoachPage() {
             </div>
           ))}
         </div>
-      </SectionCard>
+        </SectionCard>
 
-      <SectionCard
-        id="notifications"
-        title="Thông báo"
-        description="Tổng hợp sự kiện lịch, feedback và hành động cần xử lý."
-      >
+        <SectionCard
+          id="notifications"
+          title="Thông báo"
+          description="Tổng hợp sự kiện lịch, feedback và hành động cần xử lý."
+        >
         <ul className="space-y-3 text-sm text-zinc-600 dark:text-zinc-300">
           {coachNotifications.map((notification) => (
             <li key={notification.title} className="rounded-2xl border border-zinc-200 bg-white/70 p-4 dark:border-zinc-700 dark:bg-zinc-900/60">
@@ -216,7 +217,8 @@ export default function CoachPage() {
             </li>
           ))}
         </ul>
-      </SectionCard>
+        </SectionCard>
+      </div>
     </AppShell>
   );
 }

@@ -14,7 +14,7 @@ export function SectionCard({ id, title, description, actions, children }: Secti
   return (
     <section
       id={id}
-      className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+      className="rounded-xl border border-zinc-200 bg-white p-6 dark:border-zinc-700 dark:bg-zinc-900"
     >
       <header className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
         <div>

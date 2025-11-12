@@ -3,24 +3,23 @@ import { UserRole } from "@/context/AuthContext";
 export type NavItem = {
   label: string;
   href: string;
-  icon: string;
 };
 
 export const adminNavItems: NavItem[] = [
-  { label: "Tổng quan", href: "#dashboard", icon: "📊" },
-  { label: "Học viên", href: "#trainees", icon: "🧑‍🎓" },
-  { label: "Huấn luyện viên", href: "#coaches", icon: "🏋️" },
-  { label: "Gói tập", href: "#packages", icon: "🎯" },
-  { label: "Nội dung", href: "#content", icon: "📚" },
-  { label: "Lịch học", href: "#schedule", icon: "🗓️" },
+  { label: "Tổng quan", href: "#dashboard" },
+  { label: "Học viên", href: "#trainees" },
+  { label: "Huấn luyện viên", href: "#coaches" },
+  { label: "Gói tập", href: "#packages" },
+  { label: "Nội dung", href: "#content" },
+  { label: "Lịch học", href: "#schedule" },
 ];
 
 export const coachNavItems: NavItem[] = [
-  { label: "Tổng quan", href: "#coach-dashboard", icon: "📊" },
-  { label: "Học viên", href: "#coach-trainees", icon: "🧑‍🎓" },
-  { label: "Tiến trình", href: "#progress", icon: "📈" },
-  { label: "Lịch", href: "#coach-schedule", icon: "🗓️" },
-  { label: "Thông báo", href: "#notifications", icon: "🔔" },
+  { label: "Tổng quan", href: "/coach" },
+  { label: "Học viên", href: "/coach/trainees" },
+  { label: "Tiến trình", href: "/coach/progress" },
+  { label: "Lịch làm việc", href: "/coach/schedule" },
+  { label: "Thông báo", href: "/coach/notifications" },
 ];
 
 export const revenueSummary = {

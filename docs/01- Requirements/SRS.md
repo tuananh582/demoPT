@@ -65,20 +65,25 @@ Hệ thống web cho phép quản lý doanh thu, học viên, huấn luyện vi�
    - Lịch đồng bộ với huấn luyện viên liên quan.
 
 ### 3.2 Trang coach
-1. **Dashboard học viên**
-   - Hiển thị danh sách học viên gán cho coach với trạng thái lead/trial/active.
-   - Cho phép lọc theo trạng thái.
-2. **Thiết lập mục tiêu & chương trình cá nhân**
-   - Coach nhập mục tiêu (giảm cân, tăng cơ...), thời hạn.
+1. **Điều hướng đa trang**
+   - Menu coach gồm các mục: Tổng quan, Học viên, Lịch làm việc, Chương trình, Thông báo.
+   - Khi coach chọn một mục, hệ thống điều hướng sang route riêng thay vì hiển thị tất cả nội dung trong một trang cuộn dài.
+2. **Dashboard học viên**
+   - Trang Tổng quan hiển thị số lượng học viên theo trạng thái lead/trial/active và các chỉ số quan trọng.
+   - Cho phép lọc theo trạng thái và truy cập nhanh đến chi tiết học viên.
+3. **Thiết lập mục tiêu & chương trình cá nhân**
+   - Trang Học viên cho phép coach nhập mục tiêu (giảm cân, tăng cơ...), thời hạn.
    - Coach xây dựng meal plan, program từ danh mục có sẵn hoặc tùy chỉnh.
-3. **Theo dõi chỉ số và tiến trình**
-   - Coach xem biểu đồ tiến độ của học viên theo thời gian (cân nặng, số đo, attendance).
+4. **Theo dõi chỉ số và tiến trình**
+   - Trang Học viên hiển thị biểu đồ tiến độ của học viên theo thời gian (cân nặng, số đo, attendance).
    - Coach ghi chú buổi tập, phản hồi từ học viên.
-4. **Quản lý lịch làm việc**
-   - Coach xem lịch cá nhân (lớp nhóm, 1-1) và các link họp online tương ứng.
+5. **Quản lý lịch làm việc**
+   - Trang Lịch làm việc hiển thị lịch cá nhân (lớp nhóm, 1-1) và các link họp online tương ứng.
    - Coach xác nhận yêu cầu đặt lịch 1-1 từ học viên.
-5. **Thông báo**
-   - Coach nhận thông báo về lịch bị hủy, lịch sắp tới, yêu cầu đặt lịch mới.
+6. **Quản lý chương trình huấn luyện**
+   - Trang Chương trình cho phép coach quản lý meal plan, program và tài liệu liên quan.
+7. **Thông báo**
+   - Trang Thông báo hiển thị cập nhật về lịch bị hủy, lịch sắp tới, yêu cầu đặt lịch mới.
 
 ## 4. Yêu cầu phi chức năng
 - **Hiệu năng**: Dashboard tải dữ liệu trong < 3 giây với 10k bản ghi.
@@ -88,7 +93,8 @@ Hệ thống web cho phép quản lý doanh thu, học viên, huấn luyện vi�
 - **Khả năng bảo trì**: Mã nguồn tuân theo chuẩn clean architecture.
 
 ## 5. Yêu cầu giao diện
-- Sử dụng theme màu chuyên nghiệp, dashboard trực quan.
+- Giao diện coach sử dụng phong cách tối giản trắng/đen, ưu tiên typography rõ ràng, bỏ các icon trang trí không cần thiết.
+- Các trang thuộc coach dashboard cần bố cục dạng lưới hoặc cột rõ ràng, khoảng cách đủ để thao tác nhanh.
 - Bảng dữ liệu hỗ trợ tìm kiếm, phân trang, lọc.
 - Lịch hỗ trợ xem dạng tuần/tháng và hiển thị link họp.
 

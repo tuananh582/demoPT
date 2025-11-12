@@ -28,7 +28,9 @@
 - **AC5.4**: Lịch 1-1 yêu cầu coach xác nhận trước khi chuyển sang trạng thái "đã xác nhận".
 
 ## Epic 6: Trang coach
-- **AC6.1**: Dashboard coach hiển thị tổng số học viên lead/trial/active.
-- **AC6.2**: Coach cập nhật mục tiêu, meal plan và program cá nhân hóa cho từng học viên.
-- **AC6.3**: Coach ghi nhận kết quả buổi tập và phản hồi, hệ thống lưu kèm timestamp.
-- **AC6.4**: Coach nhận thông báo khi học viên hủy buổi tập.
+- **AC6.1**: Dashboard coach hiển thị tổng số học viên lead/trial/active với điều hướng riêng cho từng tác vụ (dashboard, học viên, lịch, chương trình, thông báo).
+- **AC6.2**: Khi coach chọn một mục trong menu điều hướng, hệ thống tải trang mới tương ứng thay vì cuộn trong một trang tổng hợp.
+- **AC6.3**: Giao diện coach sử dụng phong cách tối giản trắng/đen, loại bỏ icon trang trí và giữ bố cục dạng lưới/khối rõ ràng.
+- **AC6.4**: Coach cập nhật mục tiêu, meal plan và program cá nhân hóa cho từng học viên.
+- **AC6.5**: Coach ghi nhận kết quả buổi tập và phản hồi, hệ thống lưu kèm timestamp.
+- **AC6.6**: Coach nhận thông báo khi học viên hủy buổi tập.

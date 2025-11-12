@@ -10,10 +10,10 @@ interface StatCardProps {
 export function StatCard({ label, value, description, variant = "default" }: StatCardProps) {
   const isAccent = variant === "accent";
   const containerClass = isAccent
-    ? "rounded-2xl border border-transparent bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-4 text-white shadow-lg"
-    : "rounded-2xl border border-zinc-200 bg-white p-4 text-zinc-900 shadow-sm transition-colors dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100";
-  const labelClass = isAccent ? "text-sm font-medium text-white/80" : "text-sm font-medium text-zinc-500 dark:text-zinc-400";
-  const descriptionClass = isAccent ? "mt-2 text-sm text-white/90" : "mt-2 text-sm text-zinc-500 dark:text-zinc-400";
+    ? "rounded-xl border border-zinc-900 bg-zinc-900 p-4 text-white dark:border-white dark:bg-white dark:text-zinc-900"
+    : "rounded-xl border border-zinc-200 bg-white p-4 text-zinc-900 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100";
+  const labelClass = isAccent ? "text-sm font-medium text-white/70" : "text-sm font-medium text-zinc-600 dark:text-zinc-300";
+  const descriptionClass = isAccent ? "mt-2 text-sm text-white/80" : "mt-2 text-sm text-zinc-600 dark:text-zinc-300";
 
   return (
     <div className={containerClass}>

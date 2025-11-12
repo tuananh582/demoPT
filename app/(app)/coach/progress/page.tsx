@@ -3,11 +3,7 @@
 import { useMemo, useState } from "react";
 
 import { SectionCard } from "@/components/ui/SectionCard";
-import {
-  coachTrainees,
-  progressSnapshots,
-  traineeMeasurements,
-} from "@/data/mockData";
+import { coachTrainees, progressSnapshots, traineeMeasurements } from "@/data/mockData";
 
 const checklistItems = [
   "Ghi nhận RPE sau các set chính",
@@ -18,8 +14,24 @@ const checklistItems = [
 
 export default function CoachProgressPage() {
   const traineeOptions = useMemo(() => coachTrainees.map((t) => t.name), []);
-  const [selectedTrainee, setSelectedTrainee] = useState(traineeOptions[0]);
-  const measurementHistory = traineeMeasurements[selectedTrainee] ?? [];
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const measurementRows = useMemo(() => {
+    return Object.entries(traineeMeasurements).flatMap(([name, entries]) =>
+      entries.map((entry) => ({
+        trainee: name,
+        ...entry,
+      })),
+    );
+  }, []);
+
+  const filteredRows = useMemo(() => {
+    const keyword = searchTerm.trim().toLowerCase();
+    if (!keyword) {
+      return measurementRows;
+    }
+    return measurementRows.filter((row) => row.trainee.toLowerCase().includes(keyword));
+  }, [measurementRows, searchTerm]);
 
   return (
     <div className="space-y-8">
@@ -49,25 +61,20 @@ export default function CoachProgressPage() {
         title="Lịch sử đo theo buổi"
         description="Tra cứu nhanh các lần đo chỉ số đã ghi nhận."
         actions={
-          <div className="inline-flex gap-2 rounded-full border border-zinc-300 p-1 text-xs dark:border-zinc-600">
-            {traineeOptions.map((name) => (
-              <button
-                key={name}
-                type="button"
-                onClick={() => setSelectedTrainee(name)}
-                className={`rounded-full px-3 py-1 font-semibold transition ${
-                  selectedTrainee === name
-                    ? "bg-zinc-900 text-white dark:bg-white dark:text-zinc-900"
-                    : "text-zinc-600 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-800"
-                }`}
-              >
-                {name}
-              </button>
-            ))}
+          <div className="relative w-full sm:w-72">
+            <input
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
+              placeholder="Tìm theo tên học viên..."
+              className="w-full rounded-full border border-zinc-300 bg-white px-4 py-2 text-sm text-zinc-700 placeholder:text-zinc-400 focus:border-zinc-900 focus:outline-none dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-100"
+            />
+            <span className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-[11px] uppercase tracking-wide text-zinc-400">
+              {filteredRows.length}/{measurementRows.length}
+            </span>
           </div>
         }
       >
-        {measurementHistory.length > 0 ? (
+        {filteredRows.length > 0 ? (
           <div className="space-y-2">
             <div className="grid grid-cols-[1.2fr_1fr_1fr_1fr] gap-2 rounded-md bg-zinc-100 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
               <span>Buổi tập</span>
@@ -75,13 +82,16 @@ export default function CoachProgressPage() {
               <span>Body fat</span>
               <span>Muscle</span>
             </div>
-            {measurementHistory.map((entry) => (
+            {filteredRows.map((entry) => (
               <div
-                key={`${selectedTrainee}-${entry.session}`}
+                key={`${entry.trainee}-${entry.session}`}
                 className="grid grid-cols-[1.2fr_1fr_1fr_1fr] gap-2 rounded-md border border-zinc-200 bg-white px-3 py-2 text-xs text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900/60 dark:text-zinc-300"
               >
                 <div>
                   <p className="font-medium text-zinc-900 dark:text-zinc-100">{entry.session}</p>
+                  <p className="text-[11px] font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                    {entry.trainee}
+                  </p>
                   <p className="text-[11px] text-zinc-500 dark:text-zinc-400">{entry.recordedAt}</p>
                   <p className="mt-1 text-[11px] text-zinc-500 dark:text-zinc-400">{entry.note}</p>
                 </div>
@@ -93,7 +103,7 @@ export default function CoachProgressPage() {
           </div>
         ) : (
           <p className="text-sm italic text-zinc-500 dark:text-zinc-400">
-            Chưa có dữ liệu đo cho học viên này.
+            Không tìm thấy log đo nào tương ứng với tên học viên đang tìm.
           </p>
         )}
       </SectionCard>

@@ -230,6 +230,12 @@ export const coachTrainees = [
     goal: "Siết mỡ 5%",
     plan: "Lean Builder",
     nextSession: "06/06 - 07:30 (Online)",
+    package: "PT 1-1 nâng cao",
+    email: "gia.han@example.com",
+    phone: "0906 456 789",
+    lastCheckIn: "01/06",
+    riskLevel: "low",
+    streakDays: 18,
   },
   {
     name: "Quang Huy",
@@ -237,6 +243,12 @@ export const coachTrainees = [
     goal: "Giảm 3kg trong 4 tuần",
     plan: "Metabolic Reset",
     nextSession: "07/06 - 18:00 (Offline)",
+    package: "Gói 4 tuần - Giảm mỡ",
+    email: "quang.huy@example.com",
+    phone: "0903 234 567",
+    lastCheckIn: "25/05",
+    riskLevel: "medium",
+    streakDays: 6,
   },
   {
     name: "Linh Chi",
@@ -244,8 +256,214 @@ export const coachTrainees = [
     goal: "Tăng cơ, cải thiện sức bền",
     plan: "Đang tư vấn",
     nextSession: "Chờ xác nhận",
+    package: "Chưa chọn",
+    email: "linh.chi@example.com",
+    phone: "0911 654 321",
+    lastCheckIn: "19/05",
+    riskLevel: "high",
+    streakDays: 0,
   },
 ];
+
+export interface TraineeInsight {
+  summary: string;
+  metrics: {
+    adherence: number;
+    sessionsThisWeek: number;
+    completionRate: number;
+    streakDays: number;
+  };
+  focusAreas: Array<{
+    label: string;
+    status: "on_track" | "at_risk" | "pending";
+    due: string;
+    note: string;
+  }>;
+  timeline: Array<{
+    date: string;
+    title: string;
+    detail: string;
+    type: "checkin" | "meal" | "note";
+  }>;
+  reminders: string[];
+  upcomingSessions: Array<{
+    title: string;
+    time: string;
+    channel: "Online" | "Offline";
+    location: string;
+  }>;
+}
+
+export const traineeInsights: Record<string, TraineeInsight> = {
+  "Gia Han": {
+    summary:
+      "Gia Han bám sát meal plan, cần duy trì cardio hai buổi/tuần để đạt mục tiêu siết 5% mỡ trong tháng tới.",
+    metrics: {
+      adherence: 92,
+      sessionsThisWeek: 3,
+      completionRate: 88,
+      streakDays: 18,
+    },
+    focusAreas: [
+      {
+        label: "Giữ nhịp tim 150bpm buổi HIIT",
+        status: "on_track",
+        due: "Tuần 1 - Tháng 6",
+        note: "Đã đạt 2/3 buổi tuần này.",
+      },
+      {
+        label: "Ngủ đủ 7 tiếng",
+        status: "pending",
+        due: "Tuần 2 - Tháng 6",
+        note: "Đang theo dõi với wearable.",
+      },
+    ],
+    timeline: [
+      {
+        date: "01/06",
+        title: "Check-in buổi PT",
+        detail: "Giảm 1.1kg, muscle +0.5kg.",
+        type: "checkin",
+      },
+      {
+        date: "29/05",
+        title: "Điều chỉnh meal plan",
+        detail: "Thay quinoa bằng khoai lang để dễ chuẩn bị.",
+        type: "meal",
+      },
+      {
+        date: "25/05",
+        title: "Feedback sau buổi HIIT",
+        detail: "Cần nhắc kéo giãn dài hơn sau bài Burpee.",
+        type: "note",
+      },
+    ],
+    reminders: [
+      "Đính kèm video form Deadlift mới nhất cho học viên xem trước.",
+      "Nhắc uống điện giải sau buổi cardio tối thứ 5.",
+    ],
+    upcomingSessions: [
+      {
+        title: "PT 1-1 - Tập core & glute",
+        time: "Thứ 5 • 07:30 - 08:30",
+        channel: "Online",
+        location: "Google Meet",
+      },
+      {
+        title: "Check-in dinh dưỡng nhanh",
+        time: "Thứ 7 • 20:30 - 20:45",
+        channel: "Online",
+        location: "Google Meet",
+      },
+    ],
+  },
+  "Quang Huy": {
+    summary:
+      "Quang Huy mới hoàn tất tuần trial thứ 2, cần hỗ trợ duy trì cardio và giảm đồ ngọt để đạt mức -3kg.",
+    metrics: {
+      adherence: 68,
+      sessionsThisWeek: 2,
+      completionRate: 55,
+      streakDays: 6,
+    },
+    focusAreas: [
+      {
+        label: "Cardio 4 buổi/tuần",
+        status: "at_risk",
+        due: "Tuần 2 - Tháng 6",
+        note: "Mới hoàn thành 1/4 buổi.",
+      },
+      {
+        label: "Giảm đường lỏng",
+        status: "pending",
+        due: "Tuần 3 - Tháng 6",
+        note: "Cần gửi gợi ý đồ uống thay thế.",
+      },
+    ],
+    timeline: [
+      {
+        date: "25/05",
+        title: "Check-in online",
+        detail: "Giữ cân, body fat giảm 0.5%.",
+        type: "checkin",
+      },
+      {
+        date: "22/05",
+        title: "Feedback buổi nhóm",
+        detail: "Cảm thấy hụt hơi set cuối.",
+        type: "note",
+      },
+      {
+        date: "19/05",
+        title: "Điều chỉnh meal plan",
+        detail: "Bổ sung bữa phụ 16h với trái cây.",
+        type: "meal",
+      },
+    ],
+    reminders: [
+      "Gửi mẫu cardio 20 phút dễ thao tác tại nhà.",
+      "Theo dõi cảm giác thèm ngọt trong form check-in.",
+    ],
+    upcomingSessions: [
+      {
+        title: "HIIT nhóm",
+        time: "Thứ 3 • 18:00 - 19:00",
+        channel: "Offline",
+        location: "Studio A",
+      },
+      {
+        title: "Check-in online",
+        time: "Thứ 4 • 09:00 - 09:30",
+        channel: "Online",
+        location: "Google Meet",
+      },
+    ],
+  },
+  "Linh Chi": {
+    summary:
+      "Linh Chi vẫn ở giai đoạn tư vấn, cần hoàn tất khảo sát dinh dưỡng và trải nghiệm buổi trial để chốt gói.",
+    metrics: {
+      adherence: 0,
+      sessionsThisWeek: 0,
+      completionRate: 0,
+      streakDays: 0,
+    },
+    focusAreas: [
+      {
+        label: "Hoàn thành khảo sát khẩu vị",
+        status: "pending",
+        due: "Trước 08/06",
+        note: "Đã gửi form qua email.",
+      },
+      {
+        label: "Đặt lịch trial",
+        status: "at_risk",
+        due: "Tuần này",
+        note: "Chưa phản hồi lịch đề xuất.",
+      },
+    ],
+    timeline: [
+      {
+        date: "30/05",
+        title: "Gọi tư vấn",
+        detail: "Quan tâm chương trình Lean Builder.",
+        type: "note",
+      },
+    ],
+    reminders: [
+      "Chuẩn bị deck giới thiệu chương trình core/strength.",
+      "Theo dõi email phản hồi về lịch trial.",
+    ],
+    upcomingSessions: [
+      {
+        title: "Buổi trial đề xuất",
+        time: "Chờ xác nhận",
+        channel: "Offline",
+        location: "Studio B",
+      },
+    ],
+  },
+};
 
 export interface MealPlanDay {
   day: string;
@@ -506,3 +724,198 @@ export const coachNotifications = [
 export function getNavItems(role: UserRole) {
   return role === "admin" ? adminNavItems : coachNavItems;
 }
+
+export interface CoachActionItem {
+  id: string;
+  type: "confirm" | "follow_up" | "reminder";
+  title: string;
+  trainee: string;
+  time: string;
+  channel: string;
+  note: string;
+}
+
+export const coachActionQueue: CoachActionItem[] = [
+  {
+    id: "action-01",
+    type: "confirm",
+    title: "PT 1-1 - Gia Han",
+    trainee: "Gia Han",
+    time: "06/06 • 07:30",
+    channel: "Google Meet",
+    note: "Chờ xác nhận 1-1 trong 6 giờ qua.",
+  },
+  {
+    id: "action-02",
+    type: "follow_up",
+    title: "Trial - Linh Chi",
+    trainee: "Linh Chi",
+    time: "Đề xuất 08/06 • 09:00",
+    channel: "Studio B",
+    note: "Cần gọi lại xác nhận tham gia.",
+  },
+  {
+    id: "action-03",
+    type: "reminder",
+    title: "Check-in online - Quang Huy",
+    trainee: "Quang Huy",
+    time: "07/06 • 09:00",
+    channel: "Google Meet",
+    note: "Gửi form tự đánh giá trước buổi call.",
+  },
+];
+
+export interface CoachWeekDay {
+  day: string;
+  date: string;
+  slots: Array<{
+    title: string;
+    time: string;
+    type: "group" | "one_on_one" | "online";
+    location: string;
+    status: "confirmed" | "pending" | "online" | "cancelled";
+  }>;
+}
+
+export const coachWeekView: CoachWeekDay[] = [
+  {
+    day: "Thứ 2",
+    date: "03/06",
+    slots: [
+      {
+        title: "PT 1-1 - Minh Anh",
+        time: "07:00 - 08:00",
+        type: "one_on_one",
+        location: "Phòng PT",
+        status: "confirmed",
+      },
+      {
+        title: "Functional nhóm",
+        time: "19:30 - 20:30",
+        type: "group",
+        location: "Studio C",
+        status: "confirmed",
+      },
+    ],
+  },
+  {
+    day: "Thứ 3",
+    date: "04/06",
+    slots: [
+      {
+        title: "PT 1-1 - Gia Han",
+        time: "07:30 - 08:30",
+        type: "one_on_one",
+        location: "Google Meet",
+        status: "pending",
+      },
+      {
+        title: "HIIT nhóm",
+        time: "18:00 - 19:00",
+        type: "group",
+        location: "Studio A",
+        status: "confirmed",
+      },
+    ],
+  },
+  {
+    day: "Thứ 4",
+    date: "05/06",
+    slots: [
+      {
+        title: "Check-in online - Quang Huy",
+        time: "09:00 - 09:45",
+        type: "online",
+        location: "Google Meet",
+        status: "online",
+      },
+      {
+        title: "PT 1-1 - Thu Trang",
+        time: "17:00 - 18:00",
+        type: "one_on_one",
+        location: "Phòng PT",
+        status: "confirmed",
+      },
+    ],
+  },
+  {
+    day: "Thứ 5",
+    date: "06/06",
+    slots: [
+      {
+        title: "Workshop dinh dưỡng",
+        time: "20:00 - 21:00",
+        type: "online",
+        location: "Zoom",
+        status: "online",
+      },
+    ],
+  },
+  {
+    day: "Thứ 6",
+    date: "07/06",
+    slots: [
+      {
+        title: "PT 1-1 - Tuan Kiet",
+        time: "08:00 - 09:00",
+        type: "one_on_one",
+        location: "Phòng PT",
+        status: "confirmed",
+      },
+    ],
+  },
+  {
+    day: "Thứ 7",
+    date: "08/06",
+    slots: [
+      {
+        title: "Trial - Linh Chi",
+        time: "09:00 - 10:00",
+        type: "one_on_one",
+        location: "Studio B",
+        status: "pending",
+      },
+    ],
+  },
+  {
+    day: "Chủ nhật",
+    date: "09/06",
+    slots: [],
+  },
+];
+
+export interface CoachAgendaItem {
+  id: string;
+  title: string;
+  time: string;
+  status: "confirmed" | "pending" | "online";
+  note: string;
+  channel: string;
+}
+
+export const coachAgenda: CoachAgendaItem[] = [
+  {
+    id: "agenda-01",
+    title: "PT 1-1 - Gia Han",
+    time: "06/06 • 07:30",
+    status: "pending",
+    note: "Nhắc gửi link trước 15 phút.",
+    channel: "Google Meet",
+  },
+  {
+    id: "agenda-02",
+    title: "HIIT nhóm",
+    time: "06/06 • 18:00",
+    status: "confirmed",
+    note: "Chuẩn bị playlist mới.",
+    channel: "Studio A",
+  },
+  {
+    id: "agenda-03",
+    title: "Check-in online - Quang Huy",
+    time: "07/06 • 09:00",
+    status: "online",
+    note: "Theo dõi adherence tuần 2.",
+    channel: "Google Meet",
+  },
+];

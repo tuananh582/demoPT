@@ -24,15 +24,15 @@ const emptyCoach: CoachRecord = {
 
 export default function AdminCoachesPage() {
   const [coaches, setCoaches] = useState<CoachRecord[]>(() => [...coachRecords]);
-  const [showForm, setShowForm] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [formMode, setFormMode] = useState<"create" | "edit" | null>(null);
   const [formError, setFormError] = useState("");
   const [formState, setFormState] = useState<CoachRecord>(() => ({ ...emptyCoach }));
 
   const closeForm = () => {
-    setShowForm(false);
     setFormError("");
     setEditingIndex(null);
+    setFormMode(null);
     setFormState({ ...emptyCoach });
   };
 
@@ -40,14 +40,14 @@ export default function AdminCoachesPage() {
     setFormState({ ...emptyCoach });
     setEditingIndex(null);
     setFormError("");
-    setShowForm(true);
+    setFormMode("create");
   };
 
   const startEdit = (index: number) => {
     setFormState({ ...coaches[index] });
     setEditingIndex(index);
     setFormError("");
-    setShowForm(true);
+    setFormMode("edit");
   };
 
   const handleDelete = (index: number) => {
@@ -79,7 +79,7 @@ export default function AdminCoachesPage() {
       return;
     }
 
-    if (editingIndex !== null) {
+    if (formMode === "edit" && editingIndex !== null) {
       setCoaches((prev) =>
         prev.map((item, index) =>
           index === editingIndex
@@ -92,7 +92,7 @@ export default function AdminCoachesPage() {
             : item
         )
       );
-    } else {
+    } else if (formMode === "create") {
       setCoaches((prev) => [
         {
           name: trimmedName,
@@ -131,14 +131,14 @@ export default function AdminCoachesPage() {
         actions={
           <button
             type="button"
-            onClick={showForm ? closeForm : openCreateForm}
+            onClick={formMode === "create" ? closeForm : openCreateForm}
             className="rounded-md border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-900 hover:text-white"
           >
-            {showForm ? "Đóng form" : "Thêm coach"}
+            {formMode === "create" ? "Đóng form" : "Thêm coach"}
           </button>
         }
       >
-        {showForm ? (
+        {formMode === "create" ? (
           <form onSubmit={handleSubmit} className="mb-6 space-y-4 rounded-lg border border-dashed border-zinc-300 p-4">
             <div className="grid gap-4 md:grid-cols-2">
               <label className="flex flex-col gap-1 text-sm text-zinc-700">
@@ -209,6 +209,76 @@ export default function AdminCoachesPage() {
         <DataTable
           columns={columns}
           data={coaches}
+          expandedRowIndex={formMode === "edit" ? editingIndex : null}
+          renderExpandedRow={(_row, index) =>
+            editingIndex === index ? (
+              <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border border-dashed border-zinc-300 p-4">
+                <div className="grid gap-4 md:grid-cols-2">
+                  <label className="flex flex-col gap-1 text-sm text-zinc-700">
+                    Tên
+                    <input
+                      type="text"
+                      value={formState.name}
+                      onChange={(event) => handleChange("name", event.target.value)}
+                      className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-900 focus:border-zinc-900 focus:outline-none"
+                      required
+                    />
+                  </label>
+                  <label className="flex flex-col gap-1 text-sm text-zinc-700">
+                    Email
+                    <input
+                      type="email"
+                      value={formState.email}
+                      onChange={(event) => handleChange("email", event.target.value)}
+                      className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-900 focus:border-zinc-900 focus:outline-none"
+                      required
+                    />
+                  </label>
+                </div>
+                <label className="flex flex-col gap-1 text-sm text-zinc-700">
+                  Chuyên môn
+                  <select
+                    value={formState.specialization}
+                    onChange={(event) => handleChange("specialization", event.target.value)}
+                    className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-900 focus:border-zinc-900 focus:outline-none"
+                  >
+                    {coachSpecializations.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label className="flex flex-col gap-1 text-sm text-zinc-700">
+                  Lịch làm việc
+                  <input
+                    type="text"
+                    value={formState.availability}
+                    onChange={(event) => handleChange("availability", event.target.value)}
+                    className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-900 focus:border-zinc-900 focus:outline-none"
+                    placeholder="Ví dụ: Thứ 2-6 (7:00 - 17:00)"
+                    required
+                  />
+                </label>
+                {formError ? <p className="text-sm text-red-600">{formError}</p> : null}
+                <div className="flex justify-end gap-2">
+                  <button
+                    type="button"
+                    onClick={closeForm}
+                    className="rounded-md border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-100"
+                  >
+                    Hủy
+                  </button>
+                  <button
+                    type="submit"
+                    className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-zinc-800"
+                  >
+                    Cập nhật coach
+                  </button>
+                </div>
+              </form>
+            ) : null
+          }
           actionColumn={{
             header: "Thao tác",
             className: "w-44",

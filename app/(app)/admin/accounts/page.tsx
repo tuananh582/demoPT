@@ -17,8 +17,8 @@ const statusOptions = ["Hoạt động", "Dùng thử", "Vô hiệu"];
 
 export default function AdminAccountsPage() {
   const [accounts, setAccounts] = useState<AccountRecord[]>(() => [...accountRecords]);
-  const [showForm, setShowForm] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [formMode, setFormMode] = useState<"create" | "edit" | null>(null);
   const [formError, setFormError] = useState("");
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [formState, setFormState] = useState<AccountRecord>(() => ({
@@ -29,9 +29,9 @@ export default function AdminAccountsPage() {
   }));
 
   const closeForm = () => {
-    setShowForm(false);
     setFormError("");
     setEditingIndex(null);
+    setFormMode(null);
     setFormState({ name: "", email: "", role: "Học viên", status: "Hoạt động" });
   };
 
@@ -40,7 +40,7 @@ export default function AdminAccountsPage() {
     setFormError("");
     setEditingIndex(null);
     setFormState({ name: "", email: "", role: "Học viên", status: "Hoạt động" });
-    setShowForm(true);
+    setFormMode("create");
   };
 
   const startEdit = (index: number) => {
@@ -48,7 +48,7 @@ export default function AdminAccountsPage() {
     setEditingIndex(index);
     setFeedbackMessage("");
     setFormError("");
-    setShowForm(true);
+    setFormMode("edit");
   };
 
   const handleDelete = (index: number) => {
@@ -79,7 +79,7 @@ export default function AdminAccountsPage() {
       return;
     }
 
-    if (editingIndex !== null) {
+    if (formMode === "edit" && editingIndex !== null) {
       setAccounts((prev) =>
         prev.map((item, index) =>
           index === editingIndex
@@ -92,7 +92,7 @@ export default function AdminAccountsPage() {
         )
       );
       setFeedbackMessage(`Đã cập nhật tài khoản ${trimmedEmail}.`);
-    } else {
+    } else if (formMode === "create") {
       setAccounts((prev) => [
         {
           ...formState,
@@ -157,10 +157,10 @@ export default function AdminAccountsPage() {
           <div className="flex gap-2">
             <button
               type="button"
-              onClick={showForm ? closeForm : openCreateForm}
+              onClick={formMode === "create" ? closeForm : openCreateForm}
               className="rounded-md border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-900 hover:text-white"
             >
-              {showForm ? "Đóng form" : "Tạo tài khoản"}
+              {formMode === "create" ? "Đóng form" : "Tạo tài khoản"}
             </button>
             <button
               type="button"
@@ -172,7 +172,7 @@ export default function AdminAccountsPage() {
           </div>
         }
       >
-        {showForm ? (
+        {formMode === "create" ? (
           <form onSubmit={handleSubmit} className="mb-6 space-y-4 rounded-lg border border-dashed border-zinc-300 p-4">
             <div className="grid gap-4 md:grid-cols-2">
               <label className="flex flex-col gap-1 text-sm text-zinc-700">
@@ -249,6 +249,81 @@ export default function AdminAccountsPage() {
         <DataTable
           columns={columns}
           data={accounts}
+          expandedRowIndex={formMode === "edit" ? editingIndex : null}
+          renderExpandedRow={(_row, index) =>
+            editingIndex === index ? (
+              <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border border-dashed border-zinc-300 p-4">
+                <div className="grid gap-4 md:grid-cols-2">
+                  <label className="flex flex-col gap-1 text-sm text-zinc-700">
+                    Họ tên
+                    <input
+                      type="text"
+                      value={formState.name}
+                      onChange={(event) => handleChange("name", event.target.value)}
+                      className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-900 focus:border-zinc-900 focus:outline-none"
+                      required
+                    />
+                  </label>
+                  <label className="flex flex-col gap-1 text-sm text-zinc-700">
+                    Email
+                    <input
+                      type="email"
+                      value={formState.email}
+                      onChange={(event) => handleChange("email", event.target.value)}
+                      className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-900 focus:border-zinc-900 focus:outline-none"
+                      required
+                    />
+                  </label>
+                </div>
+                <div className="grid gap-4 md:grid-cols-2">
+                  <label className="flex flex-col gap-1 text-sm text-zinc-700">
+                    Vai trò
+                    <select
+                      value={formState.role}
+                      onChange={(event) => handleChange("role", event.target.value)}
+                      className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-900 focus:border-zinc-900 focus:outline-none"
+                    >
+                      {roleOptions.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label className="flex flex-col gap-1 text-sm text-zinc-700">
+                    Trạng thái
+                    <select
+                      value={formState.status}
+                      onChange={(event) => handleChange("status", event.target.value)}
+                      className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-900 focus:border-zinc-900 focus:outline-none"
+                    >
+                      {statusOptions.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
+                {formError ? <p className="text-sm text-red-600">{formError}</p> : null}
+                <div className="flex justify-end gap-2">
+                  <button
+                    type="button"
+                    onClick={closeForm}
+                    className="rounded-md border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-100"
+                  >
+                    Hủy
+                  </button>
+                  <button
+                    type="submit"
+                    className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-zinc-800"
+                  >
+                    Cập nhật tài khoản
+                  </button>
+                </div>
+              </form>
+            ) : null
+          }
           actionColumn={{
             header: "Thao tác",
             className: "w-44",

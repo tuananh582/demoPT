@@ -13,15 +13,15 @@ type Exercise = {
 
 export default function AdminLessonsPage() {
   const [exercises, setExercises] = useState<Exercise[]>(() => [...contentCatalog.exercises]);
-  const [showForm, setShowForm] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [formMode, setFormMode] = useState<"create" | "edit" | null>(null);
   const [formState, setFormState] = useState<Exercise>({ name: "", group: "", video: "" });
   const [formError, setFormError] = useState("");
 
   const closeForm = () => {
-    setShowForm(false);
     setFormError("");
     setEditingIndex(null);
+    setFormMode(null);
     setFormState({ name: "", group: "", video: "" });
   };
 
@@ -29,14 +29,14 @@ export default function AdminLessonsPage() {
     setFormState({ name: "", group: "", video: "" });
     setEditingIndex(null);
     setFormError("");
-    setShowForm(true);
+    setFormMode("create");
   };
 
   const startEdit = (index: number) => {
     setFormState({ ...exercises[index] });
     setEditingIndex(index);
     setFormError("");
-    setShowForm(true);
+    setFormMode("edit");
   };
 
   const handleDelete = (index: number) => {
@@ -81,13 +81,13 @@ export default function AdminLessonsPage() {
       return;
     }
 
-    if (editingIndex !== null) {
+    if (formMode === "edit" && editingIndex !== null) {
       setExercises((prev) =>
         prev.map((item, index) =>
           index === editingIndex ? { name: trimmedName, group: trimmedGroup, video: trimmedVideo } : item
         )
       );
-    } else {
+    } else if (formMode === "create") {
       setExercises((prev) => [{ name: trimmedName, group: trimmedGroup, video: trimmedVideo }, ...prev]);
     }
     closeForm();
@@ -108,14 +108,14 @@ export default function AdminLessonsPage() {
         actions={
           <button
             type="button"
-            onClick={showForm ? closeForm : openCreateForm}
+            onClick={formMode === "create" ? closeForm : openCreateForm}
             className="rounded-md border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-900 hover:text-white"
           >
-            {showForm ? "Đóng form" : "Thêm bài tập"}
+            {formMode === "create" ? "Đóng form" : "Thêm bài tập"}
           </button>
         }
       >
-        {showForm ? (
+        {formMode === "create" ? (
           <form onSubmit={handleSubmit} className="mb-6 space-y-4 rounded-lg border border-dashed border-zinc-300 p-4">
             <div className="grid gap-4 md:grid-cols-2">
               <label className="flex flex-col gap-1 text-sm text-zinc-700">
@@ -182,22 +182,76 @@ export default function AdminLessonsPage() {
               >
                 Xem video hướng dẫn
               </Link>
-              <div className="mt-3 flex gap-2">
-                <button
-                  type="button"
-                  onClick={() => startEdit(index)}
-                  className="rounded-md border border-zinc-300 px-3 py-1.5 text-xs font-medium text-zinc-700 transition hover:bg-zinc-100"
-                >
-                  Chỉnh sửa
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleDelete(index)}
-                  className="rounded-md border border-red-200 px-3 py-1.5 text-xs font-medium text-red-600 transition hover:bg-red-100"
-                >
-                  Xóa
-                </button>
-              </div>
+              {formMode === "edit" && editingIndex === index ? (
+                <form onSubmit={handleSubmit} className="mt-4 space-y-4 rounded-lg border border-dashed border-zinc-300 p-4">
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <label className="flex flex-col gap-1 text-sm text-zinc-700">
+                      Tên bài tập
+                      <input
+                        type="text"
+                        value={formState.name}
+                        onChange={(event) => handleChange("name", event.target.value)}
+                        className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-900 focus:border-zinc-900 focus:outline-none"
+                        required
+                      />
+                    </label>
+                    <label className="flex flex-col gap-1 text-sm text-zinc-700">
+                      Nhóm cơ
+                      <input
+                        type="text"
+                        value={formState.group}
+                        onChange={(event) => handleChange("group", event.target.value)}
+                        className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-900 focus:border-zinc-900 focus:outline-none"
+                        required
+                      />
+                    </label>
+                  </div>
+                  <label className="flex flex-col gap-1 text-sm text-zinc-700">
+                    Link video hướng dẫn
+                    <input
+                      type="url"
+                      value={formState.video}
+                      onChange={(event) => handleChange("video", event.target.value)}
+                      className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-900 focus:border-zinc-900 focus:outline-none"
+                      placeholder="https://..."
+                      required
+                    />
+                  </label>
+                  {formError ? <p className="text-sm text-red-600">{formError}</p> : null}
+                  <div className="flex justify-end gap-2">
+                    <button
+                      type="button"
+                      onClick={closeForm}
+                      className="rounded-md border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-100"
+                    >
+                      Hủy
+                    </button>
+                    <button
+                      type="submit"
+                      className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-zinc-800"
+                    >
+                      Cập nhật bài tập
+                    </button>
+                  </div>
+                </form>
+              ) : (
+                <div className="mt-3 flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => startEdit(index)}
+                    className="rounded-md border border-zinc-300 px-3 py-1.5 text-xs font-medium text-zinc-700 transition hover:bg-zinc-100"
+                  >
+                    Chỉnh sửa
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(index)}
+                    className="rounded-md border border-red-200 px-3 py-1.5 text-xs font-medium text-red-600 transition hover:bg-red-100"
+                  >
+                    Xóa
+                  </button>
+                </div>
+              )}
             </li>
           ))}
         </ul>

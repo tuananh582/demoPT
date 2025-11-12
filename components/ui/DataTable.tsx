@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 
 interface Column<T> {
   key: keyof T;
@@ -18,9 +18,20 @@ interface DataTableProps<T extends Record<string, unknown>> {
   data: T[];
   renderCell?: (key: keyof T, value: unknown, row: T) => ReactNode;
   actionColumn?: ActionColumn<T>;
+  expandedRowIndex?: number | null;
+  renderExpandedRow?: (row: T, index: number) => ReactNode;
 }
 
-export function DataTable<T extends Record<string, unknown>>({ columns, data, renderCell, actionColumn }: DataTableProps<T>) {
+export function DataTable<T extends Record<string, unknown>>({
+  columns,
+  data,
+  renderCell,
+  actionColumn,
+  expandedRowIndex,
+  renderExpandedRow,
+}: DataTableProps<T>) {
+  const totalColumns = columns.length + (actionColumn ? 1 : 0);
+
   return (
     <div className="overflow-hidden rounded-lg border border-zinc-200">
       <div className="max-h-[360px] overflow-auto">
@@ -41,22 +52,31 @@ export function DataTable<T extends Record<string, unknown>>({ columns, data, re
           </thead>
           <tbody className="divide-y divide-zinc-200 bg-white">
             {data.map((row, index) => (
-              <tr key={index} className="transition-colors hover:bg-zinc-50">
-                {columns.map((column) => (
-                  <td key={String(column.key)} className="px-4 py-3 text-zinc-700">
-                    {renderCell ? renderCell(column.key, row[column.key], row) : (row[column.key] as ReactNode)}
-                  </td>
-                ))}
-                {actionColumn ? (
-                  <td className={`px-4 py-3 text-right ${actionColumn.className ?? ""}`}>
-                    {actionColumn.render(row, index)}
-                  </td>
+              <Fragment key={index}>
+                <tr className="transition-colors hover:bg-zinc-50">
+                  {columns.map((column) => (
+                    <td key={String(column.key)} className="px-4 py-3 text-zinc-700">
+                      {renderCell ? renderCell(column.key, row[column.key], row) : (row[column.key] as ReactNode)}
+                    </td>
+                  ))}
+                  {actionColumn ? (
+                    <td className={`px-4 py-3 text-right ${actionColumn.className ?? ""}`}>
+                      {actionColumn.render(row, index)}
+                    </td>
+                  ) : null}
+                </tr>
+                {renderExpandedRow && expandedRowIndex === index ? (
+                  <tr className="bg-zinc-50">
+                    <td colSpan={totalColumns} className="px-4 py-4">
+                      {renderExpandedRow(row, index)}
+                    </td>
+                  </tr>
                 ) : null}
-              </tr>
+              </Fragment>
             ))}
             {data.length === 0 ? (
               <tr>
-                <td colSpan={columns.length + (actionColumn ? 1 : 0)} className="px-4 py-6 text-center text-zinc-500">
+                <td colSpan={totalColumns} className="px-4 py-6 text-center text-zinc-500">
                   Không có dữ liệu
                 </td>
               </tr>

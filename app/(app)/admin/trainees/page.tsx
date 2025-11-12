@@ -25,15 +25,15 @@ const emptyFormState: TraineeRecord = {
 
 export default function AdminTraineesPage() {
   const [trainees, setTrainees] = useState<TraineeRecord[]>(() => [...traineeRecords]);
-  const [showForm, setShowForm] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [formMode, setFormMode] = useState<"create" | "edit" | null>(null);
   const [formError, setFormError] = useState("");
   const [formState, setFormState] = useState<TraineeRecord>(() => ({ ...emptyFormState }));
 
   const closeForm = () => {
-    setShowForm(false);
     setFormError("");
     setEditingIndex(null);
+    setFormMode(null);
     setFormState({ ...emptyFormState });
   };
 
@@ -41,14 +41,14 @@ export default function AdminTraineesPage() {
     setFormState({ ...emptyFormState });
     setEditingIndex(null);
     setFormError("");
-    setShowForm(true);
+    setFormMode("create");
   };
 
   const startEdit = (index: number) => {
     setFormState({ ...trainees[index] });
     setEditingIndex(index);
     setFormError("");
-    setShowForm(true);
+    setFormMode("edit");
   };
 
   const handleDelete = (index: number) => {
@@ -80,7 +80,7 @@ export default function AdminTraineesPage() {
       return;
     }
 
-    if (editingIndex !== null) {
+    if (formMode === "edit" && editingIndex !== null) {
       setTrainees((prev) =>
         prev.map((item, index) =>
           index === editingIndex
@@ -94,7 +94,7 @@ export default function AdminTraineesPage() {
             : item
         )
       );
-    } else {
+    } else if (formMode === "create") {
       setTrainees((prev) => [
         {
           ...formState,
@@ -135,14 +135,14 @@ export default function AdminTraineesPage() {
         actions={
           <button
             type="button"
-            onClick={showForm ? closeForm : openCreateForm}
+            onClick={formMode === "create" ? closeForm : openCreateForm}
             className="rounded-md border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-900 hover:text-white"
           >
-            {showForm ? "Đóng form" : "Thêm học viên"}
+            {formMode === "create" ? "Đóng form" : "Thêm học viên"}
           </button>
         }
       >
-        {showForm ? (
+        {formMode === "create" ? (
           <form onSubmit={handleSubmit} className="mb-6 space-y-4 rounded-lg border border-dashed border-zinc-300 p-4">
             <div className="grid gap-4 md:grid-cols-2">
               <label className="flex flex-col gap-1 text-sm text-zinc-700">
@@ -230,6 +230,93 @@ export default function AdminTraineesPage() {
         <DataTable
           columns={columns}
           data={trainees}
+          expandedRowIndex={formMode === "edit" ? editingIndex : null}
+          renderExpandedRow={(_row, index) =>
+            editingIndex === index ? (
+              <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border border-dashed border-zinc-300 p-4">
+                <div className="grid gap-4 md:grid-cols-2">
+                  <label className="flex flex-col gap-1 text-sm text-zinc-700">
+                    Họ tên
+                    <input
+                      type="text"
+                      value={formState.name}
+                      onChange={(event) => handleChange("name", event.target.value)}
+                      className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-900 focus:border-zinc-900 focus:outline-none"
+                      required
+                    />
+                  </label>
+                  <label className="flex flex-col gap-1 text-sm text-zinc-700">
+                    Email
+                    <input
+                      type="email"
+                      value={formState.email}
+                      onChange={(event) => handleChange("email", event.target.value)}
+                      className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-900 focus:border-zinc-900 focus:outline-none"
+                      required
+                    />
+                  </label>
+                  <label className="flex flex-col gap-1 text-sm text-zinc-700">
+                    Số điện thoại
+                    <input
+                      type="tel"
+                      value={formState.phone}
+                      onChange={(event) => handleChange("phone", event.target.value)}
+                      className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-900 focus:border-zinc-900 focus:outline-none"
+                      required
+                    />
+                  </label>
+                  <label className="flex flex-col gap-1 text-sm text-zinc-700">
+                    Trạng thái
+                    <select
+                      value={formState.status}
+                      onChange={(event) => handleChange("status", event.target.value)}
+                      className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-900 focus:border-zinc-900 focus:outline-none"
+                    >
+                      {traineeStatusOptions.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
+                <label className="flex flex-col gap-1 text-sm text-zinc-700">
+                  Gói tập
+                  <select
+                    value={formState.package}
+                    onChange={(event) => handleChange("package", event.target.value)}
+                    className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-900 focus:border-zinc-900 focus:outline-none"
+                    required
+                  >
+                    <option value="" disabled>
+                      Chọn gói tập
+                    </option>
+                    {traineePackageOptions.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                {formError ? <p className="text-sm text-red-600">{formError}</p> : null}
+                <div className="flex justify-end gap-2">
+                  <button
+                    type="button"
+                    onClick={closeForm}
+                    className="rounded-md border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-100"
+                  >
+                    Hủy
+                  </button>
+                  <button
+                    type="submit"
+                    className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-zinc-800"
+                  >
+                    Cập nhật học viên
+                  </button>
+                </div>
+              </form>
+            ) : null
+          }
           actionColumn={{
             header: "Thao tác",
             className: "w-40",

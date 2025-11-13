@@ -1,91 +1,106 @@
 # Product Requirements Document (PRD)
-## Customer-Centric Personal Training Platform
+
+## FitCampus – Student Fitness Portal
 
 ## 1. Document Control
-| Version | Date | Author | Notes |
-|---------|------|--------|-------|
-| 0.9 | 2025-02-14 | Product Team | Initial draft aligned with BRD & SRS |
+
+| Version | Date       | Author       | Notes                                              |
+| ------- | ---------- | ------------ | -------------------------------------------------- |
+| 0.9     | 2025-11-13 | Product Team | Student-focused rewrite aligned with FitCampus BRD |
 
 ## 2. Product Summary
-- **Vision:** Deliver a premium digital personal training experience where customers can discover, enroll, and thrive through personalized programs and continuous engagement.
-- **Target Users:** Prospective customers, active learners, personal trainers, operations staff.
-- **Value Proposition:** Self-directed onboarding, immersive training, intelligent scheduling, rich analytics, and always-on support.
+
+- **Vision:** Provide every student with a personalized digital gym companion that simplifies onboarding, keeps them motivated, and connects them with campus wellness resources.
+- **Target Users:** Prospective students, active learners, wellness mentors, student success staff.
+- **Value Proposition:** Adaptive onboarding, curated training plans, accessible scheduling, real-time progress feedback, and vibrant community challenges—all optimized for student life.
 
 ## 3. Personas
-| Persona | Goals | Pain Points | Key Journeys |
-|---------|-------|-------------|--------------|
-| Mai – Busy Professional | Maintain fitness while balancing work/family | Limited time, inconsistent schedule | Explore programs, subscribe, follow flexible plans, track progress |
-| Nam – Elite Coach | Scale clientele without burnout | Administrative overhead, limited insights | Manage roster, adjust plans, communicate, view metrics |
-| Linh – Operations Lead | Ensure smooth business operations | Fragmented tools, manual reporting | Configure catalog, review revenue, handle escalations |
+
+| Persona                        | Goals                                    | Pain Points                                   | Key Journeys                                               |
+| ------------------------------ | ---------------------------------------- | --------------------------------------------- | ---------------------------------------------------------- |
+| Huy – First-year Student       | Build healthy routine amidst course load | Overwhelmed by choices, unsure where to start | Sign-up, orientation quiz, daily plan, peer challenges     |
+| Lan – Resident Advisor         | Encourage dorm participation             | Manual tracking, limited incentives           | Promote classes, track group progress, share announcements |
+| Minh – Student Wellness Mentor | Coach peers, monitor wellbeing           | No consolidated dashboard, hard to follow up  | Review cohorts, send nudges, adjust content                |
 
 ## 4. User Journey Highlights
-1. **Discover & Evaluate:** Guest lands on marketing page, completes quiz, receives tailored program recommendations, books consultation.
-2. **Convert & Onboard:** Guest completes registration, signs waivers, chooses membership, schedules kick-off session, receives orientation checklist.
-3. **Engage & Progress:** Customer follows daily plan, logs metrics, participates in community challenges, receives nudges when streak drops.
-4. **Optimize & Retain:** Coach reviews compliance dashboard, adjusts plans, triggers automation to re-engage inactive customers, collects testimonials.
+
+1. **Discover & Commit:** Visitor sees orientation microsite, completes readiness quiz, selects starter path, and books intro class.
+2. **Activate & Learn:** Learner confirms membership, unlocks personalized plan, adds workouts and study-friendly wellness tips to schedule.
+3. **Engage & Progress:** Daily dashboard surfaces workouts, nutrition, mindfulness; streaks and badges reward consistency; wearables sync automatically.
+4. **Connect & Thrive:** Learner joins peer groups, participates in dorm challenges, seeks support via chat, reviews progress reports with mentor.
 
 ## 5. Feature Requirements (Release Breakdown)
-### Release 1 – Foundations (Quarter 1)
-- Guided onboarding wizard with adaptive assessments and trial booking.
-- Subscription catalog with manual payment confirmation workflow.
-- Training plan builder with workout, nutrition, and habit modules.
-- Unified calendar with booking, rescheduling, reminders, waitlists.
-- Messaging (1:1) and announcement broadcasts.
-- Customer progress dashboards, basic admin reports.
+
+### Release 1 – Activation (Quarter 1)
+
+- Guided onboarding wizard with readiness quiz and consent capture.
+- Membership catalog with student pricing, manual payment confirmation.
+- Training dashboard combining workouts, micro-lessons, and habit tracker.
+- Unified scheduling for classes, workshops, and mentoring sessions.
+- Peer and mentor messaging with attachment support.
+- Learner progress dashboards with exports and advisor notes.
 
 ### Release 2 – Engagement (Quarter 2)
-- Automated payments with gateway integration and invoicing.
-- Community forums, challenges, and gamification badges.
-- Wearable integration MVP (Apple Health/Google Fit sync).
-- Workflow automation templates for admins (e.g., inactivity campaigns).
-- Support center with knowledge base and ticket routing.
+
+- Automated payments with recurring billing and perk tracking.
+- Community hubs with forums, dorm challenges, and live streams.
+- Wearable data sync MVP (Apple Health, Google Fit, Garmin).
+- Gamification engine with quests, XP, and reward store.
+- Support center with self-help guides and SLA-based ticket routing.
 
 ### Release 3 – Intelligence (Quarter 3)
-- Predictive analytics and recommendation engine.
-- AR-assisted workout guidance prototype.
-- Partner API portal and marketplace integrations.
-- Advanced cohort analytics and configurable KPI dashboards.
+
+- Recommendation engine for workouts, classes, and wellness articles.
+- AI-powered nudges detecting dropout risk.
+- Partner API for student clubs and external wellness partners.
+- Advanced cohort analytics with retention and wellbeing indices.
 
 ## 6. Detailed Requirement Matrix
-| ID | Title | Description | Acceptance Criteria Reference | Priority | Release |
-|----|-------|-------------|-------------------------------|----------|---------|
-| PRD-ONB-01 | Adaptive onboarding | Questionnaire adjusts steps based on goals/health responses. | AC-ONB-01..03 | Must | R1 |
-| PRD-SUB-01 | Catalog & checkout | Display packages with comparison, handle promo codes, send confirmation email. | AC-SUB-01..04 | Must | R1 |
-| PRD-TRN-01 | Training workspace | Customers view daily plan, mark complete, access media. | AC-TRN-01..05 | Must | R1 |
-| PRD-SCH-01 | Smart scheduling | Booking with availability rules, waitlists, reminders. | AC-SCH-01..05 | Must | R1 |
-| PRD-COM-01 | Secure messaging | Real-time chat with read receipts, attachment support. | AC-COM-01..03 | Should | R1 |
-| PRD-ANL-01 | Progress dashboard | Multi-metric charts, goal tracking, export PDF. | AC-ANL-01..04 | Must | R1 |
-| PRD-PAY-01 | Payment automation | Integrate payment gateway, recurring billing, refunds. | AC-PAY-01..04 | Must | R2 |
-| PRD-COM-02 | Community hub | Forums, challenges, moderation controls. | AC-COM-04..07 | Should | R2 |
-| PRD-AUT-01 | Automation engine | Trigger-based workflows with templates. | AC-AUT-01..03 | Should | R2 |
-| PRD-WEA-01 | Wearable sync | Import metrics, consent management. | AC-WEA-01..03 | Could | R2 |
-| PRD-INT-01 | Partner API | Provide sandbox, documentation, API keys. | AC-INT-01..03 | Could | R3 |
-| PRD-AI-01 | Recommendations | Suggest programs/content based on behavior. | AC-AI-01..02 | Could | R3 |
+
+| ID          | Title                     | Description                                                | Acceptance Criteria Reference | Priority | Release |
+| ----------- | ------------------------- | ---------------------------------------------------------- | ----------------------------- | -------- | ------- |
+| PRD-LRN-01  | Adaptive onboarding       | Quiz adapts by goal and readiness, collecting consents.    | AC-LRN-01..03                 | Must     | R1      |
+| PRD-MEM-01  | Membership catalog        | Student-centric catalog, promo codes, manual confirmation. | AC-MEM-01..04                 | Must     | R1      |
+| PRD-PLAN-01 | Training dashboard        | Daily plan with workouts, lessons, habits, streaks.        | AC-PLAN-01..05                | Must     | R1      |
+| PRD-SCH-01  | Smart scheduling          | Booking, waitlist, reminders, attendance sync.             | AC-SCH-01..05                 | Must     | R1      |
+| PRD-COM-01  | Messaging & announcements | Peer messaging, read receipts, broadcasts.                 | AC-COM-01..04                 | Should   | R1      |
+| PRD-PROG-01 | Learner analytics         | Dashboards, exports, trendlines.                           | AC-PROG-01..04                | Must     | R1      |
+| PRD-MEM-02  | Automated billing         | Gateway integration, renewals, refunds.                    | AC-MEM-02..04                 | Must     | R2      |
+| PRD-COM-02  | Community hub             | Challenges, leaderboards, moderation, live streams.        | AC-COM-04..06                 | Should   | R2      |
+| PRD-EXP-01  | Gamification engine       | Quests, XP accrual, perk store.                            | AC-PLAN-04, AC-EXP-03         | Should   | R2      |
+| PRD-WELL-01 | Wearable sync             | Consent-driven data ingestion and display.                 | AC-WELL-01..03                | Could    | R2      |
+| PRD-EXP-02  | Recommendation engine     | Explainable recommendations with feedback loop.            | AC-EXP-01..02                 | Could    | R3      |
+| PRD-API-01  | Partner API portal        | API keys, rate limits, sandbox.                            | AC-COM-03, AC-WELL-03         | Could    | R3      |
 
 ## 7. User Experience & Design Principles
-- Progressive web application with responsive grid, personalization, and theme customization.
-- Accessibility-first approach (WCAG 2.1 AA).
-- Support localization for Vietnamese (primary) and English (secondary).
-- Provide design system with reusable components (atoms, molecules, organisms).
+
+- Mobile-first PWA with offline caching for daily plans and certificates.
+- Visual identity matches campus brand; inclusive imagery representing diverse student body.
+- Accessibility-first (WCAG 2.1 AA) with focus on cognitive load reduction and dyslexia-friendly typography options.
+- Modular design system with learner widgets (streak card, challenge carousel, wellbeing alerts).
 
 ## 8. Analytics & Telemetry
-- Track funnel metrics: visits → quiz completions → account creations → purchases.
-- Monitor engagement metrics: active days/week, workout completion, message response time.
-- Capture NPS, CSAT surveys post-session and post-support interactions.
-- Implement product analytics (Mixpanel/Amplitude) with privacy controls.
+
+- Track funnel: orientation microsite → quiz completion → account creation → membership activation.
+- Engagement metrics: weekly active learners, streak retention, class attendance, wearable sync rate.
+- Wellness indicators: self-reported energy/stress, advisor interventions, goal completion.
+- Feedback & surveys: quick pulse polls after sessions and after 30-day usage.
 
 ## 9. Operational Readiness
-- Define SLAs: Support tickets acknowledged within 15 minutes (business hours), resolved within 24 hours.
-- Establish incident response runbooks, on-call rotation, and escalation matrix.
-- Provide admin training materials and in-app guided tours.
+
+- Define support SLAs: chat response ≤ 10 minutes during staffed hours, tickets resolved ≤ 24 hours.
+- Provide mentor playbooks, student tutorial videos, and onboarding webinars.
+- Establish incident response matrix with student affairs escalation paths.
 
 ## 10. Go-To-Market & Launch Plan
-- Beta program with 50 loyal customers and 10 coaches.
-- Marketing campaign: webinars, influencer partnerships, referral incentives.
-- Launch checklist covering legal review, data migration, support staffing, knowledge base completion.
+
+- Beta with 200 volunteer students across faculties and 20 wellness mentors.
+- Ambassador program with dorm leaders promoting via social channels and events.
+- Launch kit: orientation week booths, QR codes, integration with student portal announcements.
+- Post-launch survey at week 4 and week 12 to capture sentiment and feature requests.
 
 ## 11. Open Questions & Follow-Ups
-- Decide on primary payment gateway (Stripe vs. local provider like MoMo).
-- Validate legal requirements for storing biometric data in regional markets.
-- Confirm integration roadmap with existing CRM and marketing automation tools.
 
+- Confirm primary payment gateway (Stripe vs. local banking integration) supporting student discounts.
+- Align with counseling center on thresholds for wellness alerts and escalation protocols.
+- Decide on integration timeline with learning management system (if wellness modules earn credits).

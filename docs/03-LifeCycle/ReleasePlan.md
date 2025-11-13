@@ -1,35 +1,35 @@
-# Release Plan
+# Release Plan – FitCampus Student Portal
 
 ## 1. Timeline Overview
 | Release | Sprint Range | Focus | Key Deliverables |
 |---------|--------------|-------|------------------|
-| Release 0 (Discovery) | Sprint 0 | Foundations | Environment setup, architecture validation, UX research, backlog refinement |
-| Release 1 (Foundations) | Sprints 1-2 | Customer onboarding, core experience | Adaptive onboarding, subscription catalog, daily plan, session booking, messaging MVP |
-| Release 2 (Engagement) | Sprints 3-4 | Retention & community | Automated billing, community hub, wearable MVP, automation workflows, analytics dashboards |
-| Release 3 (Intelligence) | Sprints 5-6 | Advanced insights & integrations | Recommendation engine, partner API, advanced cohort analytics, AR prototype |
-| Hardening & Launch | Sprint 7 | Stabilization | Performance tuning, security testing, UAT, documentation, go-live checklist |
+| Release 0 (Discovery) | Sprint 0 | Thiết lập nền tảng | Research hành vi sinh viên, UX prototype, backlog ưu tiên, chuẩn hóa KPI |
+| Release 1 (Activation) | Sprints 1-2 | Onboarding & Membership | Adaptive onboarding, orientation checklist, catalog membership, daily plan, booking lớp đầu tiên |
+| Release 2 (Engagement) | Sprints 3-4 | Giữ chân & cộng đồng | Automated billing, community hub, messaging mentors, gamification XP/badges, progress dashboards |
+| Release 3 (Intelligence) | Sprints 5-6 | Dữ liệu & cá nhân hóa | Recommendation engine, wearable sync MVP, cohort analytics, mentor toolkit nâng cao |
+| Hardening & Launch | Sprint 7 | Ổn định & Go-live | Performance tuning, accessibility & security audit, UAT mở rộng, tài liệu & đào tạo mentor |
 
 ## 2. Milestones
-- **M1 – MVP Complete (End Sprint 2):** Customers can self-onboard, purchase plans (manual confirmation), consume daily plans, book sessions, and message coaches.
-- **M2 – Billing Automation Live (End Sprint 4):** Automated payments, analytics dashboards, workflow automation operational.
-- **M3 – Intelligent Insights (End Sprint 6):** Predictive analytics, partner API portal, community gamification fully active.
-- **M4 – Launch Readiness (Sprint 7):** Go/no-go approval, support training, marketing campaigns primed.
+- **M1 – Orientation Ready (End Sprint 2):** 80% sinh viên thử nghiệm hoàn thành onboarding và đặt lớp đầu tiên.
+- **M2 – Community Ignition (End Sprint 4):** Messaging, challenges, XP store hoạt động với ≥ 50% học viên beta tham gia.
+- **M3 – Insight Driven (End Sprint 6):** Mentor dashboard hiển thị cảnh báo rủi ro, wearable sync dữ liệu mẫu.
+- **M4 – Launch Go/No-Go (Sprint 7):** SLA đạt chuẩn, tài liệu hỗ trợ đầy đủ, đội hypercare được đào tạo.
 
 ## 3. Go/No-Go Criteria
-- All critical acceptance criteria for targeted release features met with passing QA evidence.
-- No open Severity 1 defects; Severity 2 defects have workarounds approved by Product Owner.
-- Performance tests meet SLAs (page load ≤ 2.5s, API median ≤ 400ms under load).
-- Security and accessibility audits signed off.
-- Support team trained and knowledge base published.
+- Tất cả acceptance criteria cho release tương ứng có bằng chứng test.
+- Không còn bug Sev1; Sev2 có workaround được phê duyệt.
+- Kết quả kiểm thử hiệu năng: page load ≤ 2.5s P95, API median < 400ms @ 100 RPS.
+- Security & accessibility audit (WCAG AA) pass, vấn đề blocker đã giải quyết.
+- Mentor & hỗ trợ sinh viên hoàn thành đào tạo, kịch bản hypercare sẵn sàng.
 
 ## 4. Rollback Strategy
-- Maintain blue/green environments for zero-downtime deployment.
-- Automated database snapshots prior to release; point-in-time recovery validated quarterly.
-- Feature flags for new modules enabling rapid disablement without rollback.
+- Blue/green deployment, feature flags cho module mới (community, wearable, recommendation).
+- Snapshot DB + backup object storage trước release; kiểm tra khôi phục hàng quý.
+- Plan fallback thủ công cho thanh toán (gửi email + xác nhận offline) nếu gateway gặp sự cố.
 
 ## 5. Post-Launch Activities
-- Hypercare period of 2 weeks with dedicated war room and on-call rotation.
-- Monitor KPIs: onboarding conversion, session completion rate, payment success, NPS.
-- Gather user feedback via in-app surveys and community forums; feed into backlog prioritization.
-- Conduct launch retrospective and adjust roadmap accordingly.
+- Hypercare 2 tuần với war room (Slack + hotline) và báo cáo hàng ngày.
+- Theo dõi KPI: orientation completion, weekly active learners, class fill rate, challenge participation, ticket SLA.
+- Thu thập phản hồi chi tiết từ survey tuần 2 và 6; cập nhật backlog cải tiến.
+- Tổ chức retrospective với sinh viên beta, mentor, admin; điều chỉnh roadmap (LMS integration, native app).
 

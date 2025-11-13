@@ -1,20 +1,20 @@
-# Glossary
+# Glossary – FitCampus Student Portal
 
 | Term | Definition |
 |------|------------|
-| PWA (Progressive Web App) | Web application with offline support, push notifications, and app-like UX. |
-| Onboarding | Guided process for converting guests into active customers, including registration and intake. |
-| Membership | Subscription package granting access to training services, billed per plan. |
-| Training Plan | Personalized schedule of workouts, nutrition tasks, and habits tailored to customer goals. |
-| Habit Streak | Consecutive days of completing assigned habits, used for gamification and motivation. |
-| Automation Workflow | Rule-based sequence triggered by events (e.g., missed session) to send actions/notifications. |
-| RBAC/ABAC | Role-Based and Attribute-Based Access Control authorization models. |
-| Wearable Integration | Connection to external devices/apps (Apple Health, Google Fit) that supply biometric data. |
-| Cohort Analytics | Insight into grouped customers (e.g., by membership type) to track retention and performance. |
-| NPS (Net Promoter Score) | Customer loyalty metric derived from survey responses on recommendation likelihood. |
-| SLA (Service Level Agreement) | Commitment to respond/resolve support tickets within defined time frames. |
-| API Gateway | Entry point that authenticates, rate limits, and routes API requests to backend services. |
-| Feature Flag | Configuration that allows toggling features on/off without redeploying code. |
-| Hypercare | Intensified support period immediately following a release to respond quickly to issues. |
-| Data Residency | Requirement to store/process personal data within specific geographic regions. |
+| PWA (Progressive Web App) | Ứng dụng web hỗ trợ offline, push notification, UX giống app phục vụ học viên. |
+| Orientation Checklist | Tập nhiệm vụ đầu tiên mà học viên phải hoàn thành để mở khóa nội dung tập luyện. |
+| Membership | Gói dịch vụ thể chất dành cho sinh viên, bao gồm quyền truy cập lớp, nội dung, perks. |
+| Daily Plan | Bảng điều khiển hằng ngày hiển thị workout, bài học, nhiệm vụ dinh dưỡng, mindfulness. |
+| Streak | Số ngày liên tiếp học viên hoàn thành nhiệm vụ được giao, dùng để thưởng XP/badges. |
+| Quest | Chuỗi hoạt động gamification mang lại phần thưởng khi hoàn tất. |
+| XP (Experience Points) | Điểm kinh nghiệm học viên kiếm được khi hoàn thành bài tập, duy trì streak, tham gia thử thách. |
+| Mentor | Peer coach hoặc nhân viên wellness theo dõi cohort học viên, gửi lời nhắc và hỗ trợ. |
+| Cohort Analytics | Phân tích nhóm học viên theo goal path, lớp, dorm để đánh giá hiệu quả chương trình. |
+| Wearable Sync | Quy trình đồng bộ dữ liệu từ thiết bị đeo (Apple Health, Google Fit, Garmin). |
+| Support Ticket | Yêu cầu hỗ trợ do học viên gửi qua portal, tuân thủ SLA phản hồi/giải quyết. |
+| Challenge Leaderboard | Bảng xếp hạng thử thách cập nhật theo thời gian thực phản ánh điểm và thành tích của học viên. |
+| Hypercare | Giai đoạn hỗ trợ tăng cường sau khi triển khai cho sinh viên. |
+| Privacy Dashboard | Công cụ cho học viên quản lý consent và yêu cầu tải/xóa dữ liệu. |
+| Cohort At-Risk Flag | Cờ cảnh báo giúp mentor nhận diện học viên có nguy cơ bỏ cuộc dựa trên dữ liệu sử dụng. |
 

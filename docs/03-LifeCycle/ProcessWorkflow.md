@@ -1,75 +1,66 @@
-# Process & Workflow Model (BPMN 2.0)
+# Process & Workflow Model (BPMN 2.0) – FitCampus Student Journey
 
 ```plantuml
 @startuml
 !pragma useVerticalIf on
 !include <bpmn>
 
-' Pools
-POOL "Customer" as Customer {
-  START_EVENT(start_cus, "Start")
+POOL "Learner" as Learner {
+  START_EVENT(start_lrn, "Discover Portal")
   TASK(task_signup, "Complete Onboarding")
-  EXCLUSIVE_GATEWAY(gw_membership, "Membership?" )
-  TASK(task_select_plan, "Select Plan")
-  TASK(task_book_session, "Book Session")
-  TASK(task_follow_plan, "Follow Daily Plan")
-  END_EVENT(end_cus, "Goal Achieved")
+  TASK(task_orientation, "Finish Orientation Checklist")
+  TASK(task_membership, "Activate Membership")
+  TASK(task_book, "Book First Class")
+  TASK(task_follow, "Follow Daily Plan")
+  TASK(task_join, "Join Challenge")
+  END_EVENT(end_lrn, "Achieve Goal")
 }
 
-POOL "Coach" as Coach {
-  START_EVENT(start_coach, "Assigned")
-  TASK(task_review_intake, "Review Intake")
-  TASK(task_customize_plan, "Customize Program")
-  TASK(task_conduct_session, "Conduct Session")
-  TASK(task_monitor_progress, "Monitor Progress")
-  END_EVENT(end_coach, "Customer Succeeds")
+POOL "Mentor" as Mentor {
+  START_EVENT(start_mentor, "Cohort Assigned")
+  TASK(task_review, "Review Learner Insights")
+  TASK(task_nudge, "Send Nudge / Schedule Check-in")
+  TASK(task_adjust, "Adjust Plan or Resources")
+  END_EVENT(end_mentor, "Cohort Thriving")
 }
 
-POOL "Admin" as Admin {
-  START_EVENT(start_admin, "Customer Joins")
-  TASK(task_verify_payment, "Verify Payment")
-  TASK(task_manage_catalog, "Manage Catalog")
-  TASK(task_handle_support, "Handle Support Ticket")
-  END_EVENT(end_admin, "Ops Stable")
+POOL "Wellness Admin" as Admin {
+  START_EVENT(start_admin, "Program Launch")
+  TASK(task_publish, "Publish Content & Challenges")
+  TASK(task_monitor, "Monitor KPIs & Feedback")
+  TASK(task_support, "Handle Support Tickets")
+  END_EVENT(end_admin, "Operations Stable")
 }
 
-' Flows Customer
-start_cus --> task_signup --> gw_membership
-(gw_membership) --> task_select_plan : yes
-(gw_membership) --> task_book_session : trial
-(task_select_plan) --> task_book_session --> task_follow_plan --> end_cus
+start_lrn --> task_signup --> task_orientation --> task_membership --> task_book --> task_follow --> task_join --> end_lrn
 
-' Coach collaboration
-start_coach --> task_review_intake --> task_customize_plan --> task_conduct_session --> task_monitor_progress --> end_coach
+start_mentor --> task_review --> task_nudge --> task_adjust --> end_mentor
 
-' Message flows
-TASK(task_signup) ..> TASK(task_review_intake) : "Send intake"
-TASK(task_select_plan) ..> TASK(task_verify_payment) : "Purchase details"
-TASK(task_book_session) ..> TASK(task_conduct_session) : "Session booking"
-TASK(task_follow_plan) ..> TASK(task_monitor_progress) : "Completion data"
-TASK(task_monitor_progress) ..> TASK(task_follow_plan) : "Feedback"
-TASK(task_handle_support) ..> TASK(task_follow_plan) : "Resolved guidance"
-TASK(task_follow_plan) ..> TASK(task_handle_support) : "Support request"
+start_admin --> task_publish --> task_monitor --> task_support --> end_admin
 
-' Admin flow
-start_admin --> task_verify_payment --> task_manage_catalog --> task_handle_support --> end_admin
+TASK(task_signup) ..> TASK(task_review) : "Orientation data"
+TASK(task_membership) ..> TASK(task_support) : "Payment review"
+TASK(task_book) ..> TASK(task_publish) : "Seat allocation"
+TASK(task_follow) ..> TASK(task_review) : "Completion metrics"
+TASK(task_review) ..> TASK(task_follow) : "Personalized advice"
+TASK(task_support) ..> TASK(task_follow) : "Resolution guidance"
+TASK(task_join) ..> TASK(task_monitor) : "Challenge stats"
 
 @enduml
 ```
 
 ## Workflow Narrative
-1. **Customer Pool:** Begins with onboarding, chooses membership path, books sessions, and follows daily plans until goals are met.
-2. **Coach Pool:** Receives intake data, customizes programs, delivers sessions, and monitors progress to reinforce adherence.
-3. **Admin Pool:** Confirms payments, curates catalog, and resolves escalated support issues to maintain operational stability.
-4. **Collaboration:** Message flows represent information exchange between pools, aligning with BPMN 2.0 choreography semantics.
+1. **Learner Pool:** Sinh viên khám phá portal, hoàn thành onboarding + orientation, kích hoạt membership, đặt lớp đầu tiên, theo dõi bảng kế hoạch hằng ngày và tham gia thử thách.
+2. **Mentor Pool:** Nhận dữ liệu intake và tiến độ, gửi nhắc nhở, điều chỉnh kế hoạch, tổ chức check-in để giữ động lực cho cohort.
+3. **Wellness Admin Pool:** Xuất bản nội dung mới, cấu hình thử thách, theo dõi KPI và xử lý yêu cầu hỗ trợ.
+4. **Collaboration:** Message flows mô tả dữ liệu luân chuyển giữa learner ↔ mentor ↔ admin (orientation, booking, metrics, support).
 5. **Exception Handling:**
-   - Payment verification failure triggers alternate admin subprocess for manual review.
-   - Missed sessions loop customers back to booking with automated nudges from workflow engine.
+   - Thanh toán lỗi → kích hoạt quy trình hỗ trợ thủ công.
+   - Learner bỏ lỡ buổi học → hệ thống bật workflow nhắc nhở và mentor can thiệp.
+   - Khi challenge đạt quá tải → admin cập nhật giới hạn hoặc tạo bảng mới.
 
-## Alignment with BPMN 2.0 Elements
-- **Pools & Lanes:** Distinguish organizational boundaries (Customer, Coach, Admin).
-- **Events:** Start/End events mark process lifecycle.
-- **Gateways:** Exclusive gateway determines whether customer goes to paid membership or trial session booking.
-- **Tasks:** Atomic activities align with SRS functional requirements (onboarding, scheduling, coaching, support).
-- **Message Flows:** Represent inter-pool communication (intake data, bookings, support interactions).
+## Alignment với BPMN 2.0
+- Pools đại diện cho vai trò chính (Learner, Mentor, Wellness Admin).
+- Tasks tương ứng yêu cầu trong SRS (LRN-FR-001, MEM-FR-002, SCH-FR-001, PROG-FR-001, OPS-FR-001).
+- Message flows thể hiện trao đổi dữ liệu cung cấp nền tảng cho automation và cảnh báo.
 

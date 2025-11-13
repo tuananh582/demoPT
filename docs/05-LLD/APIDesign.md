@@ -1,121 +1,132 @@
-# API Design (Excerpt)
+# API Design (Excerpt) – FitCampus Student Portal
 
-## 1. Identity & Onboarding
-### POST /api/v1/auth/register
-- **Body:** `{ "email": string, "password": string, "provider": "email" | "google" | "facebook" | "apple", "metadata": {} }`
-- **Response:** `{ "accessToken", "refreshToken", "user": { "id", "roles" } }`
-- **Notes:** MFA optional on registration; rate limited.
+## 1. Onboarding & Orientation
+### POST /api/v1/learners/register
+- **Body:** `{ "email": string, "password": string, "provider": "email"|"sso"|"google"|"facebook", "profile": { "firstName", "lastName", "studentId"? } }`
+- **Response:** `{ "accessToken", "refreshToken", "learner": { "id", "roles": ["LEARNER"], "orientationStatus" } }`
+- **Notes:** Supports campus SSO redirect; throttled 5 req/min.
 
-### POST /api/v1/onboarding/intake
-- **Body:** `{ "goals": [], "preferences": {}, "healthFlags": [], "consentAccepted": true }`
-- **Response:** `{ "profileId", "recommendedPrograms": [] }`
-- **Errors:** `409` when consent missing; `422` invalid questionnaire version.
+### POST /api/v1/learners/orientation
+- **Body:** `{ "readinessAnswers": [], "consents": [{ "code", "granted": boolean }], "preferredGoal": string }`
+- **Response:** `{ "orientationChecklist": [...], "recommendedPath": string }`
+- **Errors:** `422` khi thiếu consent; `409` nếu checklist khóa do mentor.
 
-### GET /api/v1/customers/{id}/profile
-- **Auth:** Customer or assigned coach/admin.
-- **Response:** Demographics, goals, risk flags, coach assignments.
+### POST /api/v1/learners/orientation/sessions
+- **Body:** `{ "slotId": string }`
+- **Response:** `{ "reservationId", "startTime", "calendarLinks": { "google", "outlook" } }`
 
-## 2. Catalog & Commerce
-### GET /api/v1/catalog/products
-- **Query:** `goal`, `duration`, `priceMin`, `priceMax`, `coachId`, `sort`
-- **Response:** Paginated list with ratings, testimonials, comparison metadata.
+## 2. Membership & Billing
+### GET /api/v1/memberships
+- **Query:** `goal`, `facility`, `priceMin`, `priceMax`, `durationWeeks`, `sort`
+- **Response:** Paginated plans với perks, testimonial học viên, badge yêu cầu.
 
-### POST /api/v1/orders
-- **Body:** `{ "productId", "addons": [], "promoCode": string }`
-- **Flow:** Creates pending order + invoice; returns payment intent reference.
+### POST /api/v1/memberships/orders
+- **Body:** `{ "membershipId", "perks": [], "promoCode"?, "paymentMethodId"? }`
+- **Response:** `{ "orderId", "status", "paymentIntent" }`
 
-### POST /api/v1/orders/{id}/confirm
+### POST /api/v1/memberships/orders/{orderId}/confirm
 - **Body:** `{ "paymentMethodId", "saveMethod": boolean }`
-- **Behaviour:** Captures payment (Release 2 automated), updates subscription, triggers notifications.
+- **Behaviour:** Tạo subscription, gửi receipt, phát sự kiện `MembershipActivated`.
 
-### POST /api/v1/subscriptions/{id}/change
-- **Body:** `{ "action": "upgrade"|"downgrade"|"pause"|"cancel", "effectiveDate": date }`
-- **Validations:** Checks proration rules, pause limits.
+### PATCH /api/v1/memberships/{id}
+- **Body:** `{ "action": "upgrade"|"downgrade"|"pause"|"resume"|"cancel", "effectiveDate" }`
+- **Validations:** Kiểm tra giới hạn pause (≤30 ngày, max 2 lần/năm học), tính toán proration.
 
-## 3. Training & Experience
-### GET /api/v1/plans/today
-- **Auth:** Customer
-- **Response:** Daily schedule with workouts, meals, habits, completion states, media URLs.
+## 3. Training Hub & Daily Plan
+### GET /api/v1/dashboard/today
+- **Auth:** Learner
+- **Response:** `{ "date", "timezone", "items": [{ "id", "type": "WORKOUT"|"LESSON"|"HABIT"|"TIP", "title", "media", "status", "xp" }] }`
 
-### PATCH /api/v1/plans/{planId}/items/{itemId}
-- **Body:** `{ "status": "completed"|"skipped", "substitutionId"?, "feedback": string, "metrics": {} }`
-- **Side Effects:** Emits `PlanItemCompleted` event, updates streaks/badges.
+### PATCH /api/v1/dashboard/items/{itemId}
+- **Body:** `{ "status": "completed"|"skipped", "feedback"?, "metrics"?: { "reps"?, "duration"?, "intensity"? } }`
+- **Side Effects:** Emits `PlanItemCompleted`, cập nhật streak + XP.
 
-### POST /api/v1/plans/{planId}/substitutions
-- **Body:** `{ "itemId", "alternativeId", "reason" }`
-- **Response:** Updated plan item details.
+### POST /api/v1/dashboard/items/{itemId}/substitution
+- **Body:** `{ "alternativeId", "reason": string }`
+- **Response:** Cập nhật item với media và hướng dẫn mới.
 
-## 4. Scheduling
+## 4. Scheduling & Sessions
 ### GET /api/v1/sessions
-- **Query:** `start`, `end`, `timezone`, `role`, `status`
-- **Response:** Aggregated calendar entries with join links and attendance state.
+- **Query:** `start`, `end`, `timezone`, `goal`, `location`, `status`
+- **Response:** Sessions hiển thị capacity, waitlist state, yêu cầu prerequisite.
 
-### POST /api/v1/sessions
-- **Body:** `{ "type", "startTime", "endTime", "timezone", "coachId", "location", "joinLink"?, "capacity", "participants": [] }`
-- **Validations:** Conflict detection, capacity limit, membership entitlements.
+### POST /api/v1/sessions/{id}/book
+- **Body:** `{ "learnerId"?, "notes"? }`
+- **Behaviour:** Xác nhận chỗ, gửi notification, log attendance placeholder.
 
 ### POST /api/v1/sessions/{id}/waitlist
-- **Body:** `{ "customerId" }`
-- **Response:** Waitlist position, estimated confirmation window.
+- **Body:** `{ "learnerId" }`
+- **Response:** `{ "position", "expiresAt", "autoConfirm": boolean }`
 
 ### PATCH /api/v1/sessions/{id}
-- **Body:** `{ "status", "newTime"?, "cancellationReason"? }`
-- **Behaviour:** Updates calendar, reissues notifications, handles refunds if necessary.
+- **Body:** `{ "status": "confirmed"|"cancelled"|"completed", "newTime"?, "reason"? }`
+- **Side Effects:** Resend invites, xử lý hoàn tiền (nếu cần), cập nhật leaderboard.
 
-## 5. Communication & Community
-### GET /api/v1/threads
+## 5. Community, Messaging & Support
+### GET /api/v1/messages/threads
 - **Query:** `context`, `participantId`, `page`, `pageSize`
-- **Response:** Threads with last message preview, unread counts.
+- **Response:** Threads với unread count, thông tin mentor/peer.
 
 ### POST /api/v1/messages
-- **Body:** `{ "threadId"?, "recipientId", "body", "attachments": [] }`
-- **Processing:** Virus scan attachments, push notifications, store read receipts.
+- **Body:** `{ "threadId"?, "recipientId"?, "groupId"?, "body", "attachments": [{ "url", "type" }] }`
+- **Processing:** Quét virus, lưu read receipt, broadcast qua WebSocket.
 
-### GET /api/v1/community/posts
-- **Query:** `communityId`, `sort`, `filter`
-- **Response:** Posts with reactions summary, moderation flags.
+### GET /api/v1/challenges
+- **Query:** `status`, `goal`, `dorm`
+- **Response:** Danh sách challenge với quy tắc, phần thưởng, leaderboard snapshot.
+
+### POST /api/v1/challenges/{id}/join
+- **Body:** `{ "teamId"?, "consent": boolean }`
+- **Response:** `{ "enrollmentId", "xpReward" }`
 
 ### POST /api/v1/support/tickets
-- **Body:** `{ "subject", "description", "priority", "attachments": [] }`
-- **Response:** Ticket id, SLA deadline, assigned agent (if auto-assigned).
+- **Body:** `{ "subject", "description", "priority", "category", "attachments": [] }`
+- **Response:** `{ "ticketId", "slaDueAt", "assignedTo"? }`
 
-## 6. Analytics & Reporting
-### GET /api/v1/analytics/progress
-- **Query:** `customerId`, `metrics[]`, `range`
-- **Response:** Time series, trendlines, forecast data.
+## 6. Progress & Analytics
+### GET /api/v1/progress/metrics
+- **Query:** `range`, `metrics[]`, `cohort`?
+- **Response:** `{ "series": [{ "metric", "data": [{ "timestamp", "value", "target"?, "source" }] }], "cohortBenchmark" }`
 
-### GET /api/v1/analytics/cohorts
-- **Query:** `dimension`, `metric`, `interval`
-- **Response:** Aggregated cohort performance with drilldown tokens.
+### GET /api/v1/progress/reports
+- **Query:** `format=pdf|csv`, `range`, `includeAdvisorNotes`
+- **Response:** Download link; metadata: filters, generatedAt, preparedBy.
 
-### GET /api/v1/reports/finance
-- **Role:** Admin only.
-- **Response:** Revenue breakdown, refunds, outstanding invoices, export links.
+### GET /api/v1/cohorts/at-risk
+- **Auth:** Mentor/Admin
+- **Response:** `{ "learners": [{ "id", "riskScore", "drivers": [], "recommendedActions": [] }] }`
 
-## 7. Automation & Integrations
-### POST /api/v1/automations
-- **Body:** `{ "name", "trigger", "conditions", "actions", "status" }`
-- **Response:** Automation id, simulation preview results.
+## 7. Gamification & Integrations
+### GET /api/v1/xp/summary
+- **Auth:** Learner
+- **Response:** `{ "currentXP", "level", "streakDays", "badges": [] }`
 
-### POST /api/v1/automations/{id}/simulate
-- **Body:** `{ "sampleSize" }`
-- **Response:** Impact summary, affected entities.
+### POST /api/v1/quests/{id}/complete
+- **Body:** `{ "evidence"?: { "type", "url" }, "notes"? }`
+- **Behaviour:** Validate prerequisites, grant rewards, log audit.
 
 ### POST /api/v1/integrations/wearables/webhook
-- **Auth:** Provider signature validation.
-- **Body:** Provider-specific payload normalized to metrics.
-- **Response:** `202 Accepted` once queued.
+- **Auth:** HMAC signature header
+- **Body:** `{ "learnerId", "metrics": [{ "type", "value", "unit", "timestamp" }] }`
+- **Response:** `202 Accepted` sau khi enqueue xử lý.
 
 ### POST /api/v1/integrations/api-keys
-- **Role:** Admin.
-- **Body:** `{ "name", "rateLimit", "scopes" }`
-- **Response:** API key (one-time display).
+- **Role:** Wellness Admin
+- **Body:** `{ "name", "rateLimit", "scopes": ["sessions:read", "challenges:read"], "expiresAt"? }`
+- **Response:** `{ "apiKey" }` hiển thị một lần.
 
-## 8. Observability & Audit
-### GET /api/v1/audit-logs
-- **Query:** `actorId`, `resourceType`, `dateRange`
-- **Response:** Paginated log entries with metadata.
-
+## 8. Observability & Health
 ### GET /api/v1/health
-- **Response:** Status of critical dependencies, version info.
+- **Response:** `{ "status": "ok", "services": { "database": "ok", "cache": "ok", "queue": "ok" } }`
+
+### GET /api/v1/audit-logs
+- **Query:** `actorId`, `resourceType`, `action`, `range`
+- **Response:** Trang kết quả 50 bản ghi/trang, hỗ trợ sort, export CSV.
+
+---
+**Standards:**
+- JSON:API style responses, `status` + `message` envelope for errors.
+- Pagination: cursor-based (`nextCursor`).
+- Idempotency: `Idempotency-Key` header cho POST/patch quan trọng.
+- Localization: `Accept-Language` header (vi-VN default, en-US optional).
 

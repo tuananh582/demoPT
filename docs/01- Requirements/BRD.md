@@ -1,111 +1,110 @@
 # Business Requirements Document (BRD)
-## Customer-Centric Personal Training Platform
+## FitCampus – Student Fitness Portal
 
 ## 1. Executive Summary
-The personal training business requires a unified digital experience that engages customers, empowers coaches, and provides administrators with end-to-end visibility. This BRD articulates the business needs, scope, and strategic alignment for delivering a modern customer-facing platform that elevates learner outcomes, increases retention, and scales operations.
+The FitCampus initiative delivers a holistic digital experience that empowers students to manage their fitness journey end-to-end. The portal centralizes orientation, membership, training content, scheduling, and social motivation in one learner-first interface. This BRD defines the business needs, scope, and success criteria for launching a modern student-facing platform that drives healthy habits, increases facility utilization, and elevates campus wellness outcomes.
 
 ## 2. Business Objectives & Success Metrics
 | Objective | KPI / Target |
 |-----------|--------------|
-| Increase customer acquisition via self-service onboarding | +35% new sign-ups per quarter |
-| Improve customer retention | 85% 6-month retention rate |
-| Expand coach productivity | 20% increase in active customer-to-coach ratio |
-| Grow ancillary revenue (upsells, add-ons) | 25% uplift within 12 months |
-| Elevate customer satisfaction | NPS ≥ 60, CSAT ≥ 4.5/5 |
+| Boost student onboarding to fitness programs | +40% new learner activations per semester |
+| Increase recurring participation | ≥ 70% weekly active learners |
+| Improve facility utilization | +25% average class fill rate |
+| Drive engagement in wellness challenges | ≥ 60% learners joining at least one challenge per term |
+| Elevate student satisfaction | NPS ≥ 65, CSAT ≥ 4.6/5 |
 
 ## 3. Background & Business Need
-- Current experience is fragmented across spreadsheets, messaging apps, and manual scheduling causing drop-offs during onboarding.
-- Customers demand on-demand access to workouts, progress tracking, and direct communication with coaches.
-- Business leadership seeks data-driven insights to optimize pricing, promotions, and program effectiveness.
-- Competitors offer advanced digital ecosystems; modernization is critical to maintain market share.
+- Students juggle academics, part-time jobs, and social life; they need flexible, personalized fitness guidance available anytime.
+- Current campus wellness touchpoints are fragmented (emails, posters, manual sign-up sheets), causing low conversion and abandoned goals.
+- Student affairs seeks actionable insights on participation and wellness trends to tailor programming and justify investments.
+- Competing universities offer mobile-first wellness apps; FitCampus must match or exceed digital expectations to stay competitive.
 
 ## 4. Stakeholder Analysis
 | Stakeholder | Role | Needs |
 |-------------|------|-------|
-| Executive Sponsor | Approves funding and strategy | Visibility into revenue, growth, and differentiation |
-| Product Management | Defines roadmap | Clear prioritization, validated business value |
-| Operations/Admin Team | Day-to-day management | Efficient workflows, accurate data, compliance |
-| Coaches | Deliver programs | Insight into client adherence, easy scheduling, communication |
-| Customers | Learners/end users | Seamless onboarding, engaging training content, transparency |
-| Marketing | Growth & retention | Campaign automation, segmentation, conversion insights |
-| Support Team | Customer care | Omnichannel support tools, SLAs, knowledge base |
+| Student Affairs Leadership | Sponsors, budget owners | Proof of wellness impact, adoption dashboards |
+| Campus Wellness Team | Program coordinators | Simplified content publishing, attendance visibility |
+| Student Success Coaches | Peer mentors | Real-time learner progress, nudge automations |
+| IT & Data Services | Platform support | Secure architecture, integrations, analytics |
+| Students (Learners) | Primary users | Quick onboarding, engaging content, transparent plans |
+| Resident Advisors | Influencers | Group programming tools, challenge leaderboards |
+| Marketing & Comms | Awareness | Campaign automation, conversion tracking |
+| Compliance & Legal | Risk management | Consent, privacy, accessibility compliance |
 
 ## 5. Current State Assessment
-- Manual onboarding via phone/email; average conversion time 5 days.
-- Scheduling conflicts due to lack of centralized calendar.
-- Limited visibility into customer progress; reliance on coach updates.
-- No unified portal for payments, content, or support.
+- Club sign-ups rely on paper forms and manual spreadsheet tracking.
+- Workout plans and nutrition tips scattered across PDFs and social channels.
+- No unified calendar for classes or mentoring sessions; conflicts lead to no-shows.
+- Limited feedback loops; wellness team relies on annual surveys with low response rates.
 
 ## 6. Future State Vision
-- Customers self-serve onboarding, purchase memberships, and immediately receive personalized programs.
-- Coaches leverage dashboards, automation, and analytics to manage larger rosters with less administrative overhead.
-- Administrators access real-time revenue, engagement, and compliance dashboards.
-- Integrated communication hub supporting chat, announcements, and community.
+- Learners join via mobile or web onboarding, complete readiness checks, and receive tailored plans instantly.
+- Students manage memberships, book classes, and access multimedia lessons in one place.
+- Progress analytics, wearables, and gamification maintain motivation and highlight at-risk learners.
+- Communities, challenges, and peer messaging strengthen accountability and campus culture.
 
 ## 7. Business Scope
 ### 7.1 In Scope
-- Responsive customer portal with onboarding, subscriptions, scheduling, training content, and analytics.
-- Coach workspace for roster management, program delivery, and communication.
-- Administrative console for catalog, billing oversight, promotions, and reporting.
-- Integrations with calendar providers, messaging services, wearable data sources, and identity provider.
+- Student-facing portal with onboarding, memberships, training plans, scheduling, analytics, and community features.
+- Advisor dashboards for monitoring cohorts, nudging learners, and curating content.
+- Integrations with campus identity, payment gateway, notification services, and wearable aggregators.
 
 ### 7.2 Out of Scope
-- Native mobile apps (planned as future enhancement).
-- Full payment gateway automation in Release 1 (manual capture only).
-- Brick-and-mortar access control systems.
-- Hardware integration beyond wearable data ingestion APIs.
+- Faculty/staff wellness programs (future expansion).
+- Native mobile apps (planned for later phase).
+- Physical access control hardware integrations.
+- Meal plan billing reconciliation outside fitness memberships.
 
 ## 8. Business Requirements
 | ID | Requirement | Description | Priority |
 |----|-------------|-------------|----------|
-| BR-01 | Customer self-onboarding | Provide guided assessments, plan recommendations, and trial bookings without staff intervention. | Must |
-| BR-02 | Digital program delivery | Offer multimedia workouts, nutrition plans, and habit tracking accessible 24/7. | Must |
-| BR-03 | Intelligent scheduling | Deliver unified calendar with bookings, waitlists, reminders, and attendance tracking. | Must |
-| BR-04 | Progress insights | Present dashboards for customers, coaches, and admins with actionable analytics. | Must |
-| BR-05 | Omnichannel communication | Enable secure messaging, broadcasts, support tickets, and community engagement. | Should |
-| BR-06 | Commerce management | Manage subscriptions, upgrades, add-ons, and promotions with auditability. | Must |
-| BR-07 | Operational automation | Provide workflows, alerts, and templated communications to reduce manual effort. | Should |
-| BR-08 | Compliance & trust | Support consent management, privacy controls, and robust security posture. | Must |
-| BR-09 | Partner integrations | Offer APIs and connectors for marketing, wearable, and CRM systems. | Could |
+| BR-01 | Student self-onboarding | Deliver guided registration, readiness quiz, and orientation journey without staff intervention. | Must |
+| BR-02 | Personalized training hub | Provide multimedia workouts, nutrition lessons, and habit trackers tailored to learner goals. | Must |
+| BR-03 | Smart scheduling | Offer unified calendar for classes, mentoring, and events with waitlists and reminders. | Must |
+| BR-04 | Progress intelligence | Surface learner dashboards, cohort analytics, and proactive nudges to sustain engagement. | Must |
+| BR-05 | Community motivation | Enable messaging, challenges, and campus-wide announcements to build accountability. | Should |
+| BR-06 | Membership & perks | Manage student memberships, perks, upgrades, and cancellations with transparency. | Must |
+| BR-07 | Gamification & rewards | Support streaks, badges, and quests that reinforce healthy routines. | Should |
+| BR-08 | Privacy & wellbeing safeguards | Enforce consent, data protection, and wellness escalation protocols. | Must |
+| BR-09 | Wearable & app integrations | Allow secure data sync from popular fitness apps to enrich insights. | Could |
 
 ## 9. Business Rules & Policies
-- Customers must accept liability waivers and health declarations before accessing workouts.
-- Refunds follow tiered policy: 100% within 3 days, 50% within 14 days, no refund afterwards unless medical proof.
-- Membership pauses limited to 2 per year, each up to 30 days.
-- Coaches require valid certifications uploaded annually.
-- Communications to minors must copy guardians per compliance.
+- Students must acknowledge liability waivers and campus wellness policies before accessing workouts.
+- Refund rules follow campus finance policy: full refund within 7 days, 50% within 21 days, thereafter only for documented medical reasons.
+- Membership pauses limited to 2 per academic year, each up to 30 days.
+- Learners under 18 require guardian approval for data sharing and communication features.
+- Wellness alerts (injury, mental health risk) trigger escalation pathways to student services.
 
 ## 10. Assumptions
-- Budget is approved for a 12-month phased delivery.
-- Key SMEs (head coach, support lead) available for discovery workshops.
-- Existing CRM provides API access for lead capture synchronization.
+- Funding approved for phased rollout across academic year.
+- Student ambassadors and resident advisors available to pilot test flows.
+- Campus SSO provides OAuth/OIDC integration for single sign-on.
 
 ## 11. Constraints
-- Must comply with GDPR, PDPA (Vietnam), and HIPAA-like safeguards for health data.
-- Brand guidelines mandate specific typography/color accessible combinations.
-- Legacy data migration limited to last 24 months of records.
+- Must comply with GDPR, PDPA (Vietnam), FERPA-like guidelines for student records, and campus accessibility standards.
+- Branding must align with university digital style guide (contrast, typography, mascot usage).
+- Legacy student wellness data only available for import for the past 24 months.
 
 ## 12. Risks & Mitigation
 | Risk | Impact | Likelihood | Mitigation |
 |------|--------|------------|-----------|
-| Wearable API changes | Medium | Medium | Establish vendor SLAs, monitor API deprecation notices. |
-| Adoption resistance by coaches | High | Medium | Provide training, champion program, gather feedback loops. |
-| Data privacy breach | High | Low | Implement security audits, DPO oversight, incident response plan. |
-| Manual payment errors | Medium | Medium | Add reconciliation workflows, dual approval, roadmap payment automation. |
-| Scope creep | Medium | Medium | Enforce change control, maintain prioritized backlog. |
+| Low adoption due to awareness gaps | High | Medium | Launch ambassadors, integrate with orientation events |
+| Integration delays with campus SSO | High | Low | Secure IT involvement early, stage sandbox testing |
+| Data privacy incident | High | Low | Enforce security audits, DPO review, incident response drills |
+| Content freshness | Medium | Medium | Establish content calendar, assign student creators |
+| Wearable vendor changes | Medium | Medium | Use abstraction layer, monitor API updates |
 
 ## 13. Benefits Analysis
-- Revenue uplift via premium digital services and cross-sell opportunities.
-- Reduced churn by offering data-backed coaching and community features.
-- Operational efficiency through automation saving estimated 25 hours/week across staff.
-- Enhanced brand perception and referral potential.
+- Improves student wellbeing outcomes and retention through data-driven support.
+- Streamlines operations for wellness team, saving ~20 hours/week on manual tasks.
+- Enhances campus brand perception and recruitment via modern digital experience.
+- Creates monetization opportunities through tiered memberships and partner perks.
 
 ## 14. Implementation Considerations
-- **Phasing:** Release 1 focuses on onboarding, scheduling, content delivery; Release 2 adds payment automation and deeper integrations.
-- **Dependencies:** Identity provider selection, messaging vendor contracts, data warehouse readiness.
-- **Training & Change Management:** Create e-learning modules, live webinars, and coach certification for platform usage.
+- **Phasing:** Release 1 emphasizes onboarding, memberships, training hub; Release 2 adds gamification, community, and wearables.
+- **Dependencies:** Finalize integrations (SSO, payments, messaging), source multimedia content, onboard support staff.
+- **Change Management:** Provide student tutorials, ambassador-led walkthroughs, and self-service knowledge base.
 
 ## 15. Acceptance & Approval
-- Business sponsors review BRD against strategic objectives.
-- Sign-off required from Executive Sponsor, Head of Product, Head of Operations, and Compliance Officer.
+- Student Affairs leadership, Campus Wellness director, IT security officer, and Compliance officer provide sign-off.
 

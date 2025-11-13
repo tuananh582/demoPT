@@ -13,10 +13,24 @@ interface AppShellProps {
 }
 
 export function AppShell({ title, navItems, children, roleGuard }: AppShellProps) {
-  const { user, isLoading, logout } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
   const [activeHash, setActiveHash] = useState<string>("");
+  const [mounted, setMounted] = useState(false);
+  
+  // Safely call useAuth only after mounting on client side
+  let user, isLoading, logout;
+  try {
+    const auth = useAuth();
+    user = auth.user;
+    isLoading = auth.isLoading;
+    logout = auth.logout;
+  } catch {
+    // During build/SSR, auth is not available - that's OK
+    user = null;
+    isLoading = false;
+    logout = () => {};
+  }
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -36,11 +50,12 @@ export function AppShell({ title, navItems, children, roleGuard }: AppShellProps
     return navItems.find((item) => pathname?.includes(item.href.replace("#", ""))) ?? navItems[0];
   }, [activeHash, navItems, pathname]);
 
-  if (!isLoading && (!user || user.role !== roleGuard)) {
-    if (typeof window !== "undefined") {
-      const redirectTarget = pathname ? `?redirect=${encodeURIComponent(pathname)}` : "";
-      router.replace(`/login${redirectTarget}`);
-    }
+  // Only check auth on client side, not during SSR/build
+  const shouldCheckAuth = typeof window !== "undefined";
+  
+  if (shouldCheckAuth && !isLoading && (!user || user.role !== roleGuard)) {
+    const redirectTarget = pathname ? `?redirect=${encodeURIComponent(pathname)}` : "";
+    router.replace(`/login${redirectTarget}`);
     return (
       <div className="flex min-h-screen items-center justify-center bg-zinc-50 p-8 text-center text-sm text-zinc-500 dark:bg-zinc-950 dark:text-zinc-400">
         Đang chuyển hướng...

@@ -5,12 +5,14 @@ Một nền tảng fitness toàn diện dành cho sinh viên, được thiết k
 ## 🎨 Thiết kế & Giao diện
 
 ### Màu sắc chính:
+
 - **Indigo** (`#6366f1`) – Màu chính
 - **Purple** (`#a855f7`) – Màu phụ
 - **Pink** (`#ec4899`) – Accent
 - **Gradient** – Sử dụng gradient modern cho các header và button
 
 ### Đặc điểm thiết kế:
+
 ✅ **Mobile-first** – Responsive trên tất cả thiết bị  
 ✅ **Modern UI** – Thiết kế flat với shadow depth  
 ✅ **Accessibility** – Hỗ trợ keyboard navigation, contrast tốt  
@@ -22,6 +24,7 @@ Một nền tảng fitness toàn diện dành cho sinh viên, được thiết k
 ## 📱 Các Trang & Chức năng
 
 ### 🏠 **Trang Chủ / Marketing** (`(marketing)/page.tsx`)
+
 - Hero section với call-to-action
 - 6 feature cards (tính năng nổi bật)
 - Stats banner (5000+ users, 50+ mentors, 100+ videos)
@@ -32,6 +35,7 @@ Một nền tảng fitness toàn diện dành cho sinh viên, được thiết k
 ---
 
 ### 🔐 **Trang Đăng Nhập** (`(auth)/login/page.tsx`)
+
 - Email & password fields
 - Social login buttons (Google, Microsoft)
 - Remember me & forgot password
@@ -42,6 +46,7 @@ Một nền tảng fitness toàn diện dành cho sinh viên, được thiết k
 ---
 
 ### 📝 **Trang Đăng Ký** (`(auth)/register/page.tsx`)
+
 - Multi-step form (3 bước)
   - Bước 1: Thông tin cơ bản (tên, email, mật khẩu)
   - Bước 2: Hồ sơ fitness (mục tiêu, kinh nghiệm)
@@ -54,6 +59,7 @@ Một nền tảng fitness toàn diện dành cho sinh viên, được thiết k
 ---
 
 ### 🎓 **Trang Chào mừng Onboarding** (`(student)/onboarding/welcome/page.tsx`)
+
 - Chào mừng sinh viên mới
 - Checklist 4 bước orientation
 - Info cards về tính năng
@@ -64,7 +70,9 @@ Một nền tảng fitness toàn diện dành cho sinh viên, được thiết k
 ---
 
 ### 📊 **Dashboard Chính** (`(student)/dashboard/page.tsx`)
+
 Trang chính của học viên với:
+
 - Welcome banner
 - 4 stats cards:
   - 🔥 Streak hôm nay (12 ngày)
@@ -82,6 +90,7 @@ Trang chính của học viên với:
 ---
 
 ### 📅 **Lịch & Booking Lớp** (`(student)/schedule/page.tsx`)
+
 - Filter by type (all, in-studio, virtual)
 - 6 session cards với:
   - Tên lớp, giáo viên, thời gian
@@ -96,6 +105,7 @@ Trang chính của học viên với:
 ---
 
 ### 📈 **Kế hoạch Hôm nay** (`(student)/plan/page.tsx`)
+
 - 3 stats: Progress, XP, Streak
 - 4 daily tasks:
   - Cardio (đã hoàn thành)
@@ -110,6 +120,7 @@ Trang chính của học viên với:
 ---
 
 ### 📊 **Tiến độ & Analytics** (`(student)/progress/page.tsx`)
+
 - Time range selector (week, month, year)
 - Export to PDF button
 - 4 metric cards:
@@ -126,6 +137,7 @@ Trang chính của học viên với:
 ---
 
 ### 👥 **Cộng đồng** (`(student)/community/page.tsx`)
+
 - Create post section
 - 3 sample posts từ users
 - Like, comment, share actions
@@ -139,6 +151,7 @@ Trang chính của học viên với:
 ---
 
 ### 💬 **Tin nhắn** (`(student)/messages/page.tsx`)
+
 - Chat list (3 conversations)
 - Message thread with mentor
 - Message input
@@ -150,6 +163,7 @@ Trang chính của học viên với:
 ---
 
 ### 🏆 **Thử thách** (`(student)/challenges/page.tsx`)
+
 - Active challenges grid
 - Available challenges list
 - Challenge cards with:
@@ -164,6 +178,7 @@ Trang chính của học viên với:
 ---
 
 ### ⚙️ **Cài đặt** (`(student)/settings/page.tsx`)
+
 - Tab navigation:
   - **Profile**: Thông tin cá nhân, avatar upload
   - **Security**: Mật khẩu, 2FA, devices
@@ -177,6 +192,7 @@ Trang chính của học viên với:
 ## 🎯 Tính Năng Chính
 
 ### 1. **Sidebar Navigation** (`(student)/layout.tsx`)
+
 - Collapsible sidebar (wide/narrow modes)
 - 8 menu items:
   - Dashboard, Kế hoạch, Lịch, Tiến độ, Thử thách, Cộng đồng, Tin nhắn, Cài đặt
@@ -186,11 +202,13 @@ Trang chính của học viên với:
 - Responsive: hides on mobile
 
 ### 2. **Top Bar**
+
 - Page title dynamic
 - Current date display
 - User info
 
 ### 3. **Color System**
+
 ```
 - Primary: Indigo (#6366f1)
 - Secondary: Purple (#a855f7)
@@ -201,6 +219,7 @@ Trang chính của học viên với:
 ```
 
 ### 4. **Interactive Elements**
+
 - Smooth button hover effects
 - Gradient backgrounds
 - Glassmorphism cards
@@ -213,12 +232,14 @@ Trang chính của học viên với:
 ## 🚀 Cách Chạy Website
 
 ### Prerequisites:
+
 ```bash
 - Node.js 18+
 - npm hoặc yarn
 ```
 
 ### Cài đặt:
+
 ```bash
 cd /Volumes/work/demowebpt
 npm install
@@ -227,6 +248,7 @@ yarn install
 ```
 
 ### Chạy development server:
+
 ```bash
 npm run dev
 # hoặc
@@ -236,6 +258,7 @@ yarn dev
 Truy cập: **http://localhost:3000**
 
 ### Build production:
+
 ```bash
 npm run build
 npm start
@@ -278,8 +301,8 @@ app/
   "react": "19.2.0",
   "react-dom": "19.2.0",
   "next": "16.0.1",
-  "lucide-react": "latest",     // Icons
-  "tailwindcss": "^4"           // Styling
+  "lucide-react": "latest", // Icons
+  "tailwindcss": "^4" // Styling
 }
 ```
 
@@ -293,7 +316,7 @@ app/
 ✅ Shadows & borders  
 ✅ Animation utilities  
 ✅ Dark mode compatible  
-✅ Custom spacing & sizing  
+✅ Custom spacing & sizing
 
 ---
 
@@ -320,6 +343,7 @@ app/
 ## 📊 Mock Data
 
 Tất cả dữ liệu hiện tại là mock data để demo:
+
 - Workouts, sessions, challenges
 - User profiles, messages
 - Progress metrics
@@ -332,25 +356,30 @@ Tất cả dữ liệu hiện tại là mock data để demo:
 ## 🔄 Next Steps untuk Production
 
 1. **Backend Integration**
+
    - Kết nối API endpoints từ `docs/05-LLD/APIDesign.md`
    - Replace mock `useState` với API calls
    - Add error handling & loading states
 
 2. **Authentication**
+
    - Implement OAuth 2.0 (Google, Microsoft)
    - JWT token management
    - Session storage
 
 3. **Real-time Features**
+
    - WebSocket cho messaging
    - Real-time leaderboard updates
    - Push notifications
 
 4. **Database**
+
    - PostgreSQL schema từ `docs/05-LLD/DataModel.md`
    - Data migration scripts
 
 5. **Testing**
+
    - Unit tests (Jest)
    - E2E tests (Playwright)
    - Performance testing
@@ -366,7 +395,7 @@ Tất cả dữ liệu hiện tại là mock data để demo:
 
 ✅ **Desktop** (1024px+)  
 ✅ **Tablet** (768px - 1023px)  
-✅ **Mobile** (< 768px)  
+✅ **Mobile** (< 768px)
 
 ---
 
@@ -405,6 +434,7 @@ Tất cả dữ liệu hiện tại là mock data để demo:
 ## 🤝 Support
 
 Để thêm tính năng mới hoặc sửa lỗi, hãy:
+
 1. Update component file
 2. Test trên browser
 3. Commit changes
@@ -412,4 +442,3 @@ Tất cả dữ liệu hiện tại là mock data để demo:
 ---
 
 **FitCampus** © 2025 | Wellness Platform for Students | Made with ❤️
-

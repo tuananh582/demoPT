@@ -1,33 +1,118 @@
-# Mô tả trình tự (Sequence) - dạng văn bản
+# Sequence Diagrams (Textual / PlantUML)
 
-## 1. Tạo lịch lớp online (Admin)
-```
-Admin -> UI Admin: Chọn "Tạo lịch"
-UI Admin -> Schedule API: POST /schedules {type, time, coach, participants, online_link}
-Schedule API -> Validation Service: Kiểm tra trùng lịch coach
-Validation Service --> Schedule API: Kết quả hợp lệ
-Schedule API -> DB: Lưu bản ghi schedule + participants
-Schedule API -> Message Queue: Publish event ScheduleCreated
-Message Queue -> Notification Worker: Consume event
-Notification Worker -> Email/SMS Service: Gửi thông báo tới coach & học viên
-UI Admin <- Schedule API: Trả về lịch mới
+## 1. Customer Onboarding & Intake
+```plantuml
+@startuml
+actor Guest
+participant "Web App" as UI
+participant "Identity Service" as ID
+participant "Onboarding Service" as ONB
+participant "PostgreSQL" as DB
+participant "Notification Service" as NOTIF
+
+Guest -> UI: Start sign-up
+UI -> ID: POST /register (credentials/social token)
+ID -> ID: Validate + create user
+ID --> UI: Auth token
+UI -> ONB: POST /intake (profile, goals)
+ONB -> DB: Insert customer profile & intake responses
+ONB -> NOTIF: Publish event CustomerOnboarded
+NOTIF -> Guest: Send welcome email/SMS
+UI <-- ONB: Intake summary + next steps
+@enduml
 ```
 
-## 2. Coach xác nhận lịch 1-1
-```
-Coach -> UI Coach: Mở thông báo lịch chờ xác nhận
-UI Coach -> Schedule API: PATCH /schedules/{id}/confirm
-Schedule API -> DB: Cập nhật trạng thái confirmed
-Schedule API -> Message Queue: Publish event ScheduleConfirmed
-Notification Worker -> Email học viên: Gửi xác nhận
-UI Coach <- Schedule API: Trả về trạng thái mới
+## 2. Membership Purchase (Manual Confirmation Release 1)
+```plantuml
+@startuml
+actor Customer
+participant "Web App" as UI
+participant "Subscription Service" as SUB
+participant "Billing Adapter" as BILL
+participant "Payment Gateway" as PAY
+participant "Admin Console" as ADMIN
+participant "Notification Service" as NOTIF
+
+Customer -> UI: Select plan + add-ons
+UI -> SUB: POST /orders
+SUB -> BILL: Create pending invoice
+BILL -> PAY: Create payment intent (manual capture)
+PAY --> BILL: Pending payment reference
+BILL --> SUB: Pending invoice
+SUB --> UI: Show awaiting confirmation
+ADMIN -> SUB: Approve payment (manual)
+SUB -> BILL: Capture payment
+BILL -> PAY: Capture request
+PAY --> BILL: Capture success
+BILL -> SUB: Update invoice = paid
+SUB -> DB: Activate subscription, entitlements
+SUB -> NOTIF: Publish SubscriptionActivated
+NOTIF -> Customer: Send receipt & welcome message
+@enduml
 ```
 
-## 3. Coach cập nhật tiến trình học viên
+## 3. Daily Plan Completion & Analytics Update
+```plantuml
+@startuml
+actor Customer
+participant "PWA" as PWA
+participant "Training Service" as TRN
+participant "Analytics Service" as ANL
+participant "Event Bus" as BUS
+participant "Coach Console" as COACH
+
+Customer -> PWA: Mark workout completed
+PWA -> TRN: PATCH /plans/{id}/items/{itemId}
+TRN -> TRN: Update progress + streaks
+TRN -> BUS: Emit PlanItemCompleted
+BUS -> ANL: Consume event, update metrics
+ANL -> COACH: Push dashboard refresh notification
+TRN --> PWA: Return updated plan summary
+PWA -> Customer: Display updated badges & analytics snapshot
+@enduml
 ```
-Coach -> UI Coach: Nhập dữ liệu tiến trình
-UI Coach -> Progress API: POST /trainees/{id}/progress
-Progress API -> DB: Lưu ProgressLogs
-Progress API -> Analytics Service: Trigger cập nhật dashboard
-UI Coach <- Progress API: Trả về log mới
+
+## 4. Session Booking & Reminder Workflow
+```plantuml
+@startuml
+actor Customer
+participant "Scheduler UI" as UI
+participant "Scheduling Service" as SCHED
+participant "Calendar Adapter" as CAL
+participant "Notification Service" as NOTIF
+participant "Coach" as Coach
+
+Customer -> UI: Book session slot
+UI -> SCHED: POST /sessions
+SCHED -> SCHED: Validate availability & conflicts
+SCHED -> CAL: Create calendar event (OAuth)
+CAL --> SCHED: Event ID + join link
+SCHED -> DB: Persist session + waitlist state
+SCHED -> NOTIF: Emit SessionBooked
+NOTIF -> Customer: Confirmation + reminders
+NOTIF -> Coach: Session assigned notification
+Coach -> Calendar: Accept invite (optional)
+@enduml
 ```
+
+## 5. Support Ticket Resolution Automation
+```plantuml
+@startuml
+actor Customer
+participant "Support Portal" as PORTAL
+participant "Support Service" as SUP
+participant "Automation Engine" as AUTO
+participant "Admin/Agent" as AGENT
+participant "Notification Service" as NOTIF
+
+Customer -> PORTAL: Submit support ticket
+PORTAL -> SUP: POST /tickets
+SUP -> SUP: Prioritize via SLA rules
+SUP -> AUTO: Trigger workflow (assign agent, set due date)
+AUTO -> AGENT: Notify assignment
+AGENT -> SUP: Update status/resolution notes
+SUP -> NOTIF: Send resolution email + CSAT survey
+NOTIF -> Customer: Resolution confirmation
+@enduml
+```
+

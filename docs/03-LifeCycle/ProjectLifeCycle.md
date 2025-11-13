@@ -1,39 +1,37 @@
-# Vòng đời dự án
+# Project Life Cycle
 
-## 1. Pha Khởi động
-- Thu thập yêu cầu từ ban điều hành, admin, coach.
-- Xác định mục tiêu, phạm vi, ngân sách, timeline.
-- Lập kế hoạch nguồn lực (PO, BA, UX, Dev, QA, DevOps).
+## 1. Initiation Phase
+- Conduct stakeholder workshops (executive sponsor, product, coaches, support, marketing) to refine vision and KPIs.
+- Define business case, success metrics (acquisition, retention, NPS), and secure funding.
+- Establish governance model, steering committee cadence, and risk register.
 
-## 2. Pha Phân tích
-- Hoàn thiện BRD, SRS, use case, acceptance criteria.
-- Tạo sơ đồ kiến trúc, mô hình dữ liệu.
-- Xác định rủi ro và kế hoạch giảm thiểu.
+## 2. Discovery & Analysis
+- Elicit requirements for customer portal, coach/admin consoles, and integrations aligned with BRD/SRS/PRD.
+- Map current vs. future state journeys, document process flows (BPMN), and finalize personas.
+- Validate regulatory obligations (GDPR, PDPA) and data handling policies with compliance team.
 
-## 3. Pha Thiết kế
-- Thiết kế UI/UX cho trang admin và coach.
-- Thiết kế kiến trúc logic, API contract, database schema.
-- Xây dựng kế hoạch test.
+## 3. Design Phase
+- Create UX prototypes for customer onboarding, training dashboard, scheduling, community, and admin workflows.
+- Define solution architecture, data models, API contracts, and integration patterns.
+- Produce testing strategy (unit, integration, E2E, performance, accessibility, security).
 
-## 4. Pha Phát triển
-- Sprint 1: Module auth, quản lý tài khoản.
-- Sprint 2: Dashboard doanh thu, quản lý học viên.
-- Sprint 3: Quản lý coach, gói tập, nội dung.
-- Sprint 4: Lịch, thông báo, tích hợp online meeting.
-- Áp dụng CI/CD, code review.
+## 4. Implementation Phase
+- Execute Scrum sprints delivering prioritized backlog (see ProductBacklog.md) with CI/CD pipelines.
+- Establish feature flag strategy and automated quality gates (lint, unit tests, security scans).
+- Conduct sprint reviews with stakeholders and incorporate feedback into backlog refinement.
 
-## 5. Pha Kiểm thử
-- Test chức năng theo test case từ acceptance criteria.
-- Test tích hợp API.
-- Test hiệu năng cho dashboard và lịch.
-- UAT với đại diện admin và coach.
+## 5. Verification Phase
+- Perform comprehensive QA: functional, regression, integration, performance, security, and accessibility testing.
+- Facilitate UAT sessions with representative customers, coaches, and admins to validate readiness.
+- Ensure documentation (user guides, support playbooks) completed and approved.
 
-## 6. Pha Triển khai
-- Triển khai staging → production.
-- Đào tạo người dùng admin và coach.
-- Thiết lập quy trình hỗ trợ sau triển khai.
+## 6. Deployment Phase
+- Run release readiness reviews, finalize go/no-go decisions per ReleasePlan.md.
+- Execute blue/green deployment, monitor health checks, and communicate launch updates.
+- Provide real-time support (hypercare) during initial rollout.
 
-## 7. Bảo trì và cải tiến
-- Theo dõi phản hồi, lập kế hoạch nâng cấp tính năng (ví dụ mobile app).
-- Xử lý bug, tối ưu hiệu năng.
-- Bổ sung báo cáo nâng cao theo yêu cầu kinh doanh.
+## 7. Operations & Continuous Improvement
+- Monitor KPIs, capture feedback via in-app surveys/community forums, and prioritize enhancements.
+- Schedule regular security/compliance audits and infrastructure maintenance.
+- Iterate roadmap (AI, mobile apps, additional integrations) based on strategic goals and analytics insights.
+

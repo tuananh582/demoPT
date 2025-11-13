@@ -1,14 +1,20 @@
-# Thuật ngữ
+# Glossary
 
-| Thuật ngữ | Định nghĩa |
-|-----------|------------|
-| Dashboard | Bảng điều khiển hiển thị các số liệu tổng quan. |
-| Gói tập | Sản phẩm dịch vụ gồm chu kỳ tập luyện (nhóm hoặc 1-1). |
-| Meal plan | Kế hoạch bữa ăn theo ngày/tuần cho học viên. |
-| Program | Chương trình tập luyện gồm nhiều bài tập và lịch trình. |
-| Feedback | Phản hồi của học viên sau buổi tập hoặc chương trình. |
-| Lead | Khách hàng tiềm năng chưa mua gói. |
-| Trial | Học viên đang trong giai đoạn dùng thử. |
-| Active | Học viên đang tham gia gói chính thức. |
-| PT | Personal Trainer (huấn luyện viên cá nhân). |
-| CRUD | Create, Read, Update, Delete. |
+| Term | Definition |
+|------|------------|
+| PWA (Progressive Web App) | Web application with offline support, push notifications, and app-like UX. |
+| Onboarding | Guided process for converting guests into active customers, including registration and intake. |
+| Membership | Subscription package granting access to training services, billed per plan. |
+| Training Plan | Personalized schedule of workouts, nutrition tasks, and habits tailored to customer goals. |
+| Habit Streak | Consecutive days of completing assigned habits, used for gamification and motivation. |
+| Automation Workflow | Rule-based sequence triggered by events (e.g., missed session) to send actions/notifications. |
+| RBAC/ABAC | Role-Based and Attribute-Based Access Control authorization models. |
+| Wearable Integration | Connection to external devices/apps (Apple Health, Google Fit) that supply biometric data. |
+| Cohort Analytics | Insight into grouped customers (e.g., by membership type) to track retention and performance. |
+| NPS (Net Promoter Score) | Customer loyalty metric derived from survey responses on recommendation likelihood. |
+| SLA (Service Level Agreement) | Commitment to respond/resolve support tickets within defined time frames. |
+| API Gateway | Entry point that authenticates, rate limits, and routes API requests to backend services. |
+| Feature Flag | Configuration that allows toggling features on/off without redeploying code. |
+| Hypercare | Intensified support period immediately following a release to respond quickly to issues. |
+| Data Residency | Requirement to store/process personal data within specific geographic regions. |
+

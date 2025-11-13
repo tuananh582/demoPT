@@ -1,80 +1,121 @@
-# Thiết kế API chi tiết (trích)
+# API Design (Excerpt)
 
-## 1. Auth
-### POST /auth/login
-- Input: { email, password }
-- Output: { access_token, refresh_token, user: {id, roles} }
-- Lỗi: 401 khi thông tin không hợp lệ.
+## 1. Identity & Onboarding
+### POST /api/v1/auth/register
+- **Body:** `{ "email": string, "password": string, "provider": "email" | "google" | "facebook" | "apple", "metadata": {} }`
+- **Response:** `{ "accessToken", "refreshToken", "user": { "id", "roles" } }`
+- **Notes:** MFA optional on registration; rate limited.
 
-### POST /auth/refresh
-- Input: { refresh_token }
-- Output: { access_token }
+### POST /api/v1/onboarding/intake
+- **Body:** `{ "goals": [], "preferences": {}, "healthFlags": [], "consentAccepted": true }`
+- **Response:** `{ "profileId", "recommendedPrograms": [] }`
+- **Errors:** `409` when consent missing; `422` invalid questionnaire version.
 
-## 2. Học viên
-### GET /trainees
-- Query: status, package_id, search, page, size.
-- Output: danh sách học viên với phân trang.
+### GET /api/v1/customers/{id}/profile
+- **Auth:** Customer or assigned coach/admin.
+- **Response:** Demographics, goals, risk flags, coach assignments.
 
-### POST /trainees
-- Input: { full_name, email, phone, status, package_id, goals }
-- Xử lý: tạo user, gán vai trò TRAINEE, tạo bản ghi trainee.
+## 2. Catalog & Commerce
+### GET /api/v1/catalog/products
+- **Query:** `goal`, `duration`, `priceMin`, `priceMax`, `coachId`, `sort`
+- **Response:** Paginated list with ratings, testimonials, comparison metadata.
 
-### GET /trainees/{id}/progress
-- Output: danh sách ProgressLogs.
+### POST /api/v1/orders
+- **Body:** `{ "productId", "addons": [], "promoCode": string }`
+- **Flow:** Creates pending order + invoice; returns payment intent reference.
 
-### POST /trainees/{id}/progress
-- Input: { recorded_at, weight, body_fat, muscle_mass, note }
+### POST /api/v1/orders/{id}/confirm
+- **Body:** `{ "paymentMethodId", "saveMethod": boolean }`
+- **Behaviour:** Captures payment (Release 2 automated), updates subscription, triggers notifications.
 
-## 3. Huấn luyện viên
-### GET /coaches
-- Output: danh sách coach với lịch khả dụng.
+### POST /api/v1/subscriptions/{id}/change
+- **Body:** `{ "action": "upgrade"|"downgrade"|"pause"|"cancel", "effectiveDate": date }`
+- **Validations:** Checks proration rules, pause limits.
 
-### POST /coaches
-- Input: { full_name, email, phone, specialization, availability[] }
+## 3. Training & Experience
+### GET /api/v1/plans/today
+- **Auth:** Customer
+- **Response:** Daily schedule with workouts, meals, habits, completion states, media URLs.
 
-### PATCH /coaches/{id}/roles
-- Input: { roles: ["COACH"] }
-- Mục tiêu: cấp quyền truy cập trang coach.
+### PATCH /api/v1/plans/{planId}/items/{itemId}
+- **Body:** `{ "status": "completed"|"skipped", "substitutionId"?, "feedback": string, "metrics": {} }`
+- **Side Effects:** Emits `PlanItemCompleted` event, updates streaks/badges.
 
-## 4. Gói tập & chương trình
-### GET /packages
-- Output: danh sách gói (group/1-1).
+### POST /api/v1/plans/{planId}/substitutions
+- **Body:** `{ "itemId", "alternativeId", "reason" }`
+- **Response:** Updated plan item details.
 
-### POST /packages
-- Input: { name, type, duration_weeks, price, description }
+## 4. Scheduling
+### GET /api/v1/sessions
+- **Query:** `start`, `end`, `timezone`, `role`, `status`
+- **Response:** Aggregated calendar entries with join links and attendance state.
 
-### POST /programs
-- Input: { name, description, goal, exercises: [{exercise_id, sets, reps}], meals: [{meal_id, day_of_week}] }
+### POST /api/v1/sessions
+- **Body:** `{ "type", "startTime", "endTime", "timezone", "coachId", "location", "joinLink"?, "capacity", "participants": [] }`
+- **Validations:** Conflict detection, capacity limit, membership entitlements.
 
-## 5. Bài tập (Lessons)
-### POST /exercises
-- Input: { category, name, video_url, description }
-- Validation: video_url phải là link hợp lệ (youtube/https).
+### POST /api/v1/sessions/{id}/waitlist
+- **Body:** `{ "customerId" }`
+- **Response:** Waitlist position, estimated confirmation window.
 
-## 6. Lịch
-### GET /schedules
-- Query: role (admin/coach), range_start, range_end, status.
+### PATCH /api/v1/sessions/{id}
+- **Body:** `{ "status", "newTime"?, "cancellationReason"? }`
+- **Behaviour:** Updates calendar, reissues notifications, handles refunds if necessary.
 
-### POST /schedules
-- Input: { type, start_time, end_time, coach_id, package_id?, participant_ids[], online_link? }
-- Logic: nếu type = "one_on_one" → status = pending, yêu cầu coach xác nhận.
+## 5. Communication & Community
+### GET /api/v1/threads
+- **Query:** `context`, `participantId`, `page`, `pageSize`
+- **Response:** Threads with last message preview, unread counts.
 
-### PATCH /schedules/{id}/confirm
-- Input: { action: "confirm" }
-- Điều kiện: chỉ coach được phân công mới xác nhận.
+### POST /api/v1/messages
+- **Body:** `{ "threadId"?, "recipientId", "body", "attachments": [] }`
+- **Processing:** Virus scan attachments, push notifications, store read receipts.
 
-### PATCH /schedules/{id}/cancel
-- Input: { reason }
-- Hệ thống gửi thông báo hủy tới coach/học viên.
+### GET /api/v1/community/posts
+- **Query:** `communityId`, `sort`, `filter`
+- **Response:** Posts with reactions summary, moderation flags.
 
-## 7. Thông báo
-### GET /notifications
-- Query: status (new/read)
+### POST /api/v1/support/tickets
+- **Body:** `{ "subject", "description", "priority", "attachments": [] }`
+- **Response:** Ticket id, SLA deadline, assigned agent (if auto-assigned).
 
-### PATCH /notifications/{id}/read
-- Đánh dấu đã đọc.
+## 6. Analytics & Reporting
+### GET /api/v1/analytics/progress
+- **Query:** `customerId`, `metrics[]`, `range`
+- **Response:** Time series, trendlines, forecast data.
 
-## 8. Báo cáo doanh thu
-### GET /reports/revenue
-- Query: period=day/week/month/year, start_date, end_date.
-- Output: { labels[], values[], total, comparison_previous }
+### GET /api/v1/analytics/cohorts
+- **Query:** `dimension`, `metric`, `interval`
+- **Response:** Aggregated cohort performance with drilldown tokens.
+
+### GET /api/v1/reports/finance
+- **Role:** Admin only.
+- **Response:** Revenue breakdown, refunds, outstanding invoices, export links.
+
+## 7. Automation & Integrations
+### POST /api/v1/automations
+- **Body:** `{ "name", "trigger", "conditions", "actions", "status" }`
+- **Response:** Automation id, simulation preview results.
+
+### POST /api/v1/automations/{id}/simulate
+- **Body:** `{ "sampleSize" }`
+- **Response:** Impact summary, affected entities.
+
+### POST /api/v1/integrations/wearables/webhook
+- **Auth:** Provider signature validation.
+- **Body:** Provider-specific payload normalized to metrics.
+- **Response:** `202 Accepted` once queued.
+
+### POST /api/v1/integrations/api-keys
+- **Role:** Admin.
+- **Body:** `{ "name", "rateLimit", "scopes" }`
+- **Response:** API key (one-time display).
+
+## 8. Observability & Audit
+### GET /api/v1/audit-logs
+- **Query:** `actorId`, `resourceType`, `dateRange`
+- **Response:** Paginated log entries with metadata.
+
+### GET /api/v1/health
+- **Response:** Status of critical dependencies, version info.
+

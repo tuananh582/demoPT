@@ -1,10 +1,16 @@
-# Phân tích bên liên quan
+# Stakeholder Analysis
 
-| Nhóm | Vai trò | Mức độ ảnh hưởng | Kỳ vọng chính | Chiến lược tương tác |
-|------|---------|------------------|---------------|----------------------|
-| Ban điều hành | Sponsor | Cao | Báo cáo doanh thu, hiệu suất | Báo cáo hàng tháng, demo kết quả |
-| Quản trị viên | Người dùng chính | Rất cao | Quản lý học viên, coach hiệu quả | Thu thập feedback định kỳ, hỗ trợ đào tạo |
-| Huấn luyện viên | Người dùng chính | Cao | Lịch rõ ràng, dữ liệu học viên đầy đủ | Workshop tính năng, tài liệu hướng dẫn |
-| Học viên | Người dùng gián tiếp | Trung bình | Chương trình cá nhân hóa, thông báo kịp thời | Khảo sát sau mỗi chu kỳ tập |
-| Đội kỹ thuật | Thực thi | Cao | Yêu cầu rõ ràng, kiến trúc ổn định | Grooming backlog, review tài liệu |
-| Đội hỗ trợ khách hàng | Hỗ trợ | Trung bình | Thông tin chính xác để xử lý ticket | Cập nhật knowledge base |
+| Stakeholder Group | Role | Influence | Key Expectations | Engagement Strategy |
+|-------------------|------|-----------|------------------|---------------------|
+| Executive Leadership | Sponsor / Decision Makers | High | Business case ROI, competitive differentiation, KPI reporting | Monthly steering committee, executive dashboards |
+| Product Management | Product Owner, roadmap | High | Clear priorities, validated requirements, customer insights | Weekly backlog grooming, discovery workshops |
+| Customers (Learners) | Primary end users | High | Seamless onboarding, engaging training, transparent billing | In-app feedback loops, beta cohorts, surveys |
+| Prospective Guests | Lead pipeline | Medium | Understanding value proposition, easy trial conversion | Marketing automation, usability testing |
+| Coaches | Power users | High | Efficient workflows, actionable insights, reliable communication | Enablement sessions, champion program, feedback forums |
+| Administrators / Operations | Day-to-day operators | High | Configurability, compliance controls, reporting | Training, SOP documentation, office hours |
+| Support Team | Customer success & care | Medium | Omnichannel tools, SLA visibility, knowledge base | Weekly syncs, ticket analytics reviews |
+| Engineering & QA | Delivery teams | High | Stable architecture, prioritized backlog, acceptance clarity | Agile ceremonies, technical reviews |
+| Compliance & Legal | Risk governance | Medium | Data protection, consent management, audit readiness | Compliance checkpoints, policy documentation |
+| Marketing & Growth | Acquisition & retention | Medium | Campaign data, segmentation, referral programs | Data sharing agreements, campaign retros |
+| External Partners (Payment, Wearable, CRM) | Integrations | Medium | Reliable APIs, clear SLAs, incident coordination | Vendor management meetings, shared status channels |
+

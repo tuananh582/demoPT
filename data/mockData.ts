@@ -19,6 +19,7 @@ export const coachNavItems: NavItem[] = [
   { label: "Tổng quan", href: "/coach", icon: "LayoutDashboard" },
   { label: "Học viên", href: "/coach/trainees", icon: "Users" },
   { label: "Tiến trình", href: "/coach/progress", icon: "TrendingUp" },
+  { label: "Thống kê", href: "/coach/statistics", icon: "BarChart3" },
   { label: "Lịch làm việc", href: "/coach/schedule", icon: "Calendar" },
   { label: "Thông báo", href: "/coach/notifications", icon: "Bell" },
   { label: "Ghi chú", href: "/coach/notes", icon: "NotebookPen" },
@@ -919,5 +920,252 @@ export const coachAgenda: CoachAgendaItem[] = [
     status: "online",
     note: "Theo dõi adherence tuần 2.",
     channel: "Google Meet",
+  },
+];
+
+export interface CoachScheduleChangeLog {
+  id: string;
+  scheduleTitle: string;
+  fromDay: string;
+  toDay: string;
+  previousTime: string;
+  newTime: string;
+  reason: string;
+  changedAt: string;
+  notifiedAt: string;
+  channel: string;
+}
+
+export const coachScheduleChangeLogs: CoachScheduleChangeLog[] = [
+  {
+    id: "change-01",
+    scheduleTitle: "PT 1-1 - Gia Han",
+    fromDay: "Thứ 3",
+    toDay: "Thứ 4",
+    previousTime: "07:30 - 08:30",
+    newTime: "09:00 - 10:00",
+    reason: "Học viên bận họp buổi sáng, chuyển sang khung giờ muộn hơn",
+    changedAt: "2024-06-02T09:45:00+07:00",
+    notifiedAt: "2024-06-02T09:46:00+07:00",
+    channel: "Google Meet",
+  },
+  {
+    id: "change-02",
+    scheduleTitle: "Trial - Linh Chi",
+    fromDay: "Thứ 7",
+    toDay: "Thứ 5",
+    previousTime: "09:00 - 10:00",
+    newTime: "16:00 - 17:00",
+    reason: "Ưu tiên sắp lịch thử trước sự kiện studio cuối tuần",
+    changedAt: "2024-06-01T15:20:00+07:00",
+    notifiedAt: "2024-06-01T15:21:00+07:00",
+    channel: "Studio B",
+  },
+];
+
+export interface CoachStatisticRecord {
+  id: string;
+  trainee: string;
+  coach: string;
+  status: TraineeStatus;
+  week: { sessions: number; target: number };
+  month: { sessions: number; target: number };
+  year: { sessions: number; target: number };
+  goalCompletionRate: number;
+  averageRating: number;
+  reviewCount: number;
+}
+
+export const coachStatisticRecords: CoachStatisticRecord[] = [
+  {
+    id: "stat-01",
+    trainee: "Gia Han",
+    coach: "Minh Tran",
+    status: "Active",
+    week: { sessions: 3, target: 3 },
+    month: { sessions: 12, target: 12 },
+    year: { sessions: 132, target: 144 },
+    goalCompletionRate: 92,
+    averageRating: 4.8,
+    reviewCount: 12,
+  },
+  {
+    id: "stat-02",
+    trainee: "Quang Huy",
+    coach: "Minh Tran",
+    status: "Trial",
+    week: { sessions: 2, target: 3 },
+    month: { sessions: 7, target: 12 },
+    year: { sessions: 24, target: 36 },
+    goalCompletionRate: 68,
+    averageRating: 4.2,
+    reviewCount: 8,
+  },
+  {
+    id: "stat-03",
+    trainee: "Linh Chi",
+    coach: "Kim Ngan",
+    status: "Lead",
+    week: { sessions: 0, target: 2 },
+    month: { sessions: 1, target: 6 },
+    year: { sessions: 4, target: 24 },
+    goalCompletionRate: 15,
+    averageRating: 0,
+    reviewCount: 0,
+  },
+];
+
+export interface CoachStatisticTrendPoint {
+  label: string;
+  sessions: number;
+  completionRate: number;
+  averageRating: number;
+}
+
+export const coachStatisticTrend: CoachStatisticTrendPoint[] = [
+  { label: "Tuần 1", sessions: 7, completionRate: 64, averageRating: 4.2 },
+  { label: "Tuần 2", sessions: 8, completionRate: 71, averageRating: 4.3 },
+  { label: "Tuần 3", sessions: 9, completionRate: 78, averageRating: 4.4 },
+  { label: "Tuần 4", sessions: 8, completionRate: 73, averageRating: 4.5 },
+];
+
+export type CoachStatisticAlertLevel = "info" | "warning" | "critical";
+
+export interface CoachStatisticAlert {
+  id: string;
+  trainee: string;
+  level: CoachStatisticAlertLevel;
+  message: string;
+  recommendedAction: string;
+  updatedAt: string;
+}
+
+export const coachStatisticAlerts: CoachStatisticAlert[] = [
+  {
+    id: "alert-01",
+    trainee: "Quang Huy",
+    level: "warning",
+    message: "Tỷ lệ hoàn thành tuần ở mức 68% (dưới ngưỡng 75%).",
+    recommendedAction: "Gửi kế hoạch cardio thay thế và nhắc ghi log dinh dưỡng.",
+    updatedAt: "2024-06-02T20:15:00+07:00",
+  },
+  {
+    id: "alert-02",
+    trainee: "Linh Chi",
+    level: "critical",
+    message: "3 tuần liền không tham gia buổi thử nghiệm nào.",
+    recommendedAction: "Đặt cuộc gọi giới thiệu lại chương trình và ưu đãi dùng thử.",
+    updatedAt: "2024-06-02T08:30:00+07:00",
+  },
+];
+
+export interface CoachStatisticExportEntry {
+  id: string;
+  format: "pdf" | "xlsx" | "csv";
+  rangeLabel: string;
+  createdAt: string;
+  createdBy: string;
+  filters: string[];
+}
+
+export const coachStatisticExportHistory: CoachStatisticExportEntry[] = [
+  {
+    id: "export-01",
+    format: "pdf",
+    rangeLabel: "Tuần 4 - Tháng 5/2024",
+    createdAt: "2024-05-31T21:05:00+07:00",
+    createdBy: "Minh Tran",
+    filters: ["Trạng thái: Active", "Bao gồm đánh giá"],
+  },
+  {
+    id: "export-02",
+    format: "xlsx",
+    rangeLabel: "Tháng 5/2024",
+    createdAt: "2024-05-25T10:12:00+07:00",
+    createdBy: "Lan Nguyen",
+    filters: ["Tất cả học viên", "Có dữ liệu rating"],
+  },
+];
+
+export type CoachNotePriority = "low" | "medium" | "high";
+
+export interface CoachNoteRecord {
+  id: string;
+  trainee: string;
+  coach: string;
+  status: "pending" | "in-progress" | "completed";
+  priority: CoachNotePriority;
+  content: string;
+  tags: string[];
+  createdAt: string;
+  updatedAt?: string;
+  dueAt?: string;
+  relatedSession?: string;
+  attachmentLabel?: string;
+  attachmentUrl?: string;
+}
+
+export const coachNotesSeed: CoachNoteRecord[] = [
+  {
+    id: "note-01",
+    trainee: "Gia Han",
+    coach: "Minh Tran",
+    status: "completed",
+    priority: "medium",
+    content: "Cải thiện kỹ thuật deadlift, gửi video form chuẩn cho học viên.",
+    tags: ["form", "strength"],
+    createdAt: "2024-06-01T08:45:00+07:00",
+    updatedAt: "2024-06-01T09:15:00+07:00",
+    relatedSession: "PT 1-1 • 01/06",
+    attachmentLabel: "Video hướng dẫn",
+    attachmentUrl: "https://example.com/deadlift-form.mp4",
+  },
+  {
+    id: "note-02",
+    trainee: "Gia Han",
+    coach: "Minh Tran",
+    status: "in-progress",
+    priority: "high",
+    content: "Nhắc bổ sung điện giải sau cardio, theo dõi giấc ngủ 7 tiếng.",
+    tags: ["recovery", "nutrition"],
+    createdAt: "2024-06-01T09:30:00+07:00",
+    dueAt: "2024-06-03T21:00:00+07:00",
+    relatedSession: "Cardio tối thứ 5",
+  },
+  {
+    id: "note-03",
+    trainee: "Quang Huy",
+    coach: "Minh Tran",
+    status: "pending",
+    priority: "high",
+    content: "Thiếu 1 buổi cardio tuần này, gửi lịch luyện tập thay thế và follow-up.",
+    tags: ["adherence", "cardio"],
+    createdAt: "2024-05-31T18:00:00+07:00",
+    dueAt: "2024-06-02T20:00:00+07:00",
+    relatedSession: "Check-in online • 25/05",
+  },
+  {
+    id: "note-04",
+    trainee: "Quang Huy",
+    coach: "Minh Tran",
+    status: "completed",
+    priority: "low",
+    content: "Gửi mẫu cardio 20 phút dễ thao tác tại nhà.",
+    tags: ["cardio", "home"],
+    createdAt: "2024-05-30T10:30:00+07:00",
+    updatedAt: "2024-05-30T11:10:00+07:00",
+    attachmentLabel: "Tài liệu cardio",
+    attachmentUrl: "https://example.com/cardio-20-phut.pdf",
+  },
+  {
+    id: "note-05",
+    trainee: "Linh Chi",
+    coach: "Kim Ngan",
+    status: "pending",
+    priority: "medium",
+    content: "Chuẩn bị deck giới thiệu chương trình core/strength cho buổi tư vấn.",
+    tags: ["onboarding", "program"],
+    createdAt: "2024-05-30T14:00:00+07:00",
+    dueAt: "2024-06-04T10:00:00+07:00",
   },
 ];

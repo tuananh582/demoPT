@@ -1,27 +1,18 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { FormEvent, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 
 export function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { login } = useAuth();
   const [email, setEmail] = useState("admin@gymflow.vn");
   const [password, setPassword] = useState("admin123");
   const [error, setError] = useState<string | null>(null);
-  const [redirectTarget, setRedirectTarget] = useState("/admin");
-
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-    const params = new URLSearchParams(window.location.search);
-    const redirectParam = params.get("redirect");
-    if (redirectParam) {
-      setRedirectTarget(redirectParam);
-    }
-  }, []);
+  const redirectParam = searchParams?.get("redirect");
+  const sanitizedRedirect = redirectParam && redirectParam.startsWith("/") ? redirectParam : null;
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -32,17 +23,10 @@ export function LoginForm() {
     }
 
     setError(null);
-    // Determine redirect destination
-    const destination = redirectTarget.includes("coach")
-      ? "/coach"
-      : email.toLowerCase().includes("coach")
-        ? "/coach"
-        : "/admin";
-    
-    // Use setTimeout to ensure state update happens before navigation
-    setTimeout(() => {
-      router.push(destination);
-    }, 0);
+    const normalizedEmail = email.toLowerCase();
+    const defaultDestination = normalizedEmail.includes("coach") ? "/coach" : "/admin";
+    const destination = sanitizedRedirect?.includes("coach") ? "/coach" : sanitizedRedirect ?? defaultDestination;
+    router.push(destination);
   };
 
   return (

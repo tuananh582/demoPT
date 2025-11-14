@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 
 import { SectionCard } from "@/components/ui/SectionCard";
-import { coachTrainees, progressSnapshots, traineeMeasurements } from "@/data/mockData";
+import { progressSnapshots, traineeMeasurements } from "@/data/mockData";
 
 const checklistItems = [
   "Ghi nhận RPE sau các set chính",
@@ -13,7 +13,6 @@ const checklistItems = [
 ];
 
 export default function CoachProgressPage() {
-  const traineeOptions = useMemo(() => coachTrainees.map((t) => t.name), []);
   const [searchTerm, setSearchTerm] = useState("");
 
   const measurementRows = useMemo(() => {

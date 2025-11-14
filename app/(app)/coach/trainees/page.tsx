@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { SectionCard } from "@/components/ui/SectionCard";
 import {
   coachTrainees,
@@ -30,8 +30,9 @@ type DetailTab = (typeof detailTabs)[number]["value"];
 export default function CoachTraineesPage() {
   const [filter, setFilter] = useState<StatusFilter>("all");
   const [search, setSearch] = useState("");
+  const defaultTrainee = coachTrainees[0];
   const [activeTab, setActiveTab] = useState<DetailTab>("overview");
-  const [selectedTrainee, setSelectedTrainee] = useState(coachTrainees[0]);
+  const [selectedTraineeId, setSelectedTraineeId] = useState(defaultTrainee?.name ?? "");
 
   const filteredTrainees = useMemo(() => {
     const normalizedSearch = search.trim().toLowerCase();
@@ -46,19 +47,38 @@ export default function CoachTraineesPage() {
     });
   }, [filter, search]);
 
-  useEffect(() => {
-    if (!filteredTrainees.some((trainee) => trainee.name === selectedTrainee.name)) {
-      setSelectedTrainee(filteredTrainees[0] ?? coachTrainees[0]);
+  const resolvedTrainee = useMemo(() => {
+    if (filteredTrainees.length === 0) {
+      return coachTrainees.find((trainee) => trainee.name === selectedTraineeId) ?? defaultTrainee;
     }
-  }, [filteredTrainees, selectedTrainee.name]);
+    const matched = filteredTrainees.find((trainee) => trainee.name === selectedTraineeId);
+    return matched ?? filteredTrainees[0];
+  }, [defaultTrainee, filteredTrainees, selectedTraineeId]);
 
-  useEffect(() => {
+  const selectedTrainee = resolvedTrainee ?? defaultTrainee;
+  const selectedName = selectedTrainee?.name ?? "";
+
+  if (!selectedTrainee || !selectedName) {
+    return (
+      <div className="space-y-8">
+        <div className="space-y-2">
+          <h2 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-100">Quản lý học viên</h2>
+          <p className="text-sm text-zinc-600 dark:text-zinc-300">
+            Hiện chưa có dữ liệu học viên để hiển thị. Hãy thêm học viên mới để bắt đầu quản lý.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  const handleSelectTrainee = (traineeName: string) => {
+    setSelectedTraineeId(traineeName);
     setActiveTab("overview");
-  }, [selectedTrainee.name]);
+  };
 
-  const mealPlan = traineeMealPlans[selectedTrainee.name];
-  const measurements = traineeMeasurements[selectedTrainee.name] ?? [];
-  const insight = traineeInsights[selectedTrainee.name];
+  const mealPlan = selectedName ? traineeMealPlans[selectedName] : undefined;
+  const measurements = selectedName ? traineeMeasurements[selectedName] ?? [] : [];
+  const insight = selectedName ? traineeInsights[selectedName] : undefined;
   const upcomingSessions = insight?.upcomingSessions ?? [];
   const reminders = insight?.reminders ?? [];
   const focusAreas = insight?.focusAreas ?? [];
@@ -116,12 +136,12 @@ export default function CoachTraineesPage() {
                 </p>
               ) : (
                 filteredTrainees.map((trainee) => {
-                  const isSelected = trainee.name === selectedTrainee.name;
+                  const isSelected = trainee.name === selectedName;
                   return (
                     <button
                       key={trainee.name}
                       type="button"
-                      onClick={() => setSelectedTrainee(trainee)}
+                      onClick={() => handleSelectTrainee(trainee.name)}
                       className={`w-full rounded-2xl border px-4 py-4 text-left transition ${
                         isSelected
                           ? "border-zinc-900 bg-zinc-900 text-white dark:border-white dark:bg-white dark:text-zinc-900"

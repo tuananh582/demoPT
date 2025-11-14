@@ -78,9 +78,16 @@
 - Input: { reason }
 - Hệ thống gửi thông báo hủy tới coach/học viên.
 
+### PATCH /schedules/{id}
+- Input: { start_time?, end_time?, status?, reason }
+- Logic: yêu cầu reason khi thay đổi thời gian; ghi log vào ScheduleChangeLogs và đẩy thông báo real-time.
+
 ### GET /schedules/coach-weekly-summary
 - Query: week_start, coach_id?
 - Output: { total_sessions, sessions: [{schedule_id, title, start_time, end_time, status}] }
+
+### GET /schedules/{id}/changes
+- Output: danh sách lịch sử thay đổi với thời gian, người cập nhật, lý do, trạng thái gửi thông báo.
 
 ## 7. Thông báo
 ### GET /notifications
@@ -93,3 +100,28 @@
 ### GET /reports/revenue
 - Query: period=day/week/month/year, start_date, end_date.
 - Output: { labels[], values[], total, comparison_previous }
+
+## 9. Thống kê huấn luyện
+### GET /coach/statistics
+- Query: range_start, range_end, trainee_status?, coach_id?, group_by=trainee|coach, include_raw?
+- Output: { summaries: [{subject_id, subject_name, sessions_completed, goal_completion_rate, average_rating, trend: []}], totals, alerts: [] }
+
+### GET /coach/statistics/export
+- Query: format=pdf|xlsx|csv, range_start, range_end, filters...
+- Output: { download_url, expires_at }
+
+## 10. Ghi chú/Nhắc việc
+### GET /coach-notes
+- Query: trainee_id?, status?, priority?, search?, page, size.
+- Output: danh sách ghi chú với phân trang.
+
+### POST /coach-notes
+- Input: { trainee_id, schedule_id?, title, content, priority, due_at?, tags[] }
+- Xử lý: tạo ghi chú, gán coach hiện tại, status mặc định "pending".
+
+### PATCH /coach-notes/{id}
+- Input: { title?, content?, priority?, status?, due_at?, tags?, attachment_url? }
+- Cho phép cập nhật trạng thái hoàn thành, đính kèm tài liệu.
+
+### DELETE /coach-notes/{id}
+- Xóa mềm ghi chú, lưu timestamp.

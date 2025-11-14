@@ -40,22 +40,26 @@
 |- **AC6.7**: Coach nhận thông báo khi học viên hủy buổi tập.
 
 ## Epic 7: Lịch drag-drop và thông báo thay đổi
-|- **AC7.1**: Lịch làm việc hỗ trợ drag-drop để coach sắp xếp lại buổi tập, thay đổi thời gian.
-|- **AC7.2**: Khi coach kéo thả buổi tập, hệ thống gửi thông báo tự động cho học viên/khách hàng liên quan trong vòng 5 phút.
-|- **AC7.3**: Giao diện lịch hiển thị rõ buổi tập được chọn (highlight, shadow) khi drag-drop.
+|- **AC7.1**: Lịch làm việc hỗ trợ drag-drop để coach sắp xếp lại buổi tập, thay đổi thời gian (bao gồm kéo dài/rút ngắn thời lượng).
+|- **AC7.2**: Khi coach kéo thả hoặc cập nhật buổi tập, hệ thống gửi thông báo tự động cho học viên/khách hàng liên quan trong vòng 5 phút và cập nhật lại lịch theo thời gian thực.
+|- **AC7.3**: Giao diện lịch hiển thị rõ buổi tập được chọn (highlight, shadow), trạng thái kéo thả và xung đột thời gian.
+|- **AC7.4**: Coach phải nhập lý do thay đổi khi cập nhật buổi tập; lý do được hiển thị trong thông báo gửi đến học viên.
 
 ## Epic 8: Thống kê chi tiết
-|- **AC8.1**: Trang thống kê riêng hiển thị tổng số buổi tập theo tuần/tháng/năm cho từng học viên.
-|- **AC8.2**: Tỷ lệ hoàn thành mục tiêu (%) được tính toán và hiển thị cùng với biểu đồ tiến độ.
-|- **AC8.3**: Đánh giá chất lượng buổi tập dựa trên feedback/ghi chú (1-5 sao) với nhân xét.
-|- **AC8.4**: Coach có thể lọc thống kê theo date range và xuất báo cáo PDF/Excel.
+|- **AC8.1**: Trang thống kê riêng hiển thị tổng số buổi tập theo tuần/tháng/năm cho từng học viên và toàn bộ huấn luyện viên.
+|- **AC8.2**: Tỷ lệ hoàn thành mục tiêu (%) được tính toán theo từng giai đoạn và hiển thị cùng với biểu đồ tiến độ, có cảnh báo màu khi dưới ngưỡng.
+|- **AC8.3**: Đánh giá chất lượng buổi tập dựa trên feedback/ghi chú (1-5 sao) với nhận xét chi tiết và chỉ số trung bình cho từng học viên.
+|- **AC8.4**: Coach có thể lọc thống kê theo date range, trạng thái học viên và xuất báo cáo PDF/Excel.
+|- **AC8.5**: Cho phép tải về dữ liệu thô (CSV) phục vụ phân tích bổ sung.
 
 ## Epic 9: Ghi chú/Nhắc việc
-|- **AC9.1**: Coach thêm ghi chú cho học viên sau buổi tập với loại (pending/in-progress/completed).
-|- **AC9.2**: Ghi chú được lưu kèm timestamp, liên kết với buổi tập hoặc mục tiêu cụ thể.
-|- **AC9.3**: Danh sách ghi chú hiển thị trạng thái và có thể search, filter theo loại.
+|- **AC9.1**: Coach thêm ghi chú hoặc nhắc việc cho học viên sau buổi tập với loại (pending/in-progress/completed) và mức ưu tiên.
+|- **AC9.2**: Ghi chú được lưu kèm timestamp, liên kết với buổi tập hoặc mục tiêu cụ thể, có thể đính kèm tài liệu hoặc liên kết.
+|- **AC9.3**: Danh sách ghi chú hiển thị trạng thái, ưu tiên và có thể search, filter theo loại, học viên, mức ưu tiên.
+|- **AC9.4**: Cho phép đánh dấu nhắc việc đã hoàn thành ngay từ danh sách và đồng bộ trạng thái về dashboard tổng quan.
 
 ## Epic 10: Cải thiện card thông tin HLV
-|- **AC10.1**: Thẻ thông tin HLV (Trainer Info) được tách thành các ô nhỏ riêng biệt (email, chuyên môn, chiều cao, cân nặng, kinh nghiệm).
-|- **AC10.2**: Mỗi ô card có icon, nhãn rõ ràng, dữ liệu dễ đọc.
-|- **AC10.3**: Card layout responsive với grid 2-3 cột tuỳ theo kích thước màn hình.
+|- **AC10.1**: Thẻ thông tin HLV (Trainer Info) được tách thành các ô nhỏ riêng biệt (email, chuyên môn, chiều cao, cân nặng, kinh nghiệm) với bố cục tối giản.
+|- **AC10.2**: Mỗi ô card có icon, nhãn rõ ràng, dữ liệu dễ đọc và tuân theo hệ màu trung tính, tương phản cao.
+|- **AC10.3**: Card layout responsive với grid 2-3 cột tuỳ theo kích thước màn hình, đảm bảo khoảng trắng thoáng.
+|- **AC10.4**: Thanh điều hướng coach sử dụng icon dạng nét (outline), typography đồng nhất và hỗ trợ trạng thái focus/keyboard.

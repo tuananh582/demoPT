@@ -95,26 +95,28 @@ Hệ thống web cho phép quản lý doanh thu, học viên, huấn luyện vi�
    - Coach ghi chú buổi tập, phản hồi từ học viên.
    - Coach truy cập lịch sử đo chỉ số theo từng buổi tập dưới dạng bảng chi tiết.
 5. **Quản lý lịch làm việc với drag-drop**
-   - Trang Lịch làm việc hiển thị lịch cá nhân (lớp nhóm, 1-1) dưới dạng lịch interactif hỗ trợ kéo–thả (drag-drop).
-   - Coach có thể kéo thả buổi tập để sắp xếp lại lịch và thay đổi thời gian.
-   - Hệ thống gửi thông báo tự động cho học viên và khách hàng liên quan khi coach thay đổi lịch.
-   - Coach xác nhận yêu cầu đặt lịch 1-1 từ học viên.
-   - Coach xem tổng số buổi đã hoàn thành trong tuần kèm danh sách buổi chi tiết, và các link họp online tương ứng.
+   - Trang Lịch làm việc hiển thị lịch cá nhân (lớp nhóm, 1-1) dưới dạng lịch tương tác hỗ trợ kéo–thả (drag-drop) và điều chỉnh độ dài buổi tập.
+   - Coach có thể kéo thả buổi tập để sắp xếp lại lịch, thay đổi thời gian bắt đầu/kết thúc và cập nhật trạng thái.
+   - Khi coach thay đổi lịch, hệ thống yêu cầu nhập lý do, gửi thông báo tự động cho học viên/khách hàng liên quan trong vòng 5 phút và đồng bộ lịch theo thời gian thực.
+   - Giao diện lịch hiển thị trạng thái drag (highlight, shadow), cảnh báo xung đột thời gian và cho phép hoàn tác thao tác cuối cùng.
+   - Coach xác nhận yêu cầu đặt lịch 1-1 từ học viên trước khi trạng thái chuyển sang "đã xác nhận".
+   - Coach xem tổng số buổi đã hoàn thành trong tuần kèm danh sách buổi chi tiết, link họp online và lý do thay đổi gần nhất.
 6. **Bổ sung mục thống kê chi tiết**
-   - Trang thống kê riêng hiển thị tổng số buổi tập đã thực hiện trong tuần/tháng/năm cho từng học viên.
-   - Hiển thị tỷ lệ hoàn thành mục tiêu của học viên (%) so với kế hoạch.
-   - Đánh giá chất lượng buổi tập dựa trên feedback và ghi chú (số sao, nhân xét).
-   - Cho phép coach lọc và xuất báo cáo thống kê theo date range.
+   - Trang thống kê riêng hiển thị tổng số buổi tập đã thực hiện trong tuần/tháng/năm cho từng học viên và tổng hợp theo coach.
+   - Hiển thị tỷ lệ hoàn thành mục tiêu của học viên (%) so với kế hoạch theo từng giai đoạn, kèm cảnh báo khi dưới ngưỡng.
+   - Đánh giá chất lượng buổi tập dựa trên feedback và ghi chú (số sao, nhận xét chi tiết) và tính trung bình trọng số cho từng học viên.
+   - Cho phép coach lọc và so sánh thống kê theo date range, trạng thái học viên, chương trình và xuất báo cáo PDF/Excel.
+   - Hỗ trợ tải dữ liệu thô (CSV) để phân tích ngoài hệ thống và lưu lại lịch sử xuất báo cáo.
 7. **Tính năng ghi chú/nhắc việc**
-   - Coach có thể thêm ghi chú hay nhắc việc cho từng học viên sau mỗi buổi tập.
-   - Ghi chú được lưu kèm timestamp, loại (chưa xem, quan trọng, đã hoàn thành) để dễ theo dõi.
-   - Hiển thị danh sách ghi chú với trạng thái pending/in-progress/completed.
-   - Ghi chú có thể liên kết với buổi tập hoặc mục tiêu cụ thể.
+   - Coach có thể thêm ghi chú hay nhắc việc cho từng học viên sau mỗi buổi tập, thiết lập mức ưu tiên và thời hạn.
+   - Ghi chú được lưu kèm timestamp, liên kết với buổi tập hoặc mục tiêu cụ thể, có thể đính kèm tài liệu hoặc liên kết hữu ích.
+   - Hiển thị danh sách ghi chú với trạng thái pending/in-progress/completed, ưu tiên và hỗ trợ search/filter theo học viên, trạng thái, ưu tiên, tag.
+   - Coach đánh dấu hoàn thành ngay từ danh sách; trạng thái cập nhật lên dashboard tổng quan và lịch sử thay đổi được lưu lại.
 8. **Cải thiện giao diện**
-   - Thanh menu trái bổ sung icon trực quan cho từng mục (Dashboard, Users, Calendar, Programs, Notifications, Notes).
-   - Thẻ thông tin HLV (Trainer Info Card) được tách thành các ô nhỏ hiển thị riêng biệt (email, chuyên môn, chiều cao, cân nặng, kinh nghiệm...) để dễ đọc.
-   - Sử dụng bố cục card grid với shadow nhẹ, spacing rõ ràng.
-   - Dùng typography và màu sắc khéo léo để phân cấp thông tin.
+   - Thanh menu trái bổ sung icon dạng nét (outline) cho từng mục (Dashboard, Users, Calendar, Programs, Notifications, Notes) và hỗ trợ trạng thái hover/focus rõ ràng.
+   - Thẻ thông tin HLV (Trainer Info Card) được tách thành các ô nhỏ hiển thị riêng biệt (email, chuyên môn, chiều cao, cân nặng, kinh nghiệm...) với bố cục tối giản, màu trung tính và khoảng trắng hợp lý.
+   - Sử dụng bố cục card grid với shadow nhẹ, spacing rõ ràng, typography đồng nhất và kích thước tối ưu cho thao tác nhanh.
+   - Đảm bảo tính truy cập (accessibility): tương phản màu đáp ứng WCAG AA, hỗ trợ điều hướng bằng bàn phím và mô tả ARIA cho icon quan trọng.
 9. **Quản lý chương trình huấn luyện**
    - Trang Chương trình cho phép coach quản lý meal plan, program và tài liệu liên quan.
 10. **Thông báo**
@@ -131,10 +133,10 @@ Hệ thống web cho phép quản lý doanh thu, học viên, huấn luyện vi�
 
 ## 5. Yêu cầu giao diện
 
-- Giao diện coach sử dụng phong cách tối giản trắng/đen, ưu tiên typography rõ ràng, bỏ các icon trang trí không cần thiết.
-- Các trang thuộc coach dashboard cần bố cục dạng lưới hoặc cột rõ ràng, khoảng cách đủ để thao tác nhanh.
-- Bảng dữ liệu hỗ trợ tìm kiếm, phân trang, lọc.
-- Lịch hỗ trợ xem dạng tuần/tháng và hiển thị link họp.
+- Giao diện coach sử dụng phong cách tối giản với bảng màu trung tính (trắng/đen/xám nhạt) và điểm nhấn giới hạn, ưu tiên typography rõ ràng và khả năng đọc.
+- Các trang thuộc coach dashboard cần bố cục dạng lưới hoặc cột rõ ràng, khoảng cách đủ để thao tác nhanh, hỗ trợ dark mode tối giản.
+- Bảng dữ liệu hỗ trợ tìm kiếm, phân trang, lọc, hiển thị trạng thái bằng màu tương phản cao và icon dạng nét có mô tả.
+- Lịch hỗ trợ xem dạng tuần/tháng, hiển thị link họp, lý do thay đổi gần nhất và trạng thái xác nhận.
 
 ## 6. Yêu cầu dữ liệu
 

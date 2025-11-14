@@ -47,6 +47,10 @@
 ## 13. Bảng ScheduleParticipants
 - schedule_id, trainee_id, attendance_status, joined_link.
 
+## 13b. Bảng ScheduleChangeLogs
+- id, schedule_id, coach_id, changed_at, previous_start_time, previous_end_time, new_start_time, new_end_time, reason, notification_sent_at.
+- Ghi nhận lịch sử thay đổi để hiển thị trong lịch và thông báo.
+
 ## 14. Bảng ProgressLogs
 - id, trainee_id, recorded_at, weight, body_fat, muscle_mass, note, adherence_rate.
 
@@ -64,3 +68,11 @@
 
 ## 19. Bảng TraineeCoach
 - id, trainee_id, coach_id, assigned_at, is_primary.
+
+## 20. Bảng CoachNotes
+- id, coach_id, trainee_id, schedule_id?, title, content, priority (low/medium/high), status (pending/in_progress/completed), due_at, attachment_url, tags (array), created_at, updated_at.
+- Lưu trữ ghi chú/nhắc việc theo học viên và liên kết với buổi tập nếu có.
+
+## 21. Bảng StatisticsExports
+- id, coach_id, filter_json, generated_at, file_type (pdf/xlsx/csv), download_url, expires_at.
+- Lưu lịch sử xuất báo cáo để audit và tái sử dụng.

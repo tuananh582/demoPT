@@ -2,13 +2,18 @@
 
 import { useMemo, useState } from "react";
 import { SectionCard } from "@/components/ui/SectionCard";
-import { InteractiveScheduleCalendar } from "@/components/coach/InteractiveScheduleCalendar";
+import {
+  InteractiveScheduleCalendar,
+  type SessionChangeDetail,
+} from "@/components/coach/InteractiveScheduleCalendar";
 import {
   coachAgenda,
   coachActionQueue,
   coachSchedule,
   coachWeekView,
   coachWeeklySummary,
+  coachScheduleChangeLogs,
+  type CoachScheduleChangeLog,
 } from "@/data/mockData";
 
 const rangeOptions = [
@@ -27,6 +32,12 @@ type ViewMode = (typeof viewModes)[number]["value"];
 export default function CoachSchedulePage() {
   const [range, setRange] = useState<RangeOption>("week");
   const [viewMode, setViewMode] = useState<ViewMode>("week");
+  const [changeLogs, setChangeLogs] = useState<CoachScheduleChangeLog[]>(coachScheduleChangeLogs);
+  const recentBoundary = useMemo(() => {
+    const boundary = new Date();
+    boundary.setDate(boundary.getDate() - 7);
+    return boundary;
+  }, []);
 
   const completionRate = useMemo(() => {
     if (coachWeeklySummary.totalSessions === 0) {
@@ -34,6 +45,70 @@ export default function CoachSchedulePage() {
     }
     return Math.round((coachWeeklySummary.completedSessions / coachWeeklySummary.totalSessions) * 100);
   }, []);
+
+  const recentChangesThisWeek = useMemo(() => {
+    return changeLogs.filter((log) => new Date(log.changedAt).getTime() >= recentBoundary.getTime()).length;
+  }, [changeLogs, recentBoundary]);
+
+  const handleSessionUpdate = (change: SessionChangeDetail) => {
+    const nextEntry: CoachScheduleChangeLog = {
+      id: change.id,
+      scheduleTitle: change.slot.title,
+      fromDay: change.fromDay,
+      toDay: change.toDay,
+      previousTime: change.previousTime,
+      newTime: change.newTime,
+      reason: change.reason,
+      changedAt: change.changedAt,
+      notifiedAt: change.notifiedAt,
+      channel: change.channel,
+    };
+    setChangeLogs((prev) => [nextEntry, ...prev]);
+  };
+
+  const handleUndoChange = (changeId: string) => {
+    setChangeLogs((prev) => prev.filter((log) => log.id !== changeId));
+  };
+
+  const exportChangeLogs = () => {
+    if (typeof window === "undefined" || changeLogs.length === 0) {
+      return;
+    }
+    const header = [
+      "Buổi",
+      "Ngày cũ",
+      "Ngày mới",
+      "Giờ cũ",
+      "Giờ mới",
+      "Lý do",
+      "Thay đổi lúc",
+      "Gửi thông báo",
+      "Kênh",
+    ];
+    const rows = changeLogs.map((log) => [
+      log.scheduleTitle,
+      log.fromDay,
+      log.toDay,
+      log.previousTime,
+      log.newTime,
+      log.reason,
+      new Date(log.changedAt).toLocaleString("vi-VN"),
+      new Date(log.notifiedAt).toLocaleString("vi-VN"),
+      log.channel,
+    ]);
+    const csv = [header, ...rows]
+      .map((row) => row.map((cell) => `"${cell.replace(/"/g, '""')}"`).join(","))
+      .join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `schedule-change-logs-${Date.now()}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
 
   return (
     <div className="space-y-8">
@@ -125,6 +200,9 @@ export default function CoachSchedulePage() {
                 style={{ width: `${completionRate}%` }}
               />
             </div>
+            <p className="mt-3 text-xs text-zinc-500 dark:text-zinc-400">
+              Thay đổi lịch trong 7 ngày: <span className="font-semibold text-zinc-900 dark:text-zinc-100">{recentChangesThisWeek}</span>
+            </p>
           </div>
         </div>
       </SectionCard>
@@ -135,10 +213,55 @@ export default function CoachSchedulePage() {
       >
         <InteractiveScheduleCalendar
           scheduleData={coachWeekView}
-          onSessionUpdate={(movedSession, fromDay, toDay) => {
-            console.log(`Buổi '${movedSession.title}' đã được chuyển từ ${fromDay} sang ${toDay}`);
-          }}
+          onSessionUpdate={handleSessionUpdate}
+          onUndo={handleUndoChange}
         />
+      </SectionCard>
+
+      <SectionCard
+        title="Lịch sử thay đổi gần nhất"
+        description="Theo dõi lý do gửi cho học viên sau mỗi lần cập nhật lịch."
+        actions={
+          <button
+            type="button"
+            onClick={exportChangeLogs}
+            className="inline-flex items-center gap-2 rounded-full border border-zinc-300 px-3 py-1 text-xs font-semibold text-zinc-700 transition hover:bg-zinc-100 dark:border-zinc-600 dark:text-zinc-200 dark:hover:bg-zinc-800"
+          >
+            Xuất lịch sử (CSV)
+          </button>
+        }
+      >
+        <div className="space-y-3">
+          {changeLogs.length === 0 ? (
+            <p className="rounded-lg border border-dashed border-zinc-300 bg-zinc-50 p-6 text-center text-sm text-zinc-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-400">
+              Chưa có thay đổi nào được ghi nhận.
+            </p>
+          ) : (
+            changeLogs.slice(0, 6).map((log) => (
+              <div
+                key={log.id}
+                className="rounded-xl border border-zinc-200 bg-white p-4 text-sm text-zinc-600 transition hover:border-zinc-300 hover:shadow-sm dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300"
+              >
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <p className="text-base font-semibold text-zinc-900 dark:text-zinc-100">{log.scheduleTitle}</p>
+                    <p className="text-xs text-zinc-500 dark:text-zinc-400">
+                      {log.fromDay} • {log.previousTime} → {log.toDay} • {log.newTime}
+                    </p>
+                  </div>
+                  <span className="rounded-full border border-zinc-300 px-3 py-1 text-xs font-semibold text-zinc-700 dark:border-zinc-600 dark:text-zinc-200">
+                    {log.channel}
+                  </span>
+                </div>
+                <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-300">{log.reason}</p>
+                <div className="mt-3 flex flex-wrap gap-4 text-xs text-zinc-500 dark:text-zinc-400">
+                  <span>Thay đổi lúc: {new Date(log.changedAt).toLocaleString("vi-VN")}</span>
+                  <span>Thông báo gửi lúc: {new Date(log.notifiedAt).toLocaleString("vi-VN")}</span>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
       </SectionCard>
 
       <div className="grid gap-6 xl:grid-cols-[1.4fr_0.8fr]">

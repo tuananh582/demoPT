@@ -64,3 +64,15 @@
 
 ## 19. Bảng TraineeCoach
 - id, trainee_id, coach_id, assigned_at, is_primary.
+
+## 20. Bảng RolePermissions
+- id, role_id, permission_code (ví dụ `CAN_APPROVE_PAYMENT`, `CAN_EDIT_SCHEDULE`, `CAN_EXPORT_DATA`), is_allowed (boolean), updated_at.
+- Quan hệ: nhiều-1 với Roles. Hỗ trợ cấu hình quyền khác nhau giữa admin/phó admin.
+
+## 21. Bảng PermissionAudit
+- id, actor_user_id, role_id, permission_code, previous_value, new_value, changed_at, note.
+- Dùng để lưu lịch sử thay đổi quyền truy cập và phục vụ kiểm soát nội bộ.
+
+## 22. Bảng ActivityEvents
+- id, event_type (`trainee_registered`, `coach_progress_updated`, `schedule_changed`), payload_json, actor_id, created_at, status (new/read).
+- Được đẩy vào Notification Streaming Service và truy vấn để hiển thị activity feed có phân trang.

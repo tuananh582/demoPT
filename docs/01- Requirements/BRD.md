@@ -9,18 +9,22 @@
 ### 2.1 Phạm vi trong
 a. Trang admin
 - Dashboard quản lý doanh thu theo ngày/tuần/tháng/năm.
+- Bộ lọc chuyên sâu cho biểu đồ (thời gian, bộ môn) và panel phân tích chi tiết từng chỉ số.
 - CRUD học viên, theo dõi tiến độ hiện tại và lịch sử.
 - CRUD huấn luyện viên, theo dõi lịch làm việc.
 - Quản lý tài khoản: tạo tài khoản học viên, phân quyền huấn luyện viên.
+- Trang quản lý quyền truy cập (admin/chief admin) cho phép bật/tắt quyền hành động quan trọng và lưu audit.
 - Khởi tạo gói tập (nhóm, 1-1) và ánh xạ học viên.
 - CRUD dữ liệu danh mục: thực phẩm, meals, bài tập, chương trình (program), meal mẫu, feedback.
 - CRUD bài tập (lessons) với thông tin nhóm, tên, đường dẫn demo.
 - Quản lý lớp online, chèn link Google Meet/Zoom vào lịch.
+- Nhận thông báo realtime khi có học viên mới đăng ký hoặc coach cập nhật log.
 
 b. Trang coach
 - Dashboard danh sách học viên và trạng thái (lead/trial/active).
 - Thiết lập mục tiêu, meal plan và chương trình cá nhân hoá.
 - Theo dõi chỉ số, tiến trình, hiệu suất.
+- Trang thống kê riêng với biểu đồ tương tác (zoom/tooltip), lọc thời gian/bộ môn và bảng “activity feed” có phân trang.
 - Quản lý lịch làm việc, lớp nhóm, lớp 1-1 với link họp online.
 - Nhận thông báo lịch (hủy, sắp tới, yêu cầu đặt lịch). Lớp 1-1 cần xác nhận thủ công.
 
@@ -50,6 +54,10 @@ b. Trang coach
 3. Cho phép coach quản lý học viên, thiết lập chương trình cá nhân.
 4. Hỗ trợ lớp online với link họp tích hợp.
 5. Cung cấp thông báo lịch và xác nhận phù hợp từng loại lớp.
+6. Trang thống kê cung cấp bộ lọc linh hoạt (timeframe, bộ môn) cùng chế độ xem chi tiết.
+7. Thông báo realtime cho admin về sự kiện học viên/coach, đi kèm activity feed có phân trang.
+8. Quản lý quyền truy cập của từng vai trò, đảm bảo hành động nhạy cảm chỉ do admin được ủy quyền thực hiện.
+9. UI dashboard sử dụng màu sắc tương phản cao trên nền xanh nhạt, biểu đồ hỗ trợ zoom, tooltip và thao tác xem chi tiết.
 
 ## 6. Ràng buộc và giả định
 - Hệ thống chạy trên nền tảng web responsive.

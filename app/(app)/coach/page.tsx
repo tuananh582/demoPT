@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { AppShell } from "@/components/layout/AppShell";
 import { SectionCard } from "@/components/ui/SectionCard";
@@ -37,10 +38,30 @@ export default function CoachPage() {
     <AppShell title="Không gian Coach" navItems={coachNavItems} roleGuard="coach">
       <div className="space-y-8">
         <div id="coach-dashboard" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          <StatCard label="Tổng học viên" value={coachDashboardStats.total} description="Lead + Trial + Active" variant="accent" />
-          <StatCard label="Lead" value={coachDashboardStats.lead} description="Cần tư vấn chiến lược" />
-          <StatCard label="Trial" value={coachDashboardStats.trial} description="Theo sát 2 tuần đầu" />
-          <StatCard label="Active" value={coachDashboardStats.active} description="Đang theo chương trình chính" />
+          <StatCard label="Tổng học viên" value={coachDashboardStats.total} description="Lead + Trial + Active" tone="graphite" />
+          <StatCard label="Lead" value={coachDashboardStats.lead} description="Cần tư vấn chiến lược" tone="sky" />
+          <StatCard label="Trial" value={coachDashboardStats.trial} description="Theo sát 2 tuần đầu" tone="amber" />
+          <StatCard label="Active" value={coachDashboardStats.active} description="Đang theo chương trình chính" tone="emerald" />
+        </div>
+        <div className="flex justify-end">
+          <Link
+            href="/coach/statistics"
+            className="inline-flex items-center gap-2 rounded-2xl border border-zinc-200 px-4 py-2 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-900 hover:text-white"
+          >
+            Xem thống kê nâng cao
+            <svg
+              className="h-4 w-4"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              viewBox="0 0 24 24"
+            >
+              <path d="M5 12h14" />
+              <path d="m12 5 7 7-7 7" />
+            </svg>
+          </Link>
         </div>
 
         <SectionCard

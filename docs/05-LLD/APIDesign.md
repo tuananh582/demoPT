@@ -74,7 +74,29 @@
 ### PATCH /notifications/{id}/read
 - Đánh dấu đã đọc.
 
+### GET /activity-events
+- Query: type?, status?, page, size.
+- Output: danh sách sự kiện realtime phục vụ activity feed (phân trang).
+
+### PATCH /activity-events/{id}/read
+- Đánh dấu event là read để bỏ khỏi danh sách ưu tiên.
+
 ## 8. Báo cáo doanh thu
 ### GET /reports/revenue
 - Query: period=day/week/month/year, start_date, end_date.
 - Output: { labels[], values[], total, comparison_previous }
+
+## 9. Access Control
+### GET /roles
+- Output: danh sách role cùng quyền đang áp dụng.
+
+### GET /roles/{id}/permissions
+- Output: { permissions: [{code, label, is_allowed}] }
+
+### PATCH /roles/{id}/permissions
+- Input: { permissions: [{code, is_allowed}] }
+- Logic: Từ chối khi actor cố hạ cấp chính mình khỏi quyền cần thiết (HTTP 409 + message).
+
+### GET /permission-audits
+- Query: role_id?, actor_id?, range_start?, range_end?
+- Output: danh sách lịch sử thay đổi quyền truy cập.

@@ -94,8 +94,8 @@
 - **Luồng chính**:
   1. Coach mở hồ sơ học viên.
   2. Nhập mục tiêu, thời hạn.
-  3. Tạo meal plan và program dựa trên danh mục.
-  4. Lưu và cập nhật kế hoạch.
+ 3. Tạo meal plan và program dựa trên danh mục.
+ 4. Lưu và cập nhật kế hoạch.
 
 ## UC-COA-03: Theo dõi tiến trình
 - **Tác nhân chính**: Coach
@@ -116,6 +116,38 @@
 - **Luồng chính**:
   1. Hệ thống gửi thông báo khi có lịch mới/hủy/sắp tới.
   2. Coach mở thông báo và xem chi tiết.
+
+## UC-ADM-09: Theo dõi thông báo realtime
+- **Tác nhân chính**: Admin
+- **Mục tiêu**: Nắm bắt ngay các sự kiện học viên/coach.
+- **Điều kiện tiên quyết**: Đã đăng nhập trang admin.
+- **Luồng chính**:
+  1. Admin mở widget realtime hoặc trang chi tiết thông báo.
+  2. Hệ thống kết nối WebSocket/SSE và hiển thị sự kiện mới nhất (học viên đăng ký, coach cập nhật log, lịch đổi).
+  3. Admin lọc theo loại sự kiện khi cần.
+  4. Admin đánh dấu các mục đã đọc hoặc tải thêm sự kiện cũ.
+- **Ngoại lệ**: Mất kết nối → hiển thị trạng thái “Đang thử kết nối lại”.
+
+## UC-ADM-10: Quản lý quyền truy cập
+- **Tác nhân chính**: Admin cấp cao.
+- **Mục tiêu**: Phân bổ quyền chi tiết (admin, phó admin, coach lead).
+- **Luồng chính**:
+  1. Admin mở trang Access Control.
+  2. Chọn vai trò cần chỉnh.
+  3. Bật/tắt quyền cụ thể (xuất dữ liệu, chỉnh lịch, duyệt thanh toán).
+  4. Nhấn lưu → hệ thống ghi lại audit log và áp dụng quyền mới.
+- **Ngoại lệ**: Admin cố gắng loại bỏ quyền cần thiết của chính mình → hiển thị cảnh báo và từ chối.
+
+## UC-COA-06: Phân tích thống kê hiệu suất
+- **Tác nhân chính**: Coach
+- **Mục tiêu**: Xem xu hướng luyện tập theo thời gian và bộ môn.
+- **Luồng chính**:
+  1. Coach truy cập `/coach/statistics`.
+  2. Chọn timeframe (tuần/tháng/năm) và bộ môn.
+  3. Biểu đồ cập nhật, coach dùng zoom/pan để xem chi tiết; tooltip hiển thị dữ liệu từng ngày.
+  4. Coach nhấn “Xem chi tiết” để mở bảng phân tích chuyên sâu.
+  5. Coach đọc activity feed (cuộn/paginate) để hiểu bối cảnh các sự kiện.
+- **Ngoại lệ**: Không có dữ liệu → hiển thị thông báo và gợi ý bộ lọc khác.
 
 ## Ma trận truy vết (trích)
 | Use Case | Yêu cầu chức năng | Module |

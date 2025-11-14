@@ -4,7 +4,8 @@ import { useMemo, useState } from "react";
 import { MicroBarChart } from "@/components/charts/MicroBarChart";
 import { SectionCard } from "@/components/ui/SectionCard";
 import { StatCard } from "@/components/ui/StatCard";
-import { revenueSummary, upcomingSchedules } from "@/data/mockData";
+import { revenueSummary, upcomingSchedules, realtimeEventSeeds } from "@/data/mockData";
+import { useRealtimeEvents } from "@/hooks/useRealtimeEvents";
 
 const timeframeOptions = [
   { key: "week", label: "Tuần" },
@@ -14,9 +15,26 @@ const timeframeOptions = [
 
 type TimeframeKey = (typeof timeframeOptions)[number]["key"];
 
+const eventFilterOptions = [
+  { key: "all", label: "Tất cả" },
+  { key: "lead", label: "Lead mới" },
+  { key: "progress", label: "Cập nhật coach" },
+  { key: "schedule", label: "Lịch" },
+] as const;
+
+type EventFilterKey = (typeof eventFilterOptions)[number]["key"];
+
 export default function AdminDashboardPage() {
   const [timeframe, setTimeframe] = useState<TimeframeKey>("week");
+  const [eventFilter, setEventFilter] = useState<EventFilterKey>("all");
   const revenueData = useMemo(() => revenueSummary[timeframe], [timeframe]);
+  const { events, markAsRead, markAllAsRead } = useRealtimeEvents(realtimeEventSeeds, 10000);
+  const filteredEvents = useMemo(
+    () => events.filter((event) => (eventFilter === "all" ? true : event.type === eventFilter)),
+    [eventFilter, events],
+  );
+  const unreadCount = events.filter((event) => event.status === "new").length;
+  const connectionStatus = events.length > 0;
 
   return (
     <>
@@ -52,7 +70,7 @@ export default function AdminDashboardPage() {
       >
         <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
           <div className="space-y-4">
-            <StatCard label="Tổng doanh thu" value={revenueData.total} description={revenueData.change} variant="accent" />
+            <StatCard label="Tổng doanh thu" value={revenueData.total} description={revenueData.change} tone="graphite" />
             <div className="rounded-lg border border-zinc-200 p-4 text-sm text-zinc-600">
               <p className="font-semibold text-zinc-900">Ghi chú nhanh</p>
               <ul className="mt-3 space-y-2">
@@ -71,10 +89,10 @@ export default function AdminDashboardPage() {
       </SectionCard>
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard label="Học viên hoạt động" value="134" description="+12 so với tháng trước" />
-        <StatCard label="Coach đang làm việc" value="18" description="Tỷ lệ phủ lịch 92%" />
-        <StatCard label="Buổi online trong tuần" value="28" description="5 buổi chờ xác nhận" />
-        <StatCard label="Feedback tích cực" value="87%" description="30 ngày gần nhất" />
+        <StatCard label="Học viên hoạt động" value="134" description="+12 so với tháng trước" tone="emerald" />
+        <StatCard label="Coach đang làm việc" value="18" description="Tỷ lệ phủ lịch 92%" tone="sky" />
+        <StatCard label="Buổi online trong tuần" value="28" description="5 buổi chờ xác nhận" tone="amber" />
+        <StatCard label="Feedback tích cực" value="87%" description="30 ngày gần nhất" tone="fuchsia" />
       </div>
 
       <SectionCard
@@ -94,6 +112,92 @@ export default function AdminDashboardPage() {
             </li>
           ))}
         </ul>
+      </SectionCard>
+
+      <SectionCard
+        title="Thông báo realtime"
+        description="Admin nhận sự kiện ngay khi có lead mới, coach cập nhật tiến độ hoặc lịch thay đổi."
+      >
+        <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div className="inline-flex items-center gap-2 text-zinc-500">
+            <span className={`h-2 w-2 rounded-full ${connectionStatus ? "bg-emerald-500" : "bg-amber-500"}`} />
+            <span>{connectionStatus ? "Đang kết nối" : "Đang thử kết nối lại..."}</span>
+            <span className="rounded-full bg-zinc-900/5 px-2 py-0.5 font-semibold text-zinc-700">{unreadCount} mới</span>
+          </div>
+          <button
+            type="button"
+            onClick={markAllAsRead}
+            disabled={unreadCount === 0}
+            className="rounded-lg border border-zinc-200 px-3 py-1.5 font-semibold text-zinc-600 transition hover:bg-zinc-50 disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            Đánh dấu tất cả đã đọc
+          </button>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {eventFilterOptions.map((option) => {
+            const isActive = option.key === eventFilter;
+            return (
+              <button
+                key={option.key}
+                type="button"
+                onClick={() => setEventFilter(option.key)}
+                className={`rounded-full px-3 py-1.5 text-xs font-semibold uppercase tracking-wide transition ${
+                  isActive ? "bg-indigo-600 text-white" : "border border-zinc-200 text-zinc-600 hover:bg-zinc-50"
+                }`}
+              >
+                {option.label}
+              </button>
+            );
+          })}
+        </div>
+        <div className="space-y-3">
+          {filteredEvents.slice(0, 6).map((event) => (
+            <div
+              key={event.id}
+              className={`rounded-2xl border p-4 text-sm transition ${
+                event.status === "new"
+                  ? "border-indigo-400 bg-indigo-50/80 shadow"
+                  : "border-zinc-200 bg-white hover:border-zinc-300"
+              }`}
+            >
+              <div className="flex items-center justify-between text-xs text-zinc-500">
+                <span>{event.occurredAt}</span>
+                <span
+                  className={`rounded-full px-3 py-0.5 font-semibold ${
+                    event.type === "lead"
+                      ? "bg-emerald-100 text-emerald-700"
+                      : event.type === "progress"
+                        ? "bg-sky-100 text-sky-700"
+                        : "bg-amber-100 text-amber-700"
+                  }`}
+                >
+                  {event.type === "lead" ? "Lead mới" : event.type === "progress" ? "Log coach" : "Lịch"}
+                </span>
+              </div>
+              <p className="mt-2 text-sm font-semibold text-zinc-900">{event.title}</p>
+              <p className="mt-1 text-sm text-zinc-600">{event.message}</p>
+              <div className="mt-3 flex items-center justify-between text-xs text-zinc-500">
+                <span>{event.actor}</span>
+                {event.status === "new" ? (
+                  <button
+                    type="button"
+                    onClick={() => markAsRead(event.id)}
+                    className="font-semibold text-indigo-600 hover:text-indigo-500"
+                  >
+                    Đánh dấu đã đọc
+                  </button>
+                ) : (
+                  <span className="font-semibold text-emerald-500">Đã đọc</span>
+                )}
+              </div>
+            </div>
+          ))}
+          {filteredEvents.length === 0 ? (
+            <p className="rounded-xl border border-dashed border-zinc-200 px-4 py-6 text-center text-sm text-zinc-500">
+              Không có sự kiện phù hợp với bộ lọc.
+            </p>
+          ) : null}
+        </div>
       </SectionCard>
     </>
   );

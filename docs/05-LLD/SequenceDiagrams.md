@@ -31,3 +31,26 @@ Progress API -> DB: Lưu ProgressLogs
 Progress API -> Analytics Service: Trigger cập nhật dashboard
 UI Coach <- Progress API: Trả về log mới
 ```
+
+## 4. Đẩy thông báo realtime tới admin
+```
+Coach/Admin -> API: Tạo sự kiện (ví dụ tạo học viên mới)
+API -> DB: Lưu ActivityEvents (status=new)
+API -> Message Queue: Publish event ActivityEventCreated
+Realtime Stream Hub <- Message Queue: Consume sự kiện
+Realtime Stream Hub -> WebSocket/SSE: Push payload tới client admin
+UI Admin -> Activity Feed: Hiển thị mục mới, cho phép đánh dấu đã đọc
+UI Admin -> Notification API: PATCH /activity-events/{id}/read
+Notification API -> DB: Cập nhật status
+```
+
+## 5. Cập nhật quyền truy cập
+```
+Admin -> UI Access Control: Thay đổi toggle quyền
+UI -> Access Control API: PATCH /roles/{id}/permissions {permission_code, is_allowed}
+Access Control API -> RBAC Service: Validate không hạ quyền bản thân
+Access Control API -> DB: Update RolePermissions
+Access Control API -> DB: Insert PermissionAudit
+Access Control API <- RBAC Service: OK
+UI <- Access Control API: Trả về cấu hình mới
+```

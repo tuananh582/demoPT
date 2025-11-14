@@ -31,13 +31,29 @@
 - **AC5.4**: Lịch 1-1 yêu cầu coach xác nhận trước khi chuyển sang trạng thái "đã xác nhận".
 - **AC5.5**: Công cụ sắp xếp lịch cho phép di chuyển thứ tự và cập nhật thời gian/link buổi học.
 
-## Epic 7: Marketing phòng PT
-- **AC7.1**: Admin chỉnh sửa được tiêu đề, đoạn mô tả và hình ảnh chính của landing page.
-- **AC7.2**: Admin quản lý được danh sách gói nổi bật, bao gồm tên, giá hiển thị và mô tả ngắn.
-- **AC7.3**: Trước khi lưu, hệ thống hiển thị bản xem trước nội dung marketing.
-
 ## Epic 6: Trang coach
 - **AC6.1**: Dashboard coach hiển thị tổng số học viên lead/trial/active.
 - **AC6.2**: Coach cập nhật mục tiêu, meal plan và program cá nhân hóa cho từng học viên.
 - **AC6.3**: Coach ghi nhận kết quả buổi tập và phản hồi, hệ thống lưu kèm timestamp.
 - **AC6.4**: Coach nhận thông báo khi học viên hủy buổi tập.
+- **AC6.5**: Trang `/coach/statistics` phải có bộ lọc timeframe (tuần, tháng, năm) và bộ môn, cập nhật biểu đồ ngay khi thay đổi.
+- **AC6.6**: Tooltip khi hover trên biểu đồ hiển thị ngày và giá trị cụ thể; nút zoom +/- hoặc thanh trượt thay đổi cửa sổ quan sát.
+- **AC6.7**: Nút "Xem chi tiết" mở bảng phân tích của chỉ số đang chọn với ít nhất 3 dữ liệu hữu ích (ví dụ ngày cao nhất, % thay đổi, gợi ý).
+- **AC6.8**: Activity feed có thể tải thêm sau mỗi 10 mục hoặc hiển thị thanh cuộn độc lập tối đa 320px chiều cao.
+
+## Epic 7: Marketing phòng PT
+- **AC7.1**: Admin chỉnh sửa được tiêu đề, đoạn mô tả và hình ảnh chính của landing page.
+- **AC7.2**: Admin quản lý được danh sách gói nổi bật, bao gồm tên, giá hiển thị và mô tả ngắn.
+- **AC7.3**: Trước khi lưu, hệ thống hiển thị bản xem trước nội dung marketing.
+
+## Epic 8: Thông báo realtime
+- **AC8.1**: Khi có học viên mới được tạo, admin nhìn thấy sự kiện realtime trong vòng 5 giây.
+- **AC8.2**: Khi coach cập nhật log tiến trình, sự kiện tương ứng xuất hiện trong danh sách thông báo realtime.
+- **AC8.3**: Admin có thể lọc feed theo loại sự kiện (Lead mới, Cập nhật coach, Lịch) và đánh dấu từng mục là đã đọc.
+- **AC8.4**: Activity feed lưu trữ được ít nhất 50 sự kiện với phân trang hoặc nút "Tải thêm".
+
+## Epic 9: Quản lý quyền truy cập
+- **AC9.1**: Trang `/admin/access-control` hiển thị danh sách vai trò cùng các quyền chính (ví dụ: Duyệt thanh toán, Sửa lịch, Xuất dữ liệu).
+- **AC9.2**: Admin có thể bật/tắt từng quyền và lưu thay đổi; giao diện phản hồi trạng thái lưu thành công/thất bại.
+- **AC9.3**: Bất kỳ thay đổi nào đều được ghi lại trong bảng audit (ngày giờ, người thực hiện, hành động).
+- **AC9.4**: Hệ thống ngăn không cho admin hạ cấp chính mình xuống mức không đủ quyền (hiển thị thông báo lỗi rõ ràng).

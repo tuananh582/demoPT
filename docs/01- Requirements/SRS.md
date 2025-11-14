@@ -68,9 +68,17 @@ Hệ thống web cho phép quản lý doanh thu, học viên, huấn luyện vi�
    - Admin tạo lịch lớp với link Google Meet/Zoom.
    - Admin sắp xếp lại thứ tự buổi học, chỉnh sửa thông tin (thời gian, link) khi lớp thay đổi.
    - Lịch đồng bộ với huấn luyện viên liên quan.
+10. **Trung tâm thông báo realtime** (widget tại `/admin/dashboard`, bảng riêng `/admin/notifications`)
+   - Hệ thống kết nối realtime (WebSocket/SSE) để đẩy sự kiện “TraineeRegistered” và “CoachProgressUpdated” ngay sau khi phát sinh.
+   - Admin xem danh sách sự kiện mới nhất với khả năng lọc theo loại (học viên, coach, lịch) và đánh dấu đã đọc.
+   - Activity feed hỗ trợ phân trang hoặc thanh cuộn để không bỏ lỡ sự kiện cũ.
 9. **Quản lý trang marketing PT** (trang `/admin/marketing`)
    - Admin cập nhật nội dung giới thiệu phòng PT: tiêu đề, mô tả, hình ảnh hero, các gói nổi bật và giá hiển thị.
    - Hỗ trợ xem trước trước khi xuất bản để đảm bảo thống nhất thông điệp.
+11. **Quản lý quyền truy cập đa vai trò** (trang `/admin/access-control`)
+   - Admin định nghĩa quyền chi tiết cho từng nhóm (admin, phó admin, coach lead).
+   - Cho phép bật/tắt các đặc quyền (xuất dữ liệu, duyệt thanh toán, chỉnh sửa lịch minh chứng).
+   - Lưu audit log cho mỗi thay đổi quyền hạn (người thao tác, thời gian, mô tả thay đổi).
 
 ### 3.2 Trang coach
 1. **Dashboard học viên**
@@ -87,6 +95,11 @@ Hệ thống web cho phép quản lý doanh thu, học viên, huấn luyện vi�
    - Coach xác nhận yêu cầu đặt lịch 1-1 từ học viên.
 5. **Thông báo**
    - Coach nhận thông báo về lịch bị hủy, lịch sắp tới, yêu cầu đặt lịch mới.
+6. **Trang thống kê hiệu suất** (trang `/coach/statistics`)
+   - Biểu đồ tương tác hiển thị dữ liệu theo ngày/tuần/tháng/năm và lọc theo bộ môn hoặc nhóm chương trình.
+   - Người dùng zoom/pan hoặc sử dụng thanh trượt để phóng to khu vực cụ thể; tooltip hiển thị giá trị tại điểm dữ liệu.
+   - Cung cấp nút “Xem chi tiết” mở bảng phân tích sâu cho từng chỉ số (ví dụ sự tuân thủ meal plan, cường độ buổi tập).
+   - Activity feed của coach gom nhật ký cập nhật, hỗ trợ cuộn riêng và nút “Tải thêm”.
 
 ## 4. Yêu cầu phi chức năng
 - **Hiệu năng**: Dashboard tải dữ liệu trong < 3 giây với 10k bản ghi.
@@ -94,20 +107,28 @@ Hệ thống web cho phép quản lý doanh thu, học viên, huấn luyện vi�
 - **Khả dụng**: 99,5% uptime hàng tháng.
 - **Khả năng mở rộng**: Hỗ trợ đến 500 huấn luyện viên, 10.000 học viên.
 - **Khả năng bảo trì**: Mã nguồn tuân theo chuẩn clean architecture.
+- **Realtime**: Thời gian đẩy sự kiện mới tới admin < 5 giây kể từ khi phát sinh trong hệ thống.
 
 ## 5. Yêu cầu giao diện
 - Sử dụng theme trắng đen tối giản, không dùng icon trang trí dư thừa; bố cục dashboard rõ ràng với menu điều hướng sang từng trang chức năng riêng biệt.
 - Bảng dữ liệu hỗ trợ tìm kiếm, phân trang, lọc.
 - Lịch hỗ trợ xem dạng tuần/tháng và hiển thị link họp.
+- Thẻ chỉ số sử dụng màu nền đậm khác nhau để phân loại trạng thái (revenue, học viên, lịch), đảm bảo tương phản với nền xanh nhạt.
+- Vùng biểu đồ hiển thị tooltip khi hover, hỗ trợ zoom (nút +/- hoặc kéo) và trạng thái lựa chọn bộ môn.
+- Activity feed hiển thị trong cột cuộn độc lập, cung cấp nút “Xem thêm” sau mỗi 10 sự kiện.
 
 ## 6. Yêu cầu dữ liệu
 - Cơ sở dữ liệu quan hệ lưu trữ thông tin học viên, coach, gói tập, lịch học, meal plan, chương trình, feedback.
 - Lịch sử tiến độ lưu trữ dạng time-series.
+- Lưu bảng quyền chi tiết (RolePermissions) và bảng ActivityEvents để phục vụ real-time feed và log quyền hạn.
 
 ## 7. Tiêu chí chấp nhận chi tiết
 - Mọi yêu cầu ở mục 3 có test case xác nhận.
 - Quy trình tạo lịch online phải gửi thông báo đến coach trong vòng 5 phút.
 - Link họp hiển thị rõ ràng trong lịch và gửi qua email thông báo.
+- Sự kiện học viên/coach mới xuất hiện tại widget realtime < 5 giây và có thể đánh dấu đã đọc.
+- Trang Access Control ghi nhận audit log mỗi khi cấu hình quyền thay đổi.
+- Biểu đồ thống kê cho phép thay đổi timeframe + bộ môn mà không tải lại trang, và tooltip hiển thị chính xác giá trị tại thời điểm được chọn.
 
 ## 8. Phụ lục
 - Sơ đồ use case, ma trận truy vết được trình bày ở thư mục Supporting.

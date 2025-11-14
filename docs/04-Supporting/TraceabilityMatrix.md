@@ -8,3 +8,6 @@
 | BRD-04 | Quản lý nội dung bài tập, meal, program | SRS 3.1.6/3.1.7 | UC-ADM-05 | TC-CONTENT-01..06 |
 | BRD-05 | Lớp online và thông báo | SRS 3.1.8, 3.2.4, 3.2.5 | UC-ADM-06, UC-COA-04/05 | TC-SCHEDULE-01..06 |
 | BRD-06 | Coach cá nhân hóa chương trình | SRS 3.2.2/3.2.3 | UC-COA-02/03 | TC-PROGRESS-01..04 |
+| BRD-07 | Thống kê nâng cao & bộ lọc biểu đồ | SRS 3.2.6, 5 | UC-COA-06 | TC-ANALYTICS-01..05 |
+| BRD-08 | Thông báo realtime cho admin | SRS 3.1.10, 4 | UC-ADM-09 | TC-REALTIME-01..04 |
+| BRD-09 | Quản lý quyền truy cập | SRS 3.1.11, 6 | UC-ADM-10 | TC-ACCESS-01..04 |

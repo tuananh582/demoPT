@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, startTransition, useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -19,9 +19,7 @@ export function LoginForm() {
     const params = new URLSearchParams(window.location.search);
     const redirectParam = params.get("redirect");
     if (redirectParam) {
-      startTransition(() => {
-        setRedirectTarget(redirectParam);
-      });
+      setRedirectTarget(redirectParam);
     }
   }, []);
 
@@ -34,11 +32,17 @@ export function LoginForm() {
     }
 
     setError(null);
-    if (email.toLowerCase().includes("coach")) {
-      router.replace("/coach");
-    } else {
-      router.replace(redirectTarget.includes("coach") ? "/coach" : "/admin");
-    }
+    // Determine redirect destination
+    const destination = redirectTarget.includes("coach")
+      ? "/coach"
+      : email.toLowerCase().includes("coach")
+        ? "/coach"
+        : "/admin";
+    
+    // Use setTimeout to ensure state update happens before navigation
+    setTimeout(() => {
+      router.push(destination);
+    }, 0);
   };
 
   return (

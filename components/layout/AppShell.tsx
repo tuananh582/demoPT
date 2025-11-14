@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import type { NavItem } from "@/data/mockData";
+import * as LucideIcons from "lucide-react";
 
 interface AppShellProps {
   title: string;
@@ -30,6 +31,16 @@ export function AppShell({ title, navItems, children, roleGuard }: AppShellProps
     return () => window.removeEventListener("hashchange", updateHash);
   }, [navItems]);
 
+  // Handle role guard redirect
+  useEffect(() => {
+    if (!isLoading && (!user || user.role !== roleGuard)) {
+      if (typeof window !== "undefined") {
+        const redirectTarget = pathname ? `?redirect=${encodeURIComponent(pathname)}` : "";
+        router.replace(`/login${redirectTarget}`);
+      }
+    }
+  }, [isLoading, user, roleGuard, pathname, router]);
+
   const currentItem = useMemo(() => {
     const firstHashItem = navItems.find((item) => item.href.startsWith("#"));
     const resolvedHash = activeHash || firstHashItem?.href || "";
@@ -52,13 +63,20 @@ export function AppShell({ title, navItems, children, roleGuard }: AppShellProps
     return partialMatches[0] ?? navItems[0];
   }, [activeHash, navItems, pathname]);
 
+  const getIcon = (iconName?: string) => {
+    if (!iconName) return null;
+    const Icon = LucideIcons[iconName as keyof typeof LucideIcons];
+    if (!Icon) return null;
+    return <Icon className="h-5 w-5" />;
+  };
+
   const renderNavLink = (item: NavItem, variant: "sidebar" | "bottom") => {
     const isHashLink = item.href.startsWith("#");
     const isActive = currentItem?.href === item.href;
     const baseClasses =
       variant === "sidebar"
-        ? "block rounded-lg px-3 py-2 text-sm font-medium transition"
-        : "flex flex-1 items-center justify-center rounded-lg px-2 py-2 text-xs font-medium transition";
+        ? "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition"
+        : "flex flex-1 flex-col items-center justify-center rounded-lg px-2 py-2 text-xs font-medium transition gap-1";
     const activeClasses = isActive
       ? "bg-zinc-900 text-white dark:bg-white dark:text-zinc-900"
       : "text-zinc-600 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-800";
@@ -71,7 +89,8 @@ export function AppShell({ title, navItems, children, roleGuard }: AppShellProps
           onClick={() => setActiveHash(item.href)}
           className={`${baseClasses} ${activeClasses}`}
         >
-          {item.label}
+          {variant === "sidebar" && getIcon(item.icon)}
+          <span className={variant === "bottom" ? "line-clamp-1" : ""}>{item.label}</span>
         </a>
       );
     }
@@ -83,19 +102,16 @@ export function AppShell({ title, navItems, children, roleGuard }: AppShellProps
         onClick={() => setActiveHash("")}
         className={`${baseClasses} ${activeClasses}`}
       >
-        {item.label}
+        {variant === "sidebar" && getIcon(item.icon)}
+        <span className={variant === "bottom" ? "line-clamp-1" : ""}>{item.label}</span>
       </Link>
     );
   };
 
-  if (!isLoading && (!user || user.role !== roleGuard)) {
-    if (typeof window !== "undefined") {
-      const redirectTarget = pathname ? `?redirect=${encodeURIComponent(pathname)}` : "";
-      router.replace(`/login${redirectTarget}`);
-    }
+  if (isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-zinc-50 p-8 text-center text-sm text-zinc-500 dark:bg-zinc-950 dark:text-zinc-400">
-        Đang chuyển hướng...
+        Đang tải...
       </div>
     );
   }

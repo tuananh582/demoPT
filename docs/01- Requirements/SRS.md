@@ -1,40 +1,51 @@
 # Tài liệu SRS - Hệ thống quản lý phòng gym trực tuyến
 
 ## 1. Giới thiệu
+
 ### 1.1 Mục đích
+
 Tài liệu mô tả yêu cầu chi tiết cho hệ thống quản lý phòng gym trực tuyến bao gồm hai vai trò chính: admin và coach.
 
 ### 1.2 Phạm vi sản phẩm
+
 Hệ thống web cho phép quản lý doanh thu, học viên, huấn luyện viên, nội dung đào tạo và hỗ trợ lịch học online/offline.
 
 ### 1.3 Định nghĩa, chữ viết tắt
+
 - CRUD: Create, Read, Update, Delete.
 - PT: Personal Trainer (huấn luyện viên).
 - KPI: Key Performance Indicator.
 
 ## 2. Mô tả tổng quan
+
 ### 2.1 Quan điểm sản phẩm
+
 - Ứng dụng web đa vai trò, quản lý dữ liệu tập trung.
 - Tích hợp lịch có thể đồng bộ với Google Calendar (tương lai).
 
 ### 2.2 Chức năng tổng quát
+
 - Dashboard doanh thu cho admin.
 - Quản lý học viên, huấn luyện viên, gói tập, bài tập, meal plan, program.
 - Coach quản lý học viên, thiết lập mục tiêu, meal plan, program.
 - Theo dõi tiến trình, lịch học, thông báo.
 
 ### 2.3 Đặc điểm người dùng
+
 - Admin: người quản lý vận hành.
 - Coach: huấn luyện viên cung cấp dịch vụ.
 - Học viên: người sử dụng chương trình (truy cập gián tiếp qua portal khác).
 
 ### 2.4 Ràng buộc
+
 - Hỗ trợ trình duyệt hiện đại (Chrome, Edge, Firefox, Safari).
 - Ngôn ngữ hiển thị: tiếng Việt.
 - Bảo mật tuân thủ chuẩn OWASP Top 10.
 
 ## 3. Yêu cầu chức năng
+
 ### 3.1 Trang admin
+
 1. **Dashboard doanh thu**
    - Hệ thống hiển thị biểu đồ so sánh doanh thu theo tuần/tháng/năm.
    - Admin chọn khoảng thời gian để lọc doanh thu.
@@ -68,9 +79,11 @@ Hệ thống web cho phép quản lý doanh thu, học viên, huấn luyện vi�
    - Lịch đồng bộ với huấn luyện viên liên quan.
 
 ### 3.2 Trang coach
+
 1. **Điều hướng đa trang**
    - Menu coach gồm các mục: Tổng quan, Học viên, Lịch làm việc, Chương trình, Thông báo.
    - Khi coach chọn một mục, hệ thống điều hướng sang route riêng thay vì hiển thị tất cả nội dung trong một trang cuộn dài.
+   - Menu trái bổ sung icon rõ ràng cho từng mục để tăng tính trực quan.
 2. **Dashboard học viên**
    - Trang Tổng quan hiển thị số lượng học viên theo trạng thái lead/trial/active và các chỉ số quan trọng.
    - Cho phép lọc theo trạng thái và truy cập nhanh đến chi tiết học viên.
@@ -81,16 +94,35 @@ Hệ thống web cho phép quản lý doanh thu, học viên, huấn luyện vi�
    - Trang Học viên hiển thị biểu đồ tiến độ của học viên theo thời gian (cân nặng, số đo, attendance).
    - Coach ghi chú buổi tập, phản hồi từ học viên.
    - Coach truy cập lịch sử đo chỉ số theo từng buổi tập dưới dạng bảng chi tiết.
-5. **Quản lý lịch làm việc**
-   - Trang Lịch làm việc hiển thị lịch cá nhân (lớp nhóm, 1-1) và các link họp online tương ứng.
+5. **Quản lý lịch làm việc với drag-drop**
+   - Trang Lịch làm việc hiển thị lịch cá nhân (lớp nhóm, 1-1) dưới dạng lịch interactif hỗ trợ kéo–thả (drag-drop).
+   - Coach có thể kéo thả buổi tập để sắp xếp lại lịch và thay đổi thời gian.
+   - Hệ thống gửi thông báo tự động cho học viên và khách hàng liên quan khi coach thay đổi lịch.
    - Coach xác nhận yêu cầu đặt lịch 1-1 từ học viên.
-   - Coach xem tổng số buổi đã hoàn thành trong tuần kèm danh sách buổi chi tiết.
-6. **Quản lý chương trình huấn luyện**
+   - Coach xem tổng số buổi đã hoàn thành trong tuần kèm danh sách buổi chi tiết, và các link họp online tương ứng.
+6. **Bổ sung mục thống kê chi tiết**
+   - Trang thống kê riêng hiển thị tổng số buổi tập đã thực hiện trong tuần/tháng/năm cho từng học viên.
+   - Hiển thị tỷ lệ hoàn thành mục tiêu của học viên (%) so với kế hoạch.
+   - Đánh giá chất lượng buổi tập dựa trên feedback và ghi chú (số sao, nhân xét).
+   - Cho phép coach lọc và xuất báo cáo thống kê theo date range.
+7. **Tính năng ghi chú/nhắc việc**
+   - Coach có thể thêm ghi chú hay nhắc việc cho từng học viên sau mỗi buổi tập.
+   - Ghi chú được lưu kèm timestamp, loại (chưa xem, quan trọng, đã hoàn thành) để dễ theo dõi.
+   - Hiển thị danh sách ghi chú với trạng thái pending/in-progress/completed.
+   - Ghi chú có thể liên kết với buổi tập hoặc mục tiêu cụ thể.
+8. **Cải thiện giao diện**
+   - Thanh menu trái bổ sung icon trực quan cho từng mục (Dashboard, Users, Calendar, Programs, Notifications, Notes).
+   - Thẻ thông tin HLV (Trainer Info Card) được tách thành các ô nhỏ hiển thị riêng biệt (email, chuyên môn, chiều cao, cân nặng, kinh nghiệm...) để dễ đọc.
+   - Sử dụng bố cục card grid với shadow nhẹ, spacing rõ ràng.
+   - Dùng typography và màu sắc khéo léo để phân cấp thông tin.
+9. **Quản lý chương trình huấn luyện**
    - Trang Chương trình cho phép coach quản lý meal plan, program và tài liệu liên quan.
-7. **Thông báo**
-   - Trang Thông báo hiển thị cập nhật về lịch bị hủy, lịch sắp tới, yêu cầu đặt lịch mới.
+10. **Thông báo**
+
+- Trang Thông báo hiển thị cập nhật về lịch bị hủy, lịch sắp tới, yêu cầu đặt lịch mới.
 
 ## 4. Yêu cầu phi chức năng
+
 - **Hiệu năng**: Dashboard tải dữ liệu trong < 3 giây với 10k bản ghi.
 - **Bảo mật**: Tất cả API yêu cầu xác thực JWT, phân quyền theo vai trò.
 - **Khả dụng**: 99,5% uptime hàng tháng.
@@ -98,19 +130,23 @@ Hệ thống web cho phép quản lý doanh thu, học viên, huấn luyện vi�
 - **Khả năng bảo trì**: Mã nguồn tuân theo chuẩn clean architecture.
 
 ## 5. Yêu cầu giao diện
+
 - Giao diện coach sử dụng phong cách tối giản trắng/đen, ưu tiên typography rõ ràng, bỏ các icon trang trí không cần thiết.
 - Các trang thuộc coach dashboard cần bố cục dạng lưới hoặc cột rõ ràng, khoảng cách đủ để thao tác nhanh.
 - Bảng dữ liệu hỗ trợ tìm kiếm, phân trang, lọc.
 - Lịch hỗ trợ xem dạng tuần/tháng và hiển thị link họp.
 
 ## 6. Yêu cầu dữ liệu
+
 - Cơ sở dữ liệu quan hệ lưu trữ thông tin học viên, coach, gói tập, lịch học, meal plan, chương trình, feedback.
 - Lịch sử tiến độ lưu trữ dạng time-series.
 
 ## 7. Tiêu chí chấp nhận chi tiết
+
 - Mọi yêu cầu ở mục 3 có test case xác nhận.
 - Quy trình tạo lịch online phải gửi thông báo đến coach trong vòng 5 phút.
 - Link họp hiển thị rõ ràng trong lịch và gửi qua email thông báo.
 
 ## 8. Phụ lục
+
 - Sơ đồ use case, ma trận truy vết được trình bày ở thư mục Supporting.

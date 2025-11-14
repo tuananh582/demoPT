@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { SectionCard } from "@/components/ui/SectionCard";
+import { InteractiveScheduleCalendar } from "@/components/coach/InteractiveScheduleCalendar";
 import {
   coachAgenda,
   coachActionQueue,
@@ -126,6 +127,18 @@ export default function CoachSchedulePage() {
             </div>
           </div>
         </div>
+      </SectionCard>
+
+      <SectionCard
+        title="Lịch drag-drop (Kéo thả)"
+        description="Kéo thả buổi tập giữa các ngày để sắp xếp lại lịch, thông báo sẽ tự động gửi đến học viên."
+      >
+        <InteractiveScheduleCalendar
+          scheduleData={coachWeekView}
+          onSessionUpdate={(movedSession, fromDay, toDay) => {
+            console.log(`Buổi '${movedSession.title}' đã được chuyển từ ${fromDay} sang ${toDay}`);
+          }}
+        />
       </SectionCard>
 
       <div className="grid gap-6 xl:grid-cols-[1.4fr_0.8fr]">
